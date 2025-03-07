@@ -35,7 +35,7 @@
             <div class="flex flex-col lg:flex-row bg-white shadow-lg overflow-hidden border rounded-xl">
                 <!-- Bagian Langganan -->
                 <div class="lg:w-2/3 w-full flex flex-col justify-center bg-white shadow-lg rounded-xl p-8 text-center">
-                    <h2 class="text-2xl font-bold text-gray-900 mb-2" data-aos="zoom-in">
+                    <h2 class="md:text-2xl text-xl font-bold text-gray-900 mb-2" data-aos="zoom-in">
                         Yuk Berlangganan Untuk Akses Materinya!
                     </h2>
                     <!-- Deskripsi -->
@@ -90,10 +90,10 @@
                 <img src="{{ asset('storage/' . $course->image_path) }}" alt="{{ $course->title }}" class="rounded-lg w-full h-auto">
             </div>
             <div class="ml-6 w-2/3">
-                <h2 class="text-2xl font-bold capitalize mb-1">{{ $course->title }}</h2>
+                <h2 class="md:text-xl text-md font-semibold capitalize mb-1">{{ $course->title }}</h2>
                 <p class="text-gray-600 mb-3"><strong>Mentor :</strong> {{ $course->mentor->name }}</p>
                 <p class="text-gray-700 mb-4">{{ $course->description }}</p>
-                <p class="text-green-600 bg-green-300 inline-block text-xl p-3 rounded-2xl font-bold">Rp. {{ number_format($course->price, 0, ',', '.') }}</p>
+                <p class="text-green-600 bg-green-200 inline-flex items-center text-md p-1.5 rounded-xl font-semibold">Rp. {{ number_format($course->price, 0, ',', '.') }}</p>
             </div>
         </div>
         

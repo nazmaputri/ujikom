@@ -2,19 +2,19 @@
 
 @section('content')
     <div class="container mx-auto">
-        <div class="bg-white rounded-lg shadow-md p-8">
-            <h1 class="text-xl font-bold text-gray-800 mb-6 border-b-2 pb-2">Daftar Penilaian EduFlix</h1>
+        <div class="bg-white rounded-lg shadow-md p-5">
+            <h1 class="text-xl font-semibold mb-3 inline-block border-b-2 border-gray-300 pb-1 text-gray-700">Daftar Penilaian EduFlix</h1>
             
             <!-- Wrapper for responsiveness -->
             <div class="overflow-x-auto">
-                <table class="min-w-full border-separate border-spacing-1 text-sm mt-4">
+                <table class="min-w-full mt-3">
                     <thead>
-                        <tr class="bg-sky-200 text-gray-600 leading-normal uppercase">
-                            <th class="border border-gray-300 px-2 py-2 rounded-md">No</th>
-                            <th class="border border-gray-300 px-4 py-2 rounded-md">Nama</th>
-                            <th class="border border-gray-300 px-4 py-2 rounded-md">Rating</th>
-                            <th class="border border-gray-300 px-4 py-2 rounded-md">Komentar</th>
-                            <th class="border border-gray-300 px-4 py-2 rounded-md">Aksi</th>
+                        <tr class="bg-sky-100 text-gray-700">
+                            <th class="px-4 py-2 text-center text-gray-700">No</th>
+                            <th class="px-4 py-2 text-center text-gray-700">Nama</th>
+                            <th class="px-4 py-2 text-center text-gray-700">Rating</th>
+                            <th class="px-4 py-2 text-center text-gray-700">Komentar</th>
+                            <th class="px-4 py-2 text-center text-gray-700">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -23,17 +23,17 @@
                     @endphp
                         @forelse ($ratings as $index => $rating)
                         <tr class="bg-white hover:bg-sky-50 user-row text-sm">
-                            <td class="border text-center border-gray-300 px-4 py-2 rounded-md">{{ $startNumber + $index }}</td>
-                            <td class="border border-gray-300 px-4 py-2 rounded-md capitalize">{{ $rating->nama }}</td>
-                            <td class="border border-gray-300 px-4 py-2 rounded-md">
+                            <td class="text-center px-4 py-2 text-sm">{{ $startNumber + $index }}</td>
+                            <td class="px-4 py-2 text-sm capitalize">{{ $rating->nama }}</td>
+                            <td class="px-4 py-2">
                                 @for ($i = 1; $i <= 5; $i++)
                                     <span class="{{ $i <= $rating->rating ? 'text-yellow-400' : 'text-gray-300' }}">★</span>
                                 @endfor
                             </td>
-                            <td class="border border-gray-300 px-4 py-2 rounded-md">
+                            <td class="px-4 py-2">
                                 <span>{{ $rating->comment }}</span>
                             </td>
-                            <td class="border border-gray-300 px-4 py-2 rounded-md">                              
+                            <td class="px-4 py-2">                              
                                 <form action="{{ route('toggle.displaymentor', $rating->id) }}" method="POST">
                                     @csrf
                                     @method('POST') <!-- Menggunakan metode POST untuk keamanan -->
@@ -67,7 +67,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="5" class="text-center text-gray-500 py-4">Belum ada rating</td>
+                            <td colspan="5" class="text-center text-gray-500 py-4 text-sm">Belum ada rating</td>
                         </tr>
                         @endforelse
                     </tbody>

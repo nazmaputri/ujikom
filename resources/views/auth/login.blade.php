@@ -25,12 +25,8 @@
             <div class="flex flex-col items-center justify-center space-y-2">
                 <div class="flex items-center space-x-3">
                     <img src="{{ asset('storage/eduflix-1.png') }}" alt="Logo" class="w-18 h-16">
-                    <h1 class="text-3xl font-bold text-sky-600">Eduflix</h1>
+                    <h1 class="text-xl font-semibold text-sky-600">Masuk Akun Eduflix</h1>
                 </div>
-                <h4 class="text-center text-sky-600">
-                    Belum punya akun? 
-                    <a href="{{ route('register') }}" class="text-blue-900 underline">Daftar</a>
-                </h4>
             </div>         
             
             @if (session('success'))
@@ -40,14 +36,14 @@
             @endif
         
             <!-- Form -->
-            <form action="{{ route('login') }}" method="POST" class="space-y-6">
+            <form action="{{ route('login') }}" method="POST" class="space-y-4">
                 @csrf
 
                <!-- Email Field -->
                 <div>
-                    <label for="email" class="block text-sm font-medium text-sky-600 pb-2">Email Address</label>
+                    <label for="email" class="block text-sm font-medium text-sky-600 pb-2">Email</label>
                     <input type="email" name="email" id="email"
-                        class="w-full px-4 py-2 border text-sm rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 
+                        class="w-full px-4 py-2 border text-sm rounded-md focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 
                         @error('email') border-red-500 @enderror" placeholder="Masukkan email">
                     @error('email')
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -55,10 +51,10 @@
                 </div>
 
                 <!-- Password Field -->
-                <div>
+                <div class="pb-4">
                     <label for="password" class="block text-sm font-medium text-sky-600 pb-2">Password</label>
                     <input type="password" name="password" id="password"
-                        class="w-full px-4 py-2 border text-sm rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 
+                        class="w-full px-4 py-2 border text-sm rounded-md focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 
                         @error('password') border-red-500 @enderror" placeholder="Masukkan password">
                     @error('password')
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -68,11 +64,17 @@
 
                 <!-- Submit Button -->
                 <div>
-                    <button type="submit" class="w-full px-4 py-2 bg-sky-600 text-white font-bold rounded-md hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2">
+                    <button type="submit" class="w-full px-4 py-2 bg-sky-600 text-white font-semibold rounded-md hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2">
                         Login
                     </button>
                 </div>
             </form>
+
+            <h4 class="text-center text-sky-600">
+                Belum punya akun? 
+                <a href="{{ route('register') }}" class="text-blue-900 underline">Daftar</a>
+            </h4>
+
         </div>
     </div>
 </body>

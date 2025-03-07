@@ -24,13 +24,13 @@
         }
     </style>
 </head>
-<body class="font-sans antialiased dark:bg-black dark:text-white/50">
+<body class="font-sans dark:text-white/50">
     @include('components.navbar') <!-- Menambahkan Navbar -->
 
     <!-- Bagian Materi Kursus -->
-    <section id="course" class="py-12 bg-white mt-16 p-6">
-        <div class="mb-4">
-            <h3 class="text-3xl font-bold text-center text-sky-400" data-aos="fade-up">
+    <section id="course" class="py-12 bg-white p-6">
+        <div class="mb-4 mt-8">
+            <h3 class="md:text-3xl text-2xl font-bold text-center text-sky-400" data-aos="fade-up">
                 Daftar Kursus Yang Tersedia
             </h3>
         </div>
@@ -54,7 +54,7 @@
                             <!-- Konten Kursus -->
                             <div class="p-4 flex flex-col">
                                 <!-- Judul Kursus -->
-                                <h1 class="text-2xl font-semibold text-gray-800 mb-2">{{ $course->title }}</h1>
+                                <h1 class="md:text-xl text-md font-semibold text-gray-800 mb-2">{{ $course->title }}</h1>
                                 
                                 <!-- Nama Mentor -->
                                 <p class="text-sm text-gray-600 mb-2">
@@ -90,8 +90,8 @@
                                     </div>
                                 </div>
                                 <!-- Harga Kursus -->
-                                <p class="inline-flex items-center text-xl mt-2 rounded-2xl font-bold">
-                                    <span class="text-green-600 bg-green-300 inline-flex items-center text-xl p-3 rounded-2xl font-bold">Rp. {{ number_format($course->price, 0, ',', '.') }}</span>
+                                <p class="inline-flex items-center text-md mt-2 rounded-2xl font-bold">
+                                    <span class="text-green-600 bg-green-200 inline-flex items-center text-md p-1.5 rounded-xl font-semibold">Rp. {{ number_format($course->price, 0, ',', '.') }}</span>
                                 </p>
                             </div>
                         </div>

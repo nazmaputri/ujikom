@@ -1,20 +1,20 @@
 @extends('layouts.dashboard-peserta')
 @section('content')
-<div class="bg-white rounded-lg shadow-md p-8 w-full flex flex-col md:flex-row h-auto items-center md:h-60">
-    <div class="w-full md:w-2/3 text-center md:text-left mb-4 md:mb-0">
-        <h1 class="text-3xl font-bold mb-4 text-gray-800">Selamat datang, {{ Auth::user()->name }}!</h1>
+<div class="bg-white rounded-lg shadow-md p-5 w-full flex flex-col md:flex-row h-auto items-center">
+    <div class="w-full text-center md:text-left mb-4 md:mb-0">
+        <h1 class="text-xl font-semibold mb-4 text-gray-700">Selamat datang, {{ Auth::user()->name }}!</h1>
         <p class="mb-6 text-gray-600">
             Kami sangat senang Anda di sini. Di tempat ini, Anda dapat belajar, berbagi, dan terhubung dengan orang-orang yang memiliki minat yang sama.
             <br> Mari kita mulai perjalanan ini bersama-sama!
         </p>
     </div>
-    <div class="md:w-1/3 flex justify-center md:justify-end">
+    <div class="md:w-1/4 flex justify-center md:justify-end">
         <img src="{{ asset('storage/buku.png') }}" alt="Welcome Image" class="w-full h-auto md:w-54"/>
     </div>
 </div>
 
 <div class="bg-white rounded-lg shadow-md p-6 mt-7">
-    <h2 class="text-2xl font-bold mb-5 text-gray-800 uppercase border-b-2 pb-2">Kursus Saya</h2>
+    <h2 class="text-xl font-semibold mb-5 text-gray-700 border-b-2 pb-2">Kursus Saya</h2>
     
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         @forelse($courses as $course)
@@ -27,7 +27,7 @@
                     <div class="flex justify-between items-center mb-2">
                         <!-- Course Title and Rating -->
                         <div>
-                            <h3 class="text-lg font-semibold capitalize">{{ $course->title }}</h3>
+                            <h3 class="text-md text-gray-700 font-semibold capitalize">{{ $course->title }}</h3>
                             <div class="flex">
                                 @for ($i = 0; $i < 5; $i++)
                                     @if ($i < floor($course->average_rating)) <!-- Rating Penuh -->
@@ -68,7 +68,7 @@
                 <div class="p-4 mt-auto flex-col sm:flex-row justify-between gap-4">
                     <!-- Button Lanjut Belajar -->
                     <a href="{{ route('daftar-kursus') }}" class="flex-1">
-                        <button class="bg-yellow-100/50 mb-4 text-yellow-500 border border-yellow-500 w-full py-2 rounded-lg font-semibold flex items-center justify-center gap-2 hover:text-white hover:bg-yellow-500 transition-colors">
+                        <button class="bg-yellow-200/50 mb-4 text-yellow-500 border border-yellow-300 w-full py-2 rounded-lg font-semibold flex items-center justify-center gap-2 hover:text-white hover:bg-yellow-300 transition-colors">
                             Lanjut Belajar
                         </button>
                     </a>

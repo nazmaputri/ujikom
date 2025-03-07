@@ -24,7 +24,7 @@
             <div class="flex flex-col items-center justify-center space-y-2">
                 <div class="flex flex-col md:flex-row items-center space-x-3">
                     <img src="{{ asset('storage/eduflix-1.png') }}" alt="Logo" class="w-18 h-16">
-                    <h1 class="text-3xl font-bold text-sky-600">Eduflix</h1>
+                    <h1 class="text-xl font-semibold text-sky-600">Daftar Mentor Eduflix</h1>
                 </div>
                 <h4 class="text-center text-sky-600">
                     Ayo daftar dan menjadi bagian mentor di EduFlix!
@@ -47,7 +47,7 @@
                     <div>
                         <label for="name" class="block text-sm font-medium text-sky-600 pb-2">Nama Lengkap</label>
                         <input type="text" name="name" id="name" value="{{ old('name') }}" placeholder="Masukkan nama lengkap"
-                            class="w-full px-4 py-2 border text-sm rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 
+                            class="w-full px-4 py-2 border text-sm rounded-md focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 
                             @error('name') border-red-500 @enderror">
                         @error('name')
                             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -58,7 +58,7 @@
                     <div>
                         <label for="email" class="block text-sm font-medium text-sky-600 pb-2">Email</label>
                         <input type="email" name="email" id="email" placeholder="Masukkan email"
-                            class="w-full px-4 py-2 border text-sm rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 
+                            class="w-full px-4 py-2 border text-sm rounded-md focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 
                             @error('email') border-red-500 @enderror"
                             value="{{ old('email') }}">
                         @error('email')
@@ -70,7 +70,7 @@
                     <div>
                         <label for="password" class="block text-sm font-medium text-sky-600 pb-2">Password</label>
                         <input type="password" name="password" id="password" placeholder="Masukkan password"
-                            class="w-full px-4 py-2 border text-sm border-sky-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 
+                            class="w-full px-4 py-2 border text-sm border-sky-300 rounded-md focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 
                             @error('password') border-red-500 @enderror">
                         @error('password')
                             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -81,7 +81,7 @@
                     <div>
                         <label for="password_confirmation" class="block text-sm font-medium text-sky-600 pb-2">Konfirmasi Password</label>
                         <input type="password" name="password_confirmation" id="password_confirmation" placeholder="Masukkan konfirmasi password"
-                            class="w-full px-4 py-2 border text-sm border-sky-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500
+                            class="w-full px-4 py-2 border text-sm border-sky-300 rounded-md focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500
                             @error('password_confirmation') border-red-500 @enderror">
                             @error('password_confirmation')
                                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -92,7 +92,7 @@
                     <div>
                         <label for="phone_number" class="block text-sm font-medium text-sky-600 pb-2">Nomor Telepon</label>
                         <input type="text" name="phone_number" id="phone_number" placeholder="Masukkan nomor telepon"
-                            class="w-full px-4 py-2 border text-sm border-sky-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 @error('phone_number') border-red-500 @enderror"
+                            class="w-full px-4 py-2 border text-sm border-sky-300 rounded-md focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 @error('phone_number') border-red-500 @enderror"
                             value="{{ old('phone_number') }}">
                         @error('phone_number')
                             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -103,7 +103,7 @@
                     <div>
                         <label for="profesi" class="block text-sm font-medium text-sky-600 pb-2">Profesi</label>
                         <input type="text" name="profesi" id="profesi" placeholder="Masukkan profesi anda saat ini"
-                            class="w-full px-4 py-2 border text-sm rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 @error('profesi') border-red-500 @enderror"
+                            class="w-full px-4 py-2 border text-sm rounded-md focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 @error('profesi') border-red-500 @enderror"
                             value="{{ old('profesi') }}">
                         @error('profesi')
                             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -114,7 +114,7 @@
                     <div>
                         <label for="linkedin" class="block text-sm font-medium text-sky-600 pb-2">LinkedIn</label>
                         <input type="text" name="linkedin" id="linkedin" placeholder="Masukkan Link URL LinkedIn"
-                            class="w-full px-4 py-2 border text-sm rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 @error('linkedin') border-red-500 @enderror"
+                            class="w-full px-4 py-2 border text-sm rounded-md focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 @error('linkedin') border-red-500 @enderror"
                             value="{{ old('linkedin') }}">
                         @error('linkedin')
                             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -125,7 +125,7 @@
                     <div>
                         <label for="company" class="block text-sm font-medium text-sky-600 pb-2">Perusahaan</label>
                         <input type="text" name="company" id="company" placeholder="Masukkan nama perusahaan tempat bekerja"
-                            class="w-full px-4 py-2 border text-sm rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 @error('company') border-red-500 @enderror"
+                            class="w-full px-4 py-2 border text-sm rounded-md focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 @error('company') border-red-500 @enderror"
                             value="{{ old('company') }}">
                         @error('company')
                             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -136,7 +136,7 @@
                     <div>
                         <label for="years_of_experience" class="block text-sm font-medium text-sky-600 pb-2">Tahun Pengalaman</label>
                         <input type="number" name="years_of_experience" id="years_of_experience" placeholder="Masukkan tahun pengalaman bekerja"
-                            class="w-full px-4 py-2 border text-sm rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 @error('years_of_experience') border-red-500 @enderror"
+                            class="w-full px-4 py-2 border text-sm rounded-md focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 @error('years_of_experience') border-red-500 @enderror"
                             value="{{ old('years_of_experience') }}">
                         @error('years_of_experience')
                             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -147,7 +147,7 @@
                     <div>
                         <label for="experience" class="block text-sm font-medium text-sky-600 pb-2">Deskripsi Pengalaman</label>
                         <textarea name="experience" id="experience" rows="5" placeholder="Deskripsikan pengalaman saat bekerja atau mengajar"
-                            class="text-sm w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 @error('experience') border-red-500 @enderror">{{ old('experience') }}</textarea>
+                            class="text-sm w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 @error('experience') border-red-500 @enderror">{{ old('experience') }}</textarea>
                         @error('experience')
                             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                         @enderror
@@ -161,7 +161,7 @@
                     <!-- Submit Button -->
                     <div class="flex justify-center">
                         <button type="submit"
-                            class="w-full px-4 py-2 bg-sky-600 text-white font-bold rounded-md hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2">
+                            class="md:w-1/2 w-full px-4 py-2 bg-sky-600 text-white font-semibold rounded-md hover:bg-sky-700 focus:outline-none focus:ring-1 focus:ring-sky-500 focus:ring-offset-2">
                             Daftar
                         </button>
                     </div>
