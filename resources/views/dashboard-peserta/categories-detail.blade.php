@@ -17,13 +17,13 @@
         @else
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
                 @foreach($courses as $course)
-                    @php
-                        // Cek apakah user sudah membeli kursus ini
-                        $isPurchased = $course->payments()
-                            ->where('user_id', auth()->id())
-                            ->where('transaction_status', 'success') // Atau 'success' sesuai dengan Midtrans
-                            ->exists();
-                    @endphp
+                @php
+                    // Cek apakah user sudah membeli kursus ini melalui tabel purchases
+                    $isPurchased = $course->purchases()
+                        ->where('user_id', auth()->id())
+                        ->where('status', 'success') // pastikan status pembelian sesuai
+                        ->exists();
+                @endphp            
 
                     <div class="bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden">
                         <img class="w-full h-48 object-cover" src="{{ asset('storage/' . $course->image_path) }}" alt="{{ $course->title }}">

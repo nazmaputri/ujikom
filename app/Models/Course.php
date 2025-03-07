@@ -72,6 +72,12 @@ class Course extends Model
         return $this->hasMany(Payment::class, 'course_id');
     }
 
+    // Di model Course.php
+    public function purchases()
+    {
+        return $this->hasMany(Purchase::class, 'course_id', 'id');
+    }
+
     // Course.php (Model)
     public function getDurationAttribute()
     {

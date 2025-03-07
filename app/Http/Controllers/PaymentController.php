@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use App\Models\Payment;
 use App\Models\Keranjang;
+use App\Models\Purchase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Midtrans\Config;
@@ -33,7 +34,7 @@ class PaymentController extends Controller
         $itemDetails = [];
     
         foreach ($keranjangItems as $item) {
-            $totalAmount += $item->course->price; // Pastikan kolom harga ada di tabel courses
+            $totalAmount += $item->course->price; // Pastikan kolom price ada di tabel courses
     
             $itemDetails[] = [
                 'id' => 'COURSE-' . $item->course_id,
@@ -43,27 +44,27 @@ class PaymentController extends Controller
             ];
         }
     
-        // Buat Order ID unik
+        // Buat Order ID unik yang akan digunakan sebagai transaction_id
         $orderId = 'ORDER-' . time();
     
         // Konfigurasi Midtrans
-        Config::$serverKey = env('MIDTRANS_SERVER_KEY');
-        Config::$clientKey = env('MIDTRANS_CLIENT_KEY'); // Pastikan clientKey diambil dari .env
+        Config::$serverKey   = env('MIDTRANS_SERVER_KEY');
+        Config::$clientKey   = env('MIDTRANS_CLIENT_KEY'); // Pastikan clientKey diambil dari .env
         Config::$isProduction = false;
-        Config::$isSanitized = true;
-        Config::$is3ds = true;
+        Config::$isSanitized  = true;
+        Config::$is3ds        = true;
     
         // Data transaksi Midtrans
         $transactionData = [
             'transaction_details' => [
-                'order_id' => $orderId,
+                'order_id'     => $orderId,
                 'gross_amount' => $totalAmount,
             ],
             'item_details' => $itemDetails,
             'customer_details' => [
                 'first_name' => $user->name,
-                'email' => $user->email,
-                'phone' => $user->phone ?? '08123456789',
+                'email'      => $user->email,
+                'phone'      => $user->phone ?? '08123456789',
             ],
         ];
     
@@ -71,22 +72,40 @@ class PaymentController extends Controller
             // Ambil Snap Token dari Midtrans
             $snapToken = Snap::getSnapToken($transactionData);
     
-            // Simpan transaksi ke tabel `payments`
+            // Simpan transaksi ke tabel `payments` tanpa course_id
             $payment = Payment::create([
-                'user_id' => $user->id,
-                'course_id' => 21, // Kosong karena ada banyak course
-                'payment_type' => 'midtrans',
+                'user_id'            => $user->id,
+                'transaction_id'     => $orderId,
+                'payment_type'       => 'midtrans',
                 'transaction_status' => 'pending',
-                'transaction_id' => $orderId,
-                'amount' => $totalAmount,
-                'payment_url' => null,
+                'amount'             => $totalAmount,
+                'payment_url'        => null,
             ]);
     
-            return response()->json(['snapToken' => $snapToken, 'payment' => $payment]);
+            // Simpan setiap item keranjang ke tabel `purchases` dengan transaction_id yang sama
+            foreach ($keranjangItems as $item) {
+                Purchase::create([
+                    'user_id'        => $user->id,
+                    'course_id'      => $item->course_id,
+                    'transaction_id' => $orderId, // Menghubungkan pembelian ke Payment via transaction_id
+                    'status'         => 'pending'
+                ]);
+            }
+    
+            // Opsional: Hapus data keranjang setelah checkout berhasil
+            Keranjang::where('user_id', $user->id)->delete();
+    
+            return response()->json([
+                'snapToken' => $snapToken,
+                'payment'   => $payment
+            ]);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Gagal mendapatkan token pembayaran', 'message' => $e->getMessage()], 500);
+            return response()->json([
+                'error'   => 'Gagal mendapatkan token pembayaran',
+                'message' => $e->getMessage()
+            ], 500);
         }
-    }    
+    }      
     
     public function updatePaymentStatus(Request $request)
     {

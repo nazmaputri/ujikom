@@ -78,7 +78,7 @@ class DiscountController extends Controller
             'end_date' => 'required|date|after_or_equal:start_date',
             'start_time' => 'required',
             'end_time' => 'required',
-            'apply_to_all' => 'nullable|boolean',
+            'apply_to_all' => 'nullable|boolean', 
             'courses' => 'nullable|array',
         ]);
     

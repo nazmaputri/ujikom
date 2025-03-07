@@ -119,13 +119,13 @@
                 <script>
                     document.getElementById('pay-now').addEventListener('click', function(e) {
                         e.preventDefault();
-
+                
                         const totalPrice = this.getAttribute('data-total-price');
                         if (!totalPrice || isNaN(totalPrice)) {
                             alert('Harga tidak valid');
                             return;
                         }
-
+                
                         fetch('/create-payment', {
                             method: 'POST',
                             headers: {
@@ -138,9 +138,12 @@
                         .then(data => {
                             console.log(data); // Periksa data yang diterima
                             if (data.snapToken) {
+                                // Simpan order_id yang sudah kita kirim dari response
+                                const orderId = data.order_id;
                                 snap.pay(data.snapToken, {
                                     onSuccess: function(result) {
                                         alert('Pembayaran berhasil');
+                                        // Gunakan orderId dari response jika result.order_id tidak sesuai
                                         fetch('/payment-success', {
                                             method: 'POST',
                                             headers: {
@@ -148,7 +151,7 @@
                                                 'X-CSRF-TOKEN': '{{ csrf_token() }}',
                                             },
                                             body: JSON.stringify({
-                                                order_id: result.order_id,
+                                                order_id: orderId,
                                                 transaction_status: 'success',
                                             }),
                                         })
@@ -172,8 +175,8 @@
                         })
                         .catch(error => alert('Terjadi kesalahan saat memproses pembayaran.'));
                     });
-
-                </script>                
+                </script>
+                
 
                 <!-- Tambahkan JavaScript -->
                 <script>
