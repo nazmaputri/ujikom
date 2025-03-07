@@ -4,7 +4,7 @@
 <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('services.midtrans.client_key') }}"></script>
 
     <div class="bg-white p-8 rounded-lg shadow-md">
-        <h2 class="text-2xl uppercase font-bold mb-6 border-b-2 border-gray-300 pb-2">Keranjang Saya</h2>
+        <h2 class="text-xl text-gray-700 font-semibold mb-6 border-b-2 border-gray-300 pb-2">Keranjang Saya</h2>
 
         @if (session('success'))
             <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
@@ -55,13 +55,13 @@
         </script>
 
         @if ($carts->count() > 0)
-            <div class="bg-white shadow-lg rounded-lg p-6">
+            <div class="">
                 <table class="w-full border-collapse">
                     <thead>
                         <tr class="bg-gray-100 text-gray-700">
-                            <th class="px-4 py-3 text-left">Nama Kursus</th>
+                            <th class="px-4 py-3 text-center">Nama Kursus</th>
                             <th class="px-4 py-3 text-center">Harga</th>
-                            <th class="px-4 py-3 text-center">Hapus</th>
+                            <th class="px-4 py-3 text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -72,22 +72,26 @@
                             @php
                                 $total += $cart->course->price;
                             @endphp
-                            <tr class="border-t">
+                            <tr class="border-t hover:bg-gray-50">
                                 <td class="px-4 py-4">
                                     <div class="flex items-center">
                                         <img src="{{ asset('storage/' . $cart->course->image_path) }}" alt="Course Image"
                                             class="w-16 h-16 rounded-lg object-cover mr-4">
-                                        <span class="font-semibold text-gray-800">{{ $cart->course->title }}</span>
+                                        <span class="font-semibold text-gray-800 capitalize">{{ $cart->course->title }}</span>
                                     </div>
                                 </td>
-                                <td class="px-4 py-4 text-center text-gray-700">Rp
+                                <td class="px-4 py-4 text-center text-red-500">Rp
                                     {{ number_format($cart->course->price, 0, ',', '.') }}</td>
-                                <td class="px-4 py-4 text-center">
+                                <td class="px-4 py-4 text-center items-center justify-center">
                                     <form action="{{ route('cart.remove', $cart->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit"
-                                            class="text-red-500 font-bold text-lg hover:text-red-700">×</button>
+                                        <button class="flex text-center items-center justify-center space-x-2 bg-red-400 hover:bg-red-500 p-1 rounded-md text-white" type="submit">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-center w-5 h-5">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                            </svg>
+                                            <!-- <span class="hidden lg:block text-sm">Hapus</span> -->
+                                        </button>
                                     </form>
                                 </td>
                             </tr>
@@ -98,21 +102,21 @@
                 <!-- Input Kupon -->
                 <div class="mt-6">
                     <input type="text" id="coupon-code"
-                        class="border border-gray-300 rounded-lg p-2 w-full sm:w-3/4 md:w-1/2"
+                        class="border border-gray-300 rounded-lg p-2 w-full sm:w-3/4 md:w-1/2 focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 "
                         placeholder="Masukkan Kode Kupon" value="{{ $couponCode ?? '' }}">
                     <button id="apply-coupon"
-                        class="bg-green-500 text-white px-4 py-2 rounded-lg mt-2 hover:bg-green-600">Gunakan Kupon</button>
+                        class="bg-sky-400 text-white px-4 py-2 rounded-lg mt-2 hover:bg-sky-300">Gunakan Kupon</button>
                 </div>
 
                 <!-- Total Harga -->
-                <div class="flex justify-between items-center mt-6 flex-wrap">
-                    <h3 class="text-xl font-semibold text-gray-800">
-                        Total: <span id="total-price">Rp {{ number_format($totalPriceAfterDiscount, 0, ',', '.') }}</span>
+                <div class="flex justify-end space-x-3 items-center mt-6 flex-wrap">
+                    <h3 class="font-semibold text-gray-700">
+                        Total: <span id="total-price" class="text-red-500">Rp {{ number_format($totalPriceAfterDiscount, 0, ',', '.') }}</span>
                     </h3>
-                    <button class="bg-sky-300 text-white font-semibold px-4 py-2 rounded-lg hover:bg-sky-600" 
+                    <button class="bg-green-400 text-white font-semibold px-4 py-2 rounded-lg hover:bg-green-300" 
                         id="pay-now" 
                         data-total-price="{{ $totalPriceAfterDiscount }}">
-                        Bayar Sekarang
+                        Beli
                     </button>
                 </div>
 
@@ -191,10 +195,10 @@
                 </script>
             </div>
         @else
-            <div class="text-center py-10">
-                <p class="text-gray-500 text-lg">Keranjang Anda masih kosong. Yuk, pilih kursus favorit Anda!</p>
+            <div class="text-center py-3">
+                <p class="text-gray-500">Keranjang Kamu masih kosong. Yuk, pilih kursus favoritmu!</p>
                 <a href="{{ route('kategori-peserta') }}"
-                    class="mt-4 font-bold inline-block bg-sky-300 text-white px-6 py-3 rounded-lg hover:bg-sky-600 transition shadow-lg">
+                    class="mt-4 font-semibold inline-block bg-sky-400 text-white py-1.5 px-5 rounded-lg hover:bg-sky-300 transition shadow-lg">
                     Jelajahi Kursus
                 </a>
             </div>

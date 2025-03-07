@@ -2,8 +2,8 @@
 
 @section('content')
 
-<div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-lg">
-    <h2 class="text-2xl font-semibold text-gray-800 border-b-2 pb-2 mb-4">Pengaturan Akun</h2>
+<div class="w-full mx-auto bg-white p-6 rounded-lg shadow-lg">
+    <h2 class="text-xl font-semibold mb-6 text-center border-b-2 border-gray-300 text-gray-700 pb-2">Pengaturan Akun</h2>
     <form action="{{ url('/settings') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="mb-4">

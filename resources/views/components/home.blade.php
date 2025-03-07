@@ -1,15 +1,15 @@
 <!-- Home Section -->
-<section id="home" class="flex items-center min-h-screen bg-sky-50 text-sky-600 rounded-b-[75px]" data-aos="fade-up">
-    <div class="container mx-auto px-16 py-12">
+<section id="home" class="flex items-center min-h-[80vh] bg-sky-50 text-sky-600" data-aos="fade-up">
+    <div class="container mx-auto px-2 md:px-16 py-8 mt-4">
         <div class="flex flex-col-reverse lg:flex-row items-center">
             <!-- Text Content -->
             <div class="w-full lg:w-1/2 flex flex-col justify-center space-y-6 pt-8 lg:pt-0">
-                <h1 class="text-4xl md:text-5xl font-bold leading-tight">EduFlix</h1>
-                <h2 class="text-lg md:text-xl">
+                <h1 class="text-3xl font-bold leading-tight">EduFlix</h1>
+                <h2 class="text-md md:text-xl">
                     EduFlix adalah platform kursus online yang menawarkan pembelajaran melalui video serta <strong> fitur konsultasi via chat dengan mentor.  </strong>
                 </h2>
                 <div class="flex space-x-4 mt-4">
-                    <a href="#about" class="px-6 py-3 bg-sky-600 border border-sky-600 text-white font-bold rounded-full hover:bg-white hover:text-sky-600 transition duration-300 z-20">
+                    <a href="#about" class="px-6 py-2 bg-sky-600 border border-sky-600 text-white font-bold rounded-full hover:bg-white hover:text-sky-600 transition duration-300 z-20">
                         Mulai!
                     </a>
                 </div>
@@ -23,13 +23,13 @@
 </section>
 
 <!-- Card Section -->
-<div class="relative z-10 -mt-20 pb-10 lg:pb-20">
+<div class="relative bg-sky-50 z-10 pb-6 lg:pb-20">
     <div class="container mx-auto px-6">
-        <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6" data-aos="fade-up">
             <!-- Card 1 -->
             <div class="bg-white shadow-lg rounded-xl overflow-hidden transform transition-transform hover:scale-105">
                 <div class="flex justify-center py-4">
-                    <img src="{{ asset('storage/quiz.png') }}" alt="Card Image" class="w-28 h-28 object-cover">
+                    <img src="{{ asset('storage/quiz.png') }}" alt="Card Image" class="w-16 h-16 md:w-24 md:h-24 object-cover">
                 </div>
                 <div class="p-4 pt-1 text-center">
                     <h3 class="font-bold text-lg text-sky-600">Quiz</h3>
@@ -39,7 +39,7 @@
             <!-- Card 2 -->
             <div class="bg-white shadow-lg rounded-xl overflow-hidden transform transition-transform hover:scale-105">
                 <div class="flex justify-center py-4">
-                    <img src="{{ asset('storage/video.png') }}" alt="Card Image" class="w-28 h-28 object-cover">
+                    <img src="{{ asset('storage/video.png') }}" alt="Card Image" class="w-16 h-16 md:w-24 md:h-24 object-cover">
                 </div>
                 <div class="p-4 pt-1 text-center">
                     <h3 class="font-bold text-lg text-sky-600">Video Pembelajaran</h3>
@@ -49,7 +49,7 @@
             <!-- Card 3 -->
             <div class="bg-white shadow-lg rounded-xl overflow-hidden transform transition-transform hover:scale-105">
                 <div class="flex justify-center py-4">
-                    <img src="{{ asset('storage/sertifikat.png') }}" alt="Card Image" class="w-28 h-28 object-cover">
+                    <img src="{{ asset('storage/sertifikat.png') }}" alt="Card Image" class="w-16 h-16 md:w-24 md:h-24 object-cover">
                 </div>
                 <div class="p-4 pt-1 text-center">
                     <h3 class="font-bold text-lg text-sky-600">Sertifikat</h3>
@@ -59,7 +59,7 @@
             <!-- Card 4 -->
             <div class="bg-white shadow-lg rounded-xl overflow-hidden transform transition-transform hover:scale-105">
                 <div class="flex justify-center py-4">
-                    <img src="{{ asset('storage/24.png') }}" alt="Card Image" class="w-28 h-28 object-cover">
+                    <img src="{{ asset('storage/24.png') }}" alt="Card Image" class="w-16 h-16 md:w-24 md:h-24 object-cover">
                 </div>
                 <div class="p-4 pt-1 text-center">
                     <h3 class="font-bold text-lg text-sky-600">Materi 24 jam</h3>
@@ -69,7 +69,7 @@
             <!-- Card 5 -->
             <div class="bg-white shadow-lg rounded-xl overflow-hidden transform transition-transform hover:scale-105">
                 <div class="flex justify-center py-4">
-                    <img src="{{ asset('storage/chat.png') }}" alt="Card Image" class="w-28 h-28 object-cover">
+                    <img src="{{ asset('storage/chat.png') }}" alt="Card Image" class="w-16 h-16 md:w-24 md:h-24 object-cover">
                 </div>
                 <div class="p-4 pt-1 text-center">
                     <h3 class="font-bold text-lg text-sky-600">Chat dengan Mentor</h3>

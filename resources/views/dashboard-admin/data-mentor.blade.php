@@ -3,8 +3,8 @@
 @section('content')
 <div class="container mx-auto">
     <div class="bg-white shadow-md rounded-lg p-6 mb-6">
-        <div class="flex items-center justify-start space-x-4 mb-8">
-            <h2 class="text-2xl uppercase font-bold border-b-2 border-gray-300 pb-2">Data Mentor</h2>
+        <div class="flex items-center justify-start space-x-4 mb-4">
+            <h2 class="text-xl font-semibold mb-4 inline-block border-b-2 border-gray-300 pb-1 text-gray-700">Data Mentor</h2>
             <button id="addMentorBtn" class="bg-sky-300 text-white px-4 py-2 rounded-md hover:bg-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-500">
                 <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor">
                     <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344l0-64-64 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l64 0 0-64c0-13.3 10.7-24 24-24s24 10.7 24 24l0 64 64 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-64 0 0 64c0 13.3-10.7 24-24 24s-24-10.7-24-24z" />
@@ -100,7 +100,7 @@
             <div class="relative flex items-center">
                 <!-- Input Search -->
                 <input type="search" name="search" id="search" 
-                    class="block w-full pl-4 pr-14 py-3 text-sm text-gray-900 border-2 border-sky-300 rounded-full bg-gray-50 focus:ring-blue-400 focus:border-blue-500" 
+                    class="block w-full pl-4 pr-14 py-3 text-sm text-gray-900 border-2 border-sky-300 rounded-full focus:outline-none focus:ring-1 focus:ring-sky-300 bg-gray-50" 
                     placeholder="Cari Mentor (Nama, Status)" value="{{ request('search') }}" />
                 <!-- Button Search -->
                 <button type="submit" 
@@ -124,13 +124,13 @@
         @endif
         <!-- Tabel data user -->
         <div class="overflow-x-auto">
-            <table class="min-w-full border-separate border-spacing-1" id="userTable">
+            <table class="min-w-full" id="userTable">
                 <thead>
-                    <tr class="bg-sky-200 text-gray-600 text-sm leading-normal">
-                        <th class="border border-gray-300 px-4 py-2 rounded-md">No</th>
-                        <th class="border border-gray-300 px-4 py-2 rounded-md">Nama</th>
-                        <th class="border border-gray-300 px-4 py-2 rounded-md">Status</th>
-                        <th class="border border-gray-300 px-4 py-2 rounded-md">Aksi</th>
+                    <tr class="bg-sky-100 text-gray-700">
+                        <th class="py-2">No</th>
+                        <th class="py-2">Nama</th>
+                        <th class="py-2">Status</th>
+                        <th class="py-2">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -139,9 +139,9 @@
                 @endphp
                     @foreach ($users as $index => $user)
                         <tr class="bg-white hover:bg-sky-50 user-row" data-role="{{ $user->role }}">
-                            <td class="border border-gray-300 px-4 py-2 rounded-md text-center">{{ $startNumber + $index }}</td>
-                            <td class="border border-gray-300 px-4 py-2 rounded-md">{{ $user->name }}</td>
-                            <td class="py-3 px-4 text-center border border-gray-300 rounded-md">
+                            <td class="px-4 text-center text-gray-600 text-sm">{{ $startNumber + $index }}</td>
+                            <td class="px-4 text-gray-600 text-sm">{{ $user->name }}</td>
+                            <td class="py-3 px-4 text-center">
                                 <form action="{{ route('admin.users.updateStatus', $user->id) }}" method="POST">
                                     @csrf
                                     @method('PATCH')
@@ -152,10 +152,10 @@
                                     @endif
                                 </form>
                             </td>                                             
-                            <td class="py-3 px-6 text-center border border-gray-300 rounded-md">
+                            <td class="py-3 px-6 text-center">
                                 <div class="flex items-center justify-center space-x-8">
                                     <!-- Tombol Lihat Detail -->
-                                    <a href="{{ route('detaildata-mentor', ['id' => $user->id]) }}" class="text-white bg-gray-500 p-1 rounded-md hover:bg-gray-800">
+                                    <a href="{{ route('detaildata-mentor', ['id' => $user->id]) }}" class="text-white bg-sky-300 p-1 rounded-md hover:bg-sky-200">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
@@ -165,7 +165,7 @@
                                     <form id="deleteForm" action="{{ route('admin.delete', $user->id) }}" method="POST" class="inline">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="button" class="text-white bg-red-500 p-1 rounded-md hover:bg-red-800" onclick="openDeleteModal()">
+                                        <button type="button" class="text-white bg-red-400 p-1 rounded-md hover:bg-red-300" onclick="openDeleteModal()">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
                                             </svg>

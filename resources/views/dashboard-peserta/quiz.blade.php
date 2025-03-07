@@ -5,7 +5,7 @@
     <div class="bg-white shadow-lg rounded-lg overflow-hidden p-6">
         <div class="flex flex-wrap justify-between items-center">
             <div>
-                <h1 class="text-2xl font-bold">{{ $quiz->title }}</h1>
+                <h1 class="text-xl font-semibold text-gray-700">{{ $quiz->title }}</h1>
                 <p class="text-gray-600 text-sm">{{ $quiz->course->title }}</p>
             </div>
             <div id="timer" class="mt-2 text-xl font-semibold border py-2 px-4 text-red-500"></div>
@@ -15,7 +15,7 @@
         <div class="flex flex-col md:flex-row gap-4 mt-6">
             <!-- Nomor Soal -->
             <div class="md:w-1/4 bg-neutral-50 p-4 rounded border">
-                <h2 class="font-bold mb-2">Nomor Soal</h2>
+                <h2 class="font-semibold mb-2 text-gray-600">Nomor Soal</h2>
                 <div class="grid grid-cols-5 gap-2">
                     @foreach($quiz->questions as $key => $question)
                     <button
@@ -37,11 +37,11 @@
                         <div
                             class="question {{ $key === 0 ? '' : 'hidden' }} space-y-2"
                             data-question-id="{{ $question->id }}">
-                            <p class="font-bold mb-4">{{ $question->question }}</p>
+                            <p class="font-semibold text-gray-700 mb-4">{{ $question->question }}</p>
                             @foreach($question->answers as $answer)
                             <div>
-                                <label>
-                                    <input type="radio" name="question_{{ $question->id }}" value="{{ $answer->id }}" required>
+                                <label class="text-gray-600">
+                                    <input type="radio" name="question_{{ $question->id }}" value="{{ $answer->id }}"  required>
                                     {{ $answer->answer }}
                                 </label>
                             </div>
@@ -50,19 +50,22 @@
                         @endforeach
                     </div>
                     <div class="mt-6 flex justify-between space-x-2">
-                        <button type="button" id="prev-btn" class="hidden border  hover:bg-neutral-100/50 font-semibold text-white px-4 py-2 rounded-full">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="w-4 h-4">
+                        <button type="button" id="prev-btn" class="hidden border  hover:bg-neutral-100/50 font-semibold text-white px-3 py-2 rounded-full">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="w-4 h-4 text-gray-600" fill="currentColor">
                                 <path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"/>
                             </svg>
                         </button>
-                        <button type="button" id="next-btn" class="border hover:bg-neutral-100/50 font-semibold text-white px-4 py-2 rounded-full">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="w-4 h-4">
+                        <button type="button" id="next-btn" class="border hover:bg-neutral-100/50 font-semibold text-white px-3 py-2 rounded-full">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="w-4 h-4 text-gray-600" fill="currentColor">
                                 <path d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"/>
                             </svg>
                         </button>
                         <button type="submit" id="submit-btn"
-                            class="hidden bg-blue-400 shadow-md shadow-blue-200 text-white hover:shadow-none hover:bg-blue-600 font-semibold px-4 py-2 rounded">
+                            class="hidden bg-sky-400 shadow-md shadow-sky-200 text-white hover:shadow-none hover:bg-sky-300 font-semibold px-4 py-2 rounded-lg flex items-center gap-2">
                             Kirim
+                            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" class="w-5 h-5" viewBox="0 0 50 50" fill="currentColor">
+                                <path d="M46.137,6.552c-0.75-0.636-1.928-0.727-3.146-0.238l-0.002,0C41.708,6.828,6.728,21.832,5.304,22.445c-0.259,0.09-2.521,0.934-2.288,2.814c0.208,1.695,2.026,2.397,2.248,2.478l8.893,3.045c0.59,1.964,2.765,9.21,3.246,10.758c0.3,0.965,0.789,2.233,1.646,2.494c0.752,0.29,1.5,0.025,1.984-0.355l5.437-5.043l8.777,6.845l0.209,0.125c0.596,0.264,1.167,0.396,1.712,0.396c0.421,0,0.825-0.079,1.211-0.237c1.315-0.54,1.841-1.793,1.896-1.935l6.556-34.077C47.231,7.933,46.675,7.007,46.137,6.552z M22,32l-3,8l-3-10l23-17L22,32z"></path>
+                            </svg>
                         </button>
                     </div>
                 </form>
@@ -75,8 +78,8 @@
                 <div class="bg-white p-6 rounded shadow-lg">
                     <h3 class="text-lg font-semibold">Yakin ingin mengirim kuis ini?</h3>
                     <div class="flex justify-center space-x-3 mt-4">
-                        <button id="confirm-submit" class="bg-red-500 text-white px-4 py-2 rounded">Ya</button>
-                        <button id="cancel-submit" class="bg-gray-500 text-white px-4 py-2 rounded">Tidak</button>
+                        <button id="cancel-submit" class="bg-red-500 text-white px-4 py-2 rounded-lg">Tidak</button>
+                        <button id="confirm-submit" class="bg-sky-500 text-white px-4 py-2 rounded-lg">Ya</button>
                     </div>
                 </div>
             </div>
@@ -135,13 +138,13 @@
         
                         // Hover hanya aktif jika soal tidak sedang diakses
                         if (i === currentQuestion) {
-                            btn.classList.add('hover:bg-blue-400'); // Hover biru untuk soal saat ini
+                            btn.classList.add('hover:bg-sky-300'); // Hover biru untuk soal saat ini
                             btn.classList.remove('hover:bg-green-300'); // Hilangkan hover hijau
                         } else if (btn.dataset.answered === "true") {
                             btn.classList.add('hover:bg-green-300'); // Hijau untuk soal terjawab yang tidak diakses
-                            btn.classList.remove('hover:bg-blue-400'); // Hilangkan hover biru
+                            btn.classList.remove('hover:bg-sky-300'); // Hilangkan hover biru
                         } else {
-                            btn.classList.add('hover:bg-blue-400'); // Hover biru default untuk soal belum terjawab
+                            btn.classList.add('hover:bg-sky-300'); // Hover biru default untuk soal belum terjawab
                             btn.classList.remove('hover:bg-green-300'); // Hilangkan hover hijau
                         }
                     });
@@ -157,19 +160,19 @@
                         const isCurrent = i === index;
                         const isAnswered = btn.dataset.answered === "true";
         
-                        btn.classList.toggle('bg-blue-400', isCurrent); // Biru untuk soal saat ini
+                        btn.classList.toggle('bg-sky-300', isCurrent); // Biru untuk soal saat ini
                         btn.classList.toggle('text-white', isCurrent); // Teks putih untuk soal saat ini
                         btn.classList.toggle('border-gray-300', !isCurrent); // Border abu untuk lainnya
         
                         // Hover biru hanya untuk soal saat ini
                         if (isCurrent) {
-                            btn.classList.add('hover:bg-blue-400'); // Hover biru untuk soal yang sedang diakses
+                            btn.classList.add('hover:bg-sky-300'); // Hover biru untuk soal yang sedang diakses
                             btn.classList.remove('hover:bg-green-300'); // Hilangkan hover hijau
                         } else if (isAnswered) {
                             btn.classList.add('hover:bg-green-300'); // Hijau untuk soal terjawab yang tidak diakses
-                            btn.classList.remove('hover:bg-blue-400'); // Hilangkan hover biru
+                            btn.classList.remove('hover:bg-sky-300'); // Hilangkan hover biru
                         } else {
-                            btn.classList.add('hover:bg-blue-400'); // Hover biru untuk soal belum terjawab
+                            btn.classList.add('hover:bg-sky-300'); // Hover biru untuk soal belum terjawab
                             btn.classList.remove('hover:bg-green-300'); // Hilangkan hover hijau
                         }
                     });

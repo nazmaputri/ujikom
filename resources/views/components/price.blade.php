@@ -1,11 +1,11 @@
 <!-- Price Section -->
 <section id="price" class="bg-white py-16">
-    <div class="container mx-auto px-6">
+    <div class="container mx-auto px-2">
         <div class="mb-6 text-center">
-            <h3 class="text-3xl font-bold text-sky-400" data-aos="fade-down">Rekomendasi Kursus EduFlix</h3>
-            <p class="text-lg text-gray-700 mt-2" data-aos="fade-down">Pilih kursus yang sesuai dengan kebutuhan Anda.</p>
+            <h3 class="md:text-3xl text-2xl font-bold text-sky-400" data-aos="fade-down">Rekomendasi Kursus EduFlix</h3>
+            <p class="text-md text-gray-700 mt-2" data-aos="fade-down">Pilih kursus yang sesuai dengan kebutuhan Anda.</p>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
             @foreach($courses as $course)
                 <a href="{{ route('kursus.detail', $course->id) }}" class="block rounded-lg  transition-transform transform hover:scale-105 duration-300">
                     <!-- Card Kursus -->
@@ -18,7 +18,7 @@
                         <!-- Konten Kursus -->
                         <div class="p-4 flex flex-col">
                             <!-- Judul Kursus -->
-                            <h1 class="text-2xl font-semibold text-gray-800 mb-2">{{ $course->title }}</h1>
+                            <h1 class="text-xl font-semibold text-gray-800 mb-2">{{ Str::limit($course->title, 20, '...') }}</h1>
                             
                             <!-- Nama Mentor -->
                             <p class="text-sm text-gray-600 mb-2">
@@ -54,7 +54,7 @@
                       
                             <!-- Harga Kursus -->
                             <p class="inline-flex items-center text-xl mt-2 rounded-2xl font-bold">
-                                <span class="text-green-600 bg-green-300 inline-flex items-center text-xl p-3 rounded-2xl font-bold">Rp. {{ number_format($course->price, 0, ',', '.') }}</span>
+                                <span class="text-green-600 bg-green-200 inline-flex items-center text-sm p-1.5 rounded-xl font-semibold">Rp. {{ number_format($course->price, 0, ',', '.') }}</span>
                             </p>
                         </div>
                     </div>

@@ -3,7 +3,7 @@
 @section('content')
     <div class="container mx-auto">
         <div class="bg-white shadow-lg rounded-lg overflow-hidden p-6">
-            <h1 class="text-2xl font-bold border-b-2 pb-2 flex justify-between items-center">
+            <h1 class="text-xl font-semibold text-gray-700 border-b-2 pb-2 flex justify-between items-center">
                 <span>Hasil Kuis : {{ $quiz->title }}</span>
                 <span class="text-3xl cursor-pointer hover:text-red-500" onclick="closeQuizResult()">×</span>
             </h1>
@@ -15,7 +15,7 @@
             </script>
             <div class="mt-6 flex flex-col lg:flex-row gap-8">
                 <div class="lg:w-1/3 bg-white shadow-md rounded-lg p-6 sticky top-6 border">
-                    <h2 class="text-xl font-bold border-b-2 pb-2">Skor Anda</h2>
+                    <h2 class="text-lg font-semibold text-gray-700 border-b-2 pb-2">Skor Anda</h2>
                 
                     <!-- Tanggal Ujian (Paling Atas) -->
                     <p class="text-sm text-gray-700 mt-2">
@@ -27,7 +27,7 @@
                         <!-- Total Soal -->
                         <div class="flex flex-col items-center text-center">
                             <p class="text-lg text-gray-700">Total Soal :</p>
-                            <p class="text-2xl font-semibold text-gray-800">{{ count($quiz->questions) }}</p>
+                            <p class="text-2xl font-semibold text-gray-700">{{ count($quiz->questions) }}</p>
                         </div>         
                         
                         <!-- Skor -->
@@ -47,18 +47,18 @@
 
                 <!-- Detail Jawaban -->
                 <div class="lg:w-2/3 bg-white shadow-md rounded-lg border p-6 overflow-y-auto max-h-[calc(100vh-200px)]">
-                    <h2 class="text-xl font-bold mb-4 border-b-2 pb-2">Detail Jawaban</h2>
+                    <h2 class="text-lg font-semibold text-gray-700 mb-4 border-b-2 pb-2">Detail Jawaban</h2>
                     @foreach ($results as $result)
                         <div class="border-b border-gray-200 py-4">
-                            <p class="font-semibold">{{ $result['question'] }}</p>
+                            <p class="font-semibold text-gray-700">{{ $result['question'] }}</p>
                             <p class="mt-1">
-                                <span class="font-medium">Jawaban Anda :</span>
+                                <span class="font-medium text-gray-600">Jawaban Anda :</span>
                                 <span class="{{ $result['is_correct'] ? 'text-green-500' : 'text-red-500' }}">
                                     {{ $result['submitted_answer'] ?? 'Tidak dijawab' }}
                                 </span>
                             </p>
                             <p class="mt-1">
-                                <span class="font-medium">Jawaban Benar :</span>
+                                <span class="font-medium text-gray-600">Jawaban Benar :</span>
                                 <span class="text-green-500">{{ $result['correct_answer'] }}</span>
                             </p>
                         </div>
