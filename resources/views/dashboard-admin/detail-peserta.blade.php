@@ -10,50 +10,49 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <!-- Kolom Kiri: Foto Profil, Email, Role, No Telepon -->
+            <!-- Kolom Kiri: Foto Profil, Role -->
             <div class="flex flex-col items-center mb-6 space-y-4">
-             <!-- Foto Profil -->
-             <div class="w-32 h-32 rounded-full overflow-hidden border-2 border-gray-300 flex justify-center items-center bg-gray-100">
-                <img src="{{ $user->photo ? asset('storage/' . $user->photo) : asset('path/to/default-photo.jpg') }}" alt="Foto Profil" class="object-cover w-full h-full">
-            </div>           
-        
-                <!-- Email -->
-                <div class="border py-1 px-2 rounded-lg shadow-sm w-full">
-                    <h4 class="text-gray-500 font-medium">Email:</h4>
-                    <p class="text-gray-700">{{ $user->email }}</p>
-                </div>
+                <!-- Foto Profil -->
+                <div class="w-32 h-32 rounded-full overflow-hidden border-2 border-gray-300 flex justify-center items-center bg-gray-100">
+                    <img src="{{ $user->photo ? asset('storage/' . $user->photo) : asset('path/to/default-photo.jpg') }}" alt="Foto Profil" class="object-cover w-full h-full">
+                </div>           
         
                 <!-- Role -->
-                <div class="border py-1 px-2 rounded-lg shadow-sm w-full">
-                    <h4 class="text-gray-500 font-medium">Role:</h4>
+                <div class="py-1 px-2 w-full text-center">
                     <p class="text-gray-700">{{ ucfirst($user->role) }}</p>
                 </div>
             </div>
         
             <!-- Kolom Kanan: Informasi Lainnya -->
             <div class="flex flex-col space-y-4">
+                <!-- Email -->
+                <div class="py-1 px-2 w-full">
+                    <h4 class="font-semibold text-gray-700 text-sm">Email:</h4>
+                    <p class="text-sm text-gray-700">{{ $user->email }}</p>
+                </div>
+
                 <!-- No Telepon -->
-                <div class="border py-1 px-2 rounded-lg shadow-sm w-full">
-                    <h4 class="text-gray-500 font-medium">No Telepon:</h4>
-                    <p class="text-gray-700">{{ $user->phone_number ?? '-' }}</p>
+                <div class="py-1 px-2 w-full">
+                    <h4 class="font-semibold text-gray-700 text-sm">No Telepon:</h4>
+                    <p class="text-sm text-gray-700">{{ $user->phone_number ?? '-' }}</p>
                 </div>
 
                 <!-- Status -->
-                <div class="border py-1 px-2 rounded-lg shadow-sm">
-                    <h4 class="text-gray-500 font-medium">Status:</h4>
-                    <p class="text-gray-700">{{ ucfirst($user->status) ?? '-' }}</p>
+                <div class="py-1 px-2">
+                    <h4 class="font-semibold text-gray-700 text-sm">Status:</h4>
+                    <p class="text-sm text-gray-700">{{ ucfirst($user->status) ?? '-' }}</p>
                 </div>
         
                 <!-- Tanggal Registrasi -->
-                <div class="border py-1 px-2 rounded-lg shadow-sm">
-                    <h4 class="text-gray-500 font-medium">Tanggal Registrasi:</h4>
-                    <p class="text-gray-700">{{ $user->created_at->format('d M Y') }}</p>
+                <div class="py-1 px-2">
+                    <h4 class="font-semibold text-gray-700 text-sm">Tanggal Registrasi:</h4>
+                    <p class="text-sm text-gray-700">{{ $user->created_at->translatedFormat('d F Y') }}</p>
                 </div>
         
                 <!-- Email Verified At -->
-                <div class="border py-1 px-2 rounded-lg shadow-sm">
-                    <h4 class="text-gray-500 font-medium">Email Terverifikasi:</h4>
-                    <p class="text-gray-700">{{ $user->email_verified_at ? $user->email_verified_at->format('d M Y H:i') : 'Belum Terverifikasi' }}</p>
+                <div class="py-1 px-2">
+                    <h4 class="font-semibold text-gray-700 text-sm">Email Terverifikasi:</h4>
+                    <p class="text-sm text-gray-700">{{ $user->email_verified_at ? $user->email_verified_at->translatedFormat('d F Y H:i:s') : 'Belum Terverifikasi' }}</p>
                 </div>
             </div>
         </div>
@@ -66,4 +65,5 @@
         </div>
     </div>
 </div>
+
 @endsection
