@@ -47,7 +47,7 @@
                                             </svg>
                                         @endif
                                     @endfor
-                                    <span class="text-yellow-500 text-sm sm:ml-2 sm:mt-0">({{ number_format($course->average_rating, 1) }} / 5)</span>
+                                    <span class="text-yellow-500 font-bold text-sm sm:ml-2 sm:mt-0">{{ number_format($course->average_rating, 1) }} / 5</span>
                                 </div>
                                 
                                 <div class="flex w-full h-[25px] my-2">

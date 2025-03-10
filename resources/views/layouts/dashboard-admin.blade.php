@@ -23,7 +23,7 @@
         <!-- Sidebar -->
         <div 
             :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'" 
-            class="fixed inset-y-0 left-0 w-64 bg-white shadow-lg transition-transform transform lg:translate-x-0 lg:static z-50">
+            class="fixed inset-y-0 left-0 w-64 bg-white shadow-lg transition-transform transform duration-300 ease-in-out lg:translate-x-0 lg:static z-50">
             <div class="flex items-center justify-between p-4">
             <div class="flex items-center">
         <!-- logo -->
@@ -145,6 +145,7 @@
         <div 
             x-show="sidebarOpen" 
             @click="sidebarOpen = false"
+            x-transition.opacity.duration.300ms
             class="fixed inset-0 bg-black bg-opacity-50 lg:hidden"></div>
 
         <!-- Content didalam navbar -->

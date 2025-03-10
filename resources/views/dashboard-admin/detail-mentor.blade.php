@@ -6,7 +6,7 @@
     <div class="bg-white shadow-lg rounded-lg border border-gray-200 p-6 mb-6">
         <!-- Judul Card -->
         <div class="text-left mb-6">
-            <h2 class="text-xl font-semibold mb-4 border-b-2 border-gray-300 pb-1 text-gray-700">Detail User : {{ $user->name }} </h2>
+            <h2 class="text-xl font-semibold mb-8 border-b-2 pb-2 text-gray-700 text-center">Detail Mentor</h2>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-3">

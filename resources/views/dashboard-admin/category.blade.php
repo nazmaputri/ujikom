@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container mx-auto bg-white rounded-lg p-5">
-    <h2 class="text-xl font-semibold mb-4 inline-block border-b-2 border-gray-300 pb-1 text-gray-700">Daftar Kategori</h2>
+    <h2 class="text-xl font-semibold mb-8 border-b-2 pb-2 text-gray-700 text-center">Daftar Kategori</h2>
 
     <!-- Tombol Tambah Kategori -->
     <div class="mb-6 p-1 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 md:space-x-4">

@@ -23,10 +23,10 @@
         <!-- Sidebar -->
         <div 
             :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'" 
-            class="fixed inset-y-0 left-0 w-64 bg-white shadow-lg transition-transform transform lg:translate-x-0 lg:static z-50">
+            class="fixed inset-y-0 left-0 w-64 bg-white shadow-lg transition-transform duration-300 ease-in-out transform lg:translate-x-0 lg:static z-50">
             <div class="flex items-center justify-between p-4">
             <div class="flex items-center">
-        <!-- logo -->
+            <!-- logo -->
             <div class="flex flex-col items-center justify-center h-32 bg-white">
                 <img id="logo" src="{{ asset('storage/eduflix-1.png') }}" class="h-32" alt="Eduflix Logo" />
             </div>
@@ -80,6 +80,7 @@
         <div 
             x-show="sidebarOpen" 
             @click="sidebarOpen = false"
+            x-transition.opacity.duration.300ms
             class="fixed inset-0 bg-black bg-opacity-50 lg:hidden"></div>
 
         <!-- Content didalam navbar -->
@@ -106,7 +107,7 @@
                         </div>
                     @endif
                 
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="w-5 h-5 text-gray-700 hover:text-gray-800">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="w-6 h-6 text-gray-700 hover:text-gray-800">
                         <path d="M0 24C0 10.7 10.7 0 24 0L69.5 0c22 0 41.5 12.8 50.6 32l411 0c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3l-288.5 0 5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5L488 336c13.3 0 24 10.7 24 24s-10.7 24-24 24l-288.3 0c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5L24 48C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/>
                     </svg>
                 </a>
@@ -114,7 +115,7 @@
                 <!-- Pengecekan gambar profil -->
                 @if(Auth::user()->photo)
                 <!-- Tampilkan gambar profil jika ada -->
-                <img src="{{ asset('storage/' . Auth::user()->photo) }}" alt="User Profile" class="rounded-full" width="40" height="40">
+                <img src="{{ asset('storage/' . Auth::user()->photo) }}" alt="User Profile" class="rounded-full w-8 h-8 object-cover">
                 @else
                 <!-- SVG sebagai ikon default -->
                 <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -126,7 +127,7 @@
                     <!-- Memeriksa apakah pengguna sudah login -->
                         @if(Auth::check())
                         <div class="hidden md:block flex flex-col">
-                            <p class="text-gray-800 font-semibold mr-2">{{ Auth::user()->name }}</p>
+                            <p class="text-gray-800 font-semibold mr-2 text-sm">{{ Auth::user()->name }}</p>
                             <p class="text-gray-600 text-sm">{{ Auth::user()->role }}</p> <!-- Menampilkan role pengguna -->
                         </div>
                         @else

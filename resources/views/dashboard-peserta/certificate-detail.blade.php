@@ -3,7 +3,7 @@
 @section('content')
 <div class="container mx-auto">
     <div class="bg-white p-8 rounded-lg shadow-md relative">
-        <h2 class="text-2xl font-bold mb-8 border-b-2 text-center border-gray-300 pb-2 uppercase">
+        <h2 class="text-xl font-semibold mb-8 border-b-2 text-center border-gray-300 pb-2 uppercase">
             Sertifikat
         </h2>
 
@@ -29,7 +29,7 @@
 
         <!-- Tombol Kembali di bawah tombol Download Sertifikat -->
         <div class="w-full flex justify-end">
-            <a href="{{ route('welcome-peserta') }}" class="bg-sky-300 hover:bg-sky-600 text-white font-bold py-2 px-4 justify-end rounded shadow-sm transition-all">
+            <a href="{{ route('welcome-peserta') }}" class="bg-sky-400 hover:bg-sky-300 text-white font-bold py-2 px-4 justify-end rounded shadow-sm transition-all">
                 Kembali
             </a>
         </div>

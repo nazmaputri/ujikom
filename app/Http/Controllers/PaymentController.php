@@ -74,7 +74,7 @@ class PaymentController extends Controller
             // Simpan transaksi ke tabel `payments`
             $payment = Payment::create([
                 'user_id' => $user->id,
-                'course_id' => 21, // Kosong karena ada banyak course
+                'course_id' => 3, // Kosong karena ada banyak course
                 'payment_type' => 'midtrans',
                 'transaction_status' => 'pending',
                 'transaction_id' => $orderId,

@@ -31,7 +31,7 @@
                 </svg>
             </div>
             <div class="ml-4">
-                <h2 class="text-xl font-semibold text-red-800">Jumlah Mentor</h2>
+                <h2 class="text-xl font-semibold text-red-700">Jumlah Mentor</h2>
                 <p class="text-md font-semibold text-red-600">{{ $jumlahMentor }} Mentor</p>
             </div>
         </div>
@@ -43,7 +43,7 @@
                 </svg>
             </div>
             <div class="ml-4">
-                <h2 class="text-xl font-semibold text-blue-800">Jumlah Kursus</h2>
+                <h2 class="text-xl font-semibold text-blue-700">Jumlah Kursus</h2>
                 <p class="text-md font-semibold text-blue-600">{{ $jumlahKursus }} Kursus</p>
             </div>
         </div>
@@ -55,7 +55,7 @@
                 </svg>
             </div>
             <div class="ml-4">
-                <h2 class="text-xl font-semibold text-yellow-800">Jumlah Peserta</h2>
+                <h2 class="text-xl font-semibold text-yellow-700">Jumlah Peserta</h2>
                 <p class="text-md font-semibold text-yellow-600">{{ $jumlahPeserta }} Peserta</p>
             </div>
         </div>

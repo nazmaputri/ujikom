@@ -22,7 +22,7 @@
                             
                             <!-- Nama Mentor -->
                             <p class="text-sm text-gray-600 mb-2">
-                                👨‍🏫 Mentor : {{ $course->mentor ? $course->mentor->name : 'Mentor tidak ditemukan' }}
+                                Mentor : {{ $course->mentor ? $course->mentor->name : 'Mentor tidak ditemukan' }}
                             </p>                        
                             
                             <!-- Rating -->
@@ -49,12 +49,12 @@
                                     @endif
                                 @endfor
                                   <!-- Jumlah Rating -->
-                                  <span class="ml-2 text-gray-600 text-sm">({{ number_format($course->average_rating, 1) }} / 5)</span>
+                                  <span class="ml-2 text-yellow-500 font-bold text-sm">{{ number_format($course->average_rating, 1) }} / 5</span>
                             </div>                 
                       
                             <!-- Harga Kursus -->
-                            <p class="inline-flex items-center text-xl mt-2 rounded-2xl font-bold">
-                                <span class="text-green-600 bg-green-200 inline-flex items-center text-sm p-1.5 rounded-xl font-semibold">Rp. {{ number_format($course->price, 0, ',', '.') }}</span>
+                            <p class="inline-flex items-center text-xl mt-1 rounded-2xl font-bold">
+                                <span class="text-red-400 inline-flex items-center text-sm rounded-xl font-semibold">Rp. {{ number_format($course->price, 0, ',', '.') }}</span>
                             </p>
                         </div>
                     </div>

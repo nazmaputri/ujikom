@@ -2,32 +2,32 @@
 
 @section('content')
     <div class="bg-white p-6 rounded-lg shadow-md">
-        <h2 class="text-2xl font-bold mb-8 border-b-2 border-gray-300 pb-2 uppercase">Detail Kursus</h2>
+        <h2 class="text-xl font-semibold mb-8 border-b-2 pb-2 text-gray-700 text-center">Detail Kursus</h2>
             <!-- Card Informasi Kursus -->
             <div class="flex flex-col lg:flex-row mb-4">
                 <div class="w-full lg:w-1/3 mb-4 lg:mb-0">
                     <img src="{{ asset('storage/' . $course->image_path) }}" alt="{{ $course->title }}" class="rounded-lg w-full h-auto">
                 </div>
                 <div class="ml-4 w-2/3 space-y-3">
-                    <h2 class="text-2xl font-bold capitalize">{{ $course->title }}</h2>
-                    <p class="text-gray-700">{{ $course->description }}</p>
-                    <p class="text-gray-600"><strong>Mentor :</strong> {{ $course->mentor->name }}</p>
-                    <p class="text-gray-600"><strong>Biaya :</strong> Rp {{ number_format($course->price, 0, ',', '.') }}</p>
+                    <h2 class="text-md font-semibold text-gray-700 mb-2 capitalize">{{ $course->title }}</h2>
+                    <p class="text-gray-700 mb-2 text-md">{{ $course->description }}</p>
+                    <p class="text-gray-600 text-sm">Mentor :{{ $course->mentor->name }}</p>
+                    <p class="text-gray-600 text-sm">Harga :<span class="text-red-400">Rp {{ number_format($course->price, 0, ',', '.') }}</span></p>
                     @if($course->start_date && $course->end_date)
-                        <p class="text-gray-600"><strong>Tanggal Mulai :</strong> {{ \Carbon\Carbon::parse($course->start_date)->format('d F Y') }} - {{ \Carbon\Carbon::parse($course->end_date)->format('d F Y') }}</p>
+                        <p class="text-gray-600 text-sm">Tanggal Mulai :{{ \Carbon\Carbon::parse($course->start_date)->format('d F Y') }} - {{ \Carbon\Carbon::parse($course->end_date)->format('d F Y') }}</p>
                     @endif
                     @if($course->duration)
-                        <p class="text-gray-600"><strong>Durasi :</strong> {{ $course->duration }}</p>
+                        <p class="text-gray-600 text-sm">Masa Aktif :{{ $course->duration }}</p>
                     @endif
                     @if($course->capacity)
-                        <p class="text-gray-600"><strong>Kapasitas :</strong> {{ $course->capacity }}</p>
+                        <p class="text-gray-600 text-sm">Kapasitas :{{ $course->capacity }} Peserta</p>
                     @endif                  
-                    <p class="text-gray-600 capitalize"><strong>Status :</strong> {{ $course->status }}</p>
-                    <p class="{{ $course->chat ? 'text-green-500' : 'text-red-500' }}">
+                    <p class="text-gray-600 text-sm capitalize">Status :{{ $course->status }}</p>
+                    <p class="text-sm {{ $course->chat ? 'text-green-500' : 'text-red-500' }}">
                         {{ $course->chat ? 'Fitur Chat Aktif' : 'Fitur Chat Tidak Aktif' }}
                     </p> 
                     <!-- Tombol untuk melihat sertifikat -->
-                    <p id="view-certificate-btn" class="cursor-pointer text-blue-500 hover:underline">Lihat Sertifikat</p>
+                    <p id="view-certificate-btn" class="cursor-pointer text-blue-500 hover:underline text-sm">Lihat Sertifikat</p>
                    <!-- Pop-up Modal untuk Sertifikat -->
                     <div id="certificate-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-gray-500 bg-opacity-75">
                         <div class="bg-white p-6 rounded-lg shadow-xl w-11/12 sm:w-2/3 lg:w-3/4 max-h-[80vh] overflow-y-auto">

@@ -4,7 +4,7 @@
 <div class="container mx-auto">
     <div class="bg-white shadow-md rounded-lg p-6 mb-6">
         <div class="flex items-center justify-start space-x-4 mb-4">
-            <h2 class="text-xl font-semibold mb-4 inline-block border-b-2 border-gray-300 pb-1 text-gray-700">Data Mentor</h2>
+            <h2 class="text-xl font-semibold mb-4 inline-block border-b-2 pb-1 text-gray-700">Data Mentor</h2>
             <button id="addMentorBtn" class="bg-sky-300 text-white px-4 py-2 rounded-md hover:bg-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-500">
                 <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor">
                     <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344l0-64-64 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l64 0 0-64c0-13.3 10.7-24 24-24s24 10.7 24 24l0 64 64 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-64 0 0 64c0 13.3-10.7 24-24 24s-24-10.7-24-24z" />

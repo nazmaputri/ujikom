@@ -5,7 +5,7 @@
     <!-- Card Wrapper -->
     <div class="bg-white rounded-lg shadow-md p-6">
         <!-- Judul dan Tombol Tambah Kursus -->
-        <h2 class="text-2xl font-bold mb-10 text-center border-b-2 border-gray-300 pb-2 uppercase">Daftar Kursus</h2>
+        <h2 class="text-xl font-semibold  text-gray-700 mb-10 text-center border-b-2 border-gray-300 pb-2 uppercase">Daftar Kursus</h2>
 
         <!-- Search Bar -->
         <form action="{{ route('courses.index') }}" method="GET" class="max-w-sm mx-auto">
@@ -13,7 +13,7 @@
             <div class="relative flex items-center">
                 <!-- Input Search -->
                 <input type="search" name="search" id="search" 
-                    class="block w-full pl-4 pr-14 py-3 text-sm text-gray-900 border-2 border-sky-300 rounded-full bg-gray-50 focus:ring-blue-400 focus:border-blue-500" 
+                    class="block w-full pl-4 pr-14 py-3 text-sm text-gray-900 border-2 border-sky-300 rounded-full focus:outline-none bg-gray-50 focus:ring-blue-400 focus:border-blue-500" 
                     placeholder="Cari Kursus" value="{{ request('search') }}" />
                 <!-- Button Search -->
                 <button type="submit" 
