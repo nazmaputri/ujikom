@@ -10,7 +10,7 @@
     <div class="bg-white shadow-md rounded-lg p-6 mb-6">
         <div class="flex flex-col items-center mb-4">
             <div class="flex items-center space-x-4">
-                <h2 class="text-xl font-semibold inline-block border-b-2 border-gray-300 pb-1 text-gray-700">
+                <h2 class="text-xl font-semibold inline-block pb-1 text-gray-700">
                     Laporan Perkembangan Pengguna Bulanan
                 </h2>
                 <select id="yearFilter" class="p-1 border rounded-md focus:outline-none focus:ring focus:ring-sky-200">
@@ -21,7 +21,7 @@
                     @endforeach
                 </select>
             </div>
-            <div class="border-b-2 w-full mt-2"></div>
+            <div class="border-b-2 w-full mt-1"></div>
         </div>               
         <div style="position: relative; height: 300px; width: 100%;">
             <canvas id="userGrowthChart"></canvas>

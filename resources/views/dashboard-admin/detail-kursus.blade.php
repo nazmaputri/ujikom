@@ -130,9 +130,10 @@
             @endforeach
         </div>
     </div>
+</div>
 
-    <!-- Tabel Peserta Terdaftar -->
-    <div class="mt-6">
+<!-- Tabel Peserta Terdaftar -->
+    <div class="bg-white mt-6 p-6 rounded-lg shadow-md">
         <h3 class="text-xl font-semibold mb-4 inline-block pb-1 text-gray-700">Peserta Terdaftar</h3>
             <div class="overflow-x-auto">
                 <table class="min-w-full" id="courseTable">
@@ -169,6 +170,4 @@
             </a>
         </div> 
     </div>
-</div>
-    
 @endsection

@@ -4,7 +4,7 @@
 <div class="container mx-auto">
     <!-- Card Wrapper -->
     <div class="bg-white shadow-md rounded-lg p-6">
-        <h2 class="text-xl font-semibold mb-4 inline-block border-b-2 border-gray-300 pb-1 text-gray-700">Tambah Kategori</h2>
+        <h2 class="text-xl font-semibold mb-8 border-b-2 pb-2 text-gray-700 text-center">Tambah Kategori</h2>
 
         <form action="{{ route('categories.store') }}" method="POST" enctype="multipart/form-data">
             @csrf

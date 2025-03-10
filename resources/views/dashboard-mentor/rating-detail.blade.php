@@ -3,34 +3,34 @@
 @section('content')
 <div class="container mx-auto">
     <div class="bg-white rounded-lg shadow-md p-8">
-        <h1 class="text-xl font-bold text-gray-800 mb-6 border-b-2 pb-2">Rating Kursus : {{ $course->title }}</h1>
+        <h1 class="text-xl font-semibold text-gray-700 text-center mb-6 border-b-2 pb-2 capitalize">Rating Kursus : {{ $course->title }}</h1>
         
         <!-- Wrapper for responsiveness -->
         <div class="overflow-x-auto">
-            <table class="min-w-full border-separate border-spacing-1 text-sm mt-4">
+            <table class="min-w-full text-sm mt-2">
                 <thead>
-                    <tr class="bg-sky-200 text-gray-600 leading-normal uppercase">
-                        <th class="border border-gray-300 px-2 py-2 rounded-md">No</th>
-                        <th class="border border-gray-300 px-4 py-2 rounded-md">Nama</th>
-                        <th class="border border-gray-300 px-4 py-2 rounded-md">Rating</th>
-                        <th class="border border-gray-300 px-4 py-2 rounded-md">Komentar</th>
-                        <th class="border border-gray-300 px-4 py-2 rounded-md">Aksi</th>
+                    <tr class="bg-sky-200 text-gray-700">
+                        <th class="px-2 py-2">No</th>
+                        <th class="px-4 py-2">Nama</th>
+                        <th class="px-4 py-2">Rating</th>
+                        <th class="px-4 py-2">Komentar</th>
+                        <th class="px-4 py-2">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse ($ratings as $index => $rating)
-                    <tr class="bg-white hover:bg-sky-50 user-row text-sm">
-                        <td class="border text-center border-gray-300 px-4 py-2 rounded-md">{{ $index + 1 }}</td>
-                        <td class="border border-gray-300 px-4 py-2 rounded-md">{{ $rating->user->name }}</td>
-                        <td class="border border-gray-300 px-4 py-2 rounded-md">
+                    <tr class="bg-white hover:bg-sky-50 user-row text-sm text-gray-600">
+                        <td class="text-center px-4 py-2">{{ $index + 1 }}</td>
+                        <td class="px-4 py-2">{{ $rating->user->name }}</td>
+                        <td class="px-4 py-2">
                             @for ($i = 1; $i <= 5; $i++)
                                 <span class="{{ $i <= $rating->stars ? 'text-yellow-400' : 'text-gray-300' }}">★</span>
                             @endfor
                         </td>
-                        <td class="border border-gray-300 px-4 py-2 rounded-md">
+                        <td class="px-4 py-2 rounded-md">
                             <span>{{ $rating->comment }}</span>
                         </td>
-                        <td class="border border-gray-300 px-4 py-2 rounded-md">                              
+                        <td class="px-4 py-2 rounded-md">                              
                             <form action="{{ route('toggle.displaymentor', $rating->id) }}" method="POST">
                                 @csrf
                                 @method('POST') <!-- Menggunakan metode POST untuk keamanan -->
@@ -71,7 +71,7 @@
             </table>
         </div>
         <div class="mt-6 flex justify-end space-x-2">
-            <a href="{{ route('rating-kursus') }}" class="bg-sky-300 hover:bg-sky-600 text-white font-bold py-2 px-4 rounded">
+            <a href="{{ route('rating-kursus') }}" class="bg-sky-400 hover:bg-sky-300 text-white font-semibold py-2 px-4 rounded">
                 Kembali
             </a>
         </div>   

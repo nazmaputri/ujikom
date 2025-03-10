@@ -4,7 +4,7 @@
 <div class="container mx-auto">
     <!-- Judul Utama -->
     <div class="bg-white shadow-md rounded-lg p-6">
-        <h2 class="text-3xl font-bold mb-6 border-b-2 border-gray-300 pb-2">Tambah Materi</h2>
+        <h2 class="text-xl font-semibold mb-8 border-b-2 pb-2 text-gray-700 text-center">Tambah Materi</h2>
 
         <!-- Form Tambah Materi -->
         <form action="{{ route('materi.store', ['courseId' => $course->id]) }}" method="POST" enctype="multipart/form-data" class="w-full">
@@ -15,7 +15,7 @@
                 <div>
                     <!-- Input untuk Judul Materi -->
                     <div class="mb-4">
-                        <label for="judul" class="block text-gray-700 font-bold mb-2">Judul Materi</label>
+                        <label for="judul" class="block text-gray-700 font-semibold mb-2">Judul Materi</label>
                         <input type="text" name="judul" id="judul" class="w-full p-2 border rounded" placeholder="Masukkan judul materi" value="{{ old('judul') }}">
                         @error('judul')
                             <div class="text-red-600">{{ $message }}</div>
@@ -24,10 +24,10 @@
 
                     <!-- Input untuk Video -->
                     <div class="mb-4" id="video-upload">
-                        <label class="block text-gray-700 font-bold mb-2">Unggah Video Materi</label>
+                        <label class="block text-gray-700 font-semibold mb-2">Unggah Video Materi</label>
                         <input type="text" name="video_titles[]" class="w-full p-2 border rounded mb-2" placeholder="Masukkan judul video">
                         <input type="file" name="videos[]" class="w-full p-2 border rounded">
-                        <button type="button" onclick="addVideoInput()" class="font-bold mt-2 bg-green-400 text-white p-2 rounded">Tambah Video</button>
+                        <button type="button" onclick="addVideoInput()" class="font-semibold mt-2 bg-green-400 text-white p-2 rounded">Tambah Video</button>
                         <small class="text-gray-600">Format video yang diperbolehkan: mp4, avi, mkv</small>
                         @error('videos')
                             <div class="text-red-600">{{ $message }}</div>
@@ -38,7 +38,7 @@
                     </div>
                     <!-- Input Untuk Link Youtube-->
                     <div class="mb-4" id="youtube-upload">
-                        <label class="block text-gray-700 font-bold">Tambahkan Link YouTube</label>
+                        <label class="block text-gray-700 font-semibold">Tambahkan Link YouTube</label>
                         
                         <!-- Kontainer untuk link YouTube yang ditambahkan -->
                         <div id="youtube-container" class="hidden">
@@ -56,7 +56,7 @@
                                     placeholder="Masukkan link YouTube">
                                 <button 
                                     type="button" 
-                                    class="font-bold mt-2 bg-red-400 text-white p-2 rounded" 
+                                    class="font-semibold mt-2 bg-red-400 text-white p-2 rounded" 
                                     onclick="removeYoutubeItem(this)">Hapus
                                 </button>
                             </div>
@@ -66,7 +66,7 @@
                         <button 
                             type="button" 
                             onclick="addYoutubeItem()" 
-                            class="font-bold mt-2 bg-green-400 text-white p-2 rounded">Tambah Link YouTube
+                            class="font-semibold mt-2 bg-green-400 text-white p-2 rounded">Tambah Link YouTube
                         </button>
                         
                         <small class="text-gray-600">Jika ukuran video lebih dari 1GB, gunakan link YouTube.</small>
@@ -84,7 +84,7 @@
                 <div>
                    <!-- Pilihan Kursus (Hidden Input) -->
                     <div class="mb-4 hidden">
-                        <label for="courses_id" class="block text-gray-700 font-bold mb-2">Kursus Terkait</label>
+                        <label for="courses_id" class="block text-gray-700 font-semibold mb-2">Kursus Terkait</label>
                         <input type="hidden" name="courses_id" id="courses_id" value="{{ $course->id }}">
                         @error('courses_id')
                             <div class="text-red-600">{{ $message }}</div>
@@ -93,7 +93,7 @@
 
                      <!-- Input untuk Deskripsi Materi -->
                      <div class="mb-4">
-                        <label for="deskripsi" class="block text-gray-700 font-bold mb-2">Deskripsi</label>
+                        <label for="deskripsi" class="block text-gray-700 font-semibold mb-2">Deskripsi</label>
                         <textarea name="deskripsi" id="deskripsi" rows="3" class="w-full p-2 border rounded" placeholder="Masukkan deskripsi materi">{{ old('deskripsi') }}</textarea>
                         @error('deskripsi')
                             <div class="text-red-600">{{ $message }}</div>
@@ -102,10 +102,10 @@
 
                     <!-- Input untuk Materi PDF -->
                     <div class="mb-4" id="pdf-upload">
-                        <label class="block text-gray-700 font-bold mb-2">Unggah File Materi</label>
+                        <label class="block text-gray-700 font-semibold mb-2">Unggah File Materi</label>
                         <input type="text" name="material_titles[]" class="w-full p-2 border rounded mb-2" placeholder="Masukkan judul PDF">
                         <input type="file" name="material_files[]" class="w-full p-2 border rounded">
-                        <button type="button" onclick="addPdfInput()" class="font-bold mt-2 bg-green-400 text-white p-2 rounded">Tambah PDF</button>
+                        <button type="button" onclick="addPdfInput()" class="font-semibold mt-2 bg-green-400 text-white p-2 rounded">Tambah PDF</button>
                         <small class="text-gray-600">Format file yang diperbolehkan: PDF, DOC, PPT</small>
                         @error('material_files')
                             <div class="text-red-600">{{ $message }}</div>
@@ -119,12 +119,12 @@
 
             <!-- Tombol Submit -->
             <div class="mt-6 flex justify-end space-x-2">
-                <button type="submit" class="bg-sky-400 hover:bg-sky-600 text-white font-bold py-2 px-4 rounded">
-                    Tambah 
-                </button>
-                <a href="{{ route('courses.show', $course->id)}}" class="bg-red-400 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
+                <a href="{{ route('courses.show', $course->id)}}" class="bg-red-400 hover:bg-red-300 text-white font-semibold py-2 px-4 rounded">
                     Batal
                 </a>
+                <button type="submit" class="bg-sky-400 hover:bg-sky-300 text-white font-semibold py-2 px-4 rounded">
+                    Tambah 
+                </button>
             </div>
         </form>
     </div>
