@@ -10,10 +10,12 @@ use App\Models\User;
 use App\Models\Role;
 use App\Models\Payment;
 use App\Models\Rating;
+use App\Models\Purchase;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Mail\HelloMail;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Hash;
 
 class DashboardAdminController extends Controller
 {
@@ -122,15 +124,18 @@ class DashboardAdminController extends Controller
     public function detailkursus($id, $name) {
         $category = Category::with('courses')->where('name', $name)->firstOrFail();
         $course = Course::findOrFail($id);
-
-        // Ambil peserta yang pembayaran kursusnya lunas
-        $participants = Payment::where('course_id', $id)
-        ->where('transaction_status', 'success') 
-        ->with('user') 
-        ->paginate(5); 
-
+    
+        // Ambil user yang sedang login
+        $user = auth()->user();
+    
+        // Ambil peserta yang telah membayar dengan status sukses
+        $participants = Purchase::where('user_id', $user->id)
+                                ->where('status', 'success')
+                                ->where('course_id', $id)
+                                ->paginate(5);
+    
         return view('dashboard-admin.detail-kursus', compact('course', 'category', 'participants'));
-    }
+    }    
 
     public function updateStatus($id)
     {
@@ -186,7 +191,55 @@ class DashboardAdminController extends Controller
         return view('dashboard-admin.laporan', compact('userGrowthData', 'monthNames', 'years', 'year'));
     }
     
-    
+    // menampilkan halaman form tambah mentor
+    public function tambahmentor()
+    {
+        return view('dashboard-admin.tambah-mentor');
+    }
+
+    public function registerMentorByAdmin(Request $request)
+    {
+        // Validasi input pendaftaran mentor
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+            'phone_number' => 'required|string|max:15',
+            'profesi' => 'required|string|max:255',
+            'experience' => 'required|string|max:255',
+            'linkedin' => 'nullable|string|max:255',
+            'company' => 'nullable|string|max:255',
+            'years_of_experience' => 'nullable|integer',
+        ], [
+            'name.required' => 'Nama lengkap harus diisi.',
+            'email.required' => 'Email harus diisi.',
+            'email.unique' => 'Email sudah terdaftar, gunakan email lain.',
+            'password.required' => 'Password harus diisi.',
+            'password.confirmed' => 'Konfirmasi password tidak cocok.',
+            'phone_number.required' => 'Nomor telepon harus diisi.',
+            'profesi.required' => 'Profesi harus diisi.',
+            'experience.required' => 'Pengalaman harus diisi.',
+        ]);
+
+        // Buat user baru dengan role mentor
+        $mentor = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'phone_number' => $request->phone_number,
+            'role' => 'mentor', // Role dipastikan selalu mentor
+            'status' => 'pending', // Status default mentor pending
+            'email_verified_at' => now(),
+            'profesi' => $request->profesi,
+            'experience' => $request->experience,
+            'linkedin' => $request->linkedin,
+            'company' => $request->company,
+            'years_of_experience' => $request->years_of_experience,
+        ]);
+
+        return redirect()->route('datamentor-admin')->with('success', 'Mentor berhasil ditambahkan!');
+    }
+
     public function destroy($id)
     {
         // Cari user berdasarkan ID

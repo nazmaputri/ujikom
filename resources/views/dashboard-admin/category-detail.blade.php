@@ -34,6 +34,7 @@
                 <tr class="bg-sky-100 text-gray-700">
                     <th class="px-2 py-2">No</th>
                     <th class="px-4 py-2">Judul</th>
+                    <th class="px-4 py-2">Mentor</th>
                     <th class="px-4 py-2">Harga</th>
                     <th class="px-4 py-2">Aksi</th>
                 </tr>
@@ -51,6 +52,7 @@
                     <tr class="bg-white hover:bg-sky-50">
                         <td class="px-2 py-2 text-center">{{ $index + 1 }}</td>
                         <td class="px-4 py-2">{{ $course->title }}</td>
+                        <td class="px-4 py-2">{{ $course->mentor->name ?? 'Tidak Ada Mentor' }}</td>
                         <td class="px-4 py-2">Rp {{ number_format($course->price, 0, ',', '.') }}</td>
                         <td class="py-4 px-4 flex justify-center items-center space-x-4">
                             <!-- Tombol Lihat Detail -->

@@ -11,15 +11,20 @@
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <!-- Kolom Kiri: Foto Profil & Role -->
-            <div class="flex flex-col items-center space-y-4">
+            <div class="flex flex-col items-center space-y-1">
                 <!-- Foto Profil -->
-                <div class="w-36 h-36 rounded-full overflow-hidden border-2 border-gray-200 flex justify-center items-center bg-gray-100">
-                    <img src="{{ $user->photo ? asset('storage/' . $user->photo) : asset('path/to/default-photo.jpg') }}" alt="" class="object-cover w-full h-full">
+                <div class="w-36 h-36 rounded-full overflow-hidden flex justify-center items-center bg-gray-100">
+                    <img src="{{ $user->photo ? asset('storage/' . $user->photo) : asset('storage/default-profile.jpg') }}" alt="" class="object-cover w-full h-full">
                 </div>                
+                
+                <!-- Nama -->
+                <div class="p-1">
+                    <p class="font-semibold text-gray-700 text-sm">{{ $user->name }}</p>
+                </div>
 
                 <!-- Role -->
-                <div class="p-2 w-full text-center">
-                    <p class="text-gray-700 font-semibold">{{ ucfirst($user->role) }}</p>
+                <div class="w-full text-center">
+                    <p class="text-gray-700">{{ ucfirst($user->role) }}</p>
                 </div>
             </div>
 

@@ -4,121 +4,32 @@
 <div class="container mx-auto">
     <div class="bg-white shadow-md rounded-lg p-6 mb-6">
     <div class="flex items-center justify-between mb-4">
-    <h2 class="text-xl font-semibold text-gray-700 text-center w-full border-b-2 border-gray-300 pb-2">Data Mentor</h2>
-
-    <!-- <button id="addMentorBtn" class="bg-sky-300 text-white px-4 py-2 rounded-md hover:bg-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-500">
-        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor">
-            <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344l0-64-64 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l64 0 0-64c0-13.3 10.7-24 24-24s24 10.7 24 24l0 64 64 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-64 0 0 64c0 13.3-10.7 24-24 24s-24-10.7-24-24z" />
-        </svg>
-    </button> -->
-    </div>
-
-        <!-- Pop-up Modal -->
-        <div id="addMentorModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
-            <div class="bg-white w-11/12 max-w-5xl p-6 rounded-md shadow-lg overflow-auto max-h-[90vh]">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-xl font-bold text-sky-600">Tambah Mentor</h3>
-                    <button id="closeMentorModal" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+        <h2 class="text-xl font-semibold text-gray-700 text-center w-full border-b-2 border-gray-300 pb-2">Data Mentor</h2>
+    </div> 
+        <div class="flex items-center justify-between mb-4">
+            <form action="{{ route('datamentor-admin') }}" method="GET" class="w-full max-w-xs">
+                <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Cari</label>
+                <div class="relative flex items-center">
+                    <input type="search" name="search" id="search" 
+                        class="block w-full pl-4 pr-14 py-3 text-sm text-gray-900 border-2 border-sky-300 rounded-full focus:outline-none bg-gray-50 focus:ring-sky-400 focus:border-sky-400" 
+                        placeholder="Cari Mentor (Nama, Status)" value="{{ request('search') }}" />
+                    <button type="submit" 
+                        class="absolute right-2.5 bottom-2 bg-sky-300 text-white hover:bg-sky-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-full text-sm px-4 py-2 flex items-center justify-center">
+                        <svg class="w-4 h-4 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                        </svg>
+                    </button>
                 </div>
-                <form action="{{ route('register') }}" method="POST" class="grid grid-cols-2 gap-6">
-                    @csrf
-                    <input type="hidden" name="added_by_admin" value="true">
-                    <!-- Nama Lengkap -->
-                    <div>
-                        <label for="name" class="block text-sm font-medium text-sky-600 pb-2">Nama Lengkap</label>
-                        <input type="text" name="name" id="name" class="w-full px-4 py-2 border border-sky-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500" required placeholder="Masukkan nama lengkap">
-                    </div>
-                    <!-- Email -->
-                    <div>
-                        <label for="email" class="block text-sm font-medium text-sky-600 pb-2">Email</label>
-                        <input type="email" name="email" id="email" class="w-full px-4 py-2 border border-sky-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500" required placeholder="Masukkan Email">
-                    </div>
-                    <!-- Password -->
-                    <div>
-                        <label for="password" class="block text-sm font-medium text-sky-600 pb-2">Password</label>
-                        <input type="password" name="password" id="password" class="w-full px-4 py-2 border border-sky-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500" required placeholder="Masukkan password">
-                    </div>
-                    <!-- Konfirmasi Password -->
-                    <div>
-                        <label for="password_confirmation" class="block text-sm font-medium text-sky-600 pb-2">Konfirmasi Password</label>
-                        <input type="password" name="password_confirmation" id="password_confirmation" class="w-full px-4 py-2 border border-sky-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500" required placeholder="Masukkan konfirmasi password">
-                    </div>
-                    <!-- Nomor Telepon -->
-                    <div>
-                        <label for="phone_number" class="block text-sm font-medium text-sky-600 pb-2">Nomor Telepon</label>
-                        <input type="text" name="phone_number" id="phone_number" class="w-full px-4 py-2 border border-sky-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500" required placeholder="Masukkan nomor telepon">
-                    </div>
-                    <!-- Profesi -->
-                    <div>
-                        <label for="profesi" class="block text-sm font-medium text-sky-600 pb-2">Profesi</label>
-                        <input type="text" name="profesi" id="profesi" class="w-full px-4 py-2 border border-sky-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500" required placeholder="Masukkan profesi">
-                    </div>
-                    <!-- LinkedIn -->
-                    <div>
-                        <label for="linkedin" class="block text-sm font-medium text-sky-600 pb-2">LinkedIn</label>
-                        <input type="text" name="linkedin" id="linkedin" class="w-full px-4 py-2 border border-sky-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500" required placeholder="Masukkan link URL linkedin">
-                    </div>
-                    <!-- Company -->
-                    <div>
-                        <label for="company" class="block text-sm font-medium text-sky-600 pb-2">Perusahaan</label>
-                        <input type="text" name="company" id="company" class="w-full px-4 py-2 border border-sky-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500" required placeholder="Masukkan nama perusahaan tempat bekerja">
-                    </div>
-                    <!-- Years of Experience -->
-                    <div>
-                        <label for="years_of_experience" class="block text-sm font-medium text-sky-600 pb-2">Tahun Pengalaman</label>
-                        <input type="number" name="years_of_experience" id="years_of_experience" class="w-full px-4 py-2 border border-sky-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500" required placeholder="Masukkan tahun pengalaman bekerja">
-                    </div>
-                    <!-- Deskripsi Pengalaman -->
-                    <div class="col-span-2">
-                        <label for="experience" class="block text-sm font-medium text-sky-600 pb-2">Deskripsi Pengalaman</label>
-                        <textarea name="experience" id="experience" rows="4" class="w-full px-4 py-2 border border-sky-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500" placeholder="Deskripsikan pengalaman"></textarea>
-                    </div>
-                    <!-- Hidden Role -->
-                    <input type="hidden" name="role" value="mentor">
-                    <!-- Submit Button -->
-                    <div class="col-span-2">
-                        <button type="submit" class="w-full px-4 py-2 bg-sky-600 text-white font-bold rounded-md hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500">
-                            Tambah
-                        </button>
-                    </div>
-                </form>
-            </div>
+            </form>
+
+            <a href="{{ route('tambah-mentor') }}"  class="ml-4 text-white px-4 py-2 rounded-md bg-sky-300 hover:bg-sky-200 focus:outline-none flex items-center">
+                <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor">
+                    <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344l0-64-64 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l64 0 0-64c0-13.3 10.7-24 24-24s24 10.7 24 24l0 64 64 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-64 0 0 64c0 13.3-10.7 24-24 24s-24-10.7-24-24z" />
+                </svg>
+                Tambah
+            </a>
         </div>
 
-        <script>
-            document.getElementById('addMentorBtn').addEventListener('click', function () {
-                document.getElementById('addMentorModal').classList.remove('hidden');
-            });
-
-            document.getElementById('closeMentorModal').addEventListener('click', function () {
-                document.getElementById('addMentorModal').classList.add('hidden');
-            });
-        </script>
-        
-<div class="flex items-center justify-between mb-4">
-<form action="{{ route('datamentor-admin') }}" method="GET" class="w-full max-w-xs">
-    <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Cari</label>
-    <div class="relative flex items-center">
-        <input type="search" name="search" id="search" 
-            class="block w-full pl-4 pr-14 py-3 text-sm text-gray-900 border-2 border-sky-300 rounded-full focus:outline-none bg-gray-50 focus:ring-sky-400 focus:border-sky-400" 
-            placeholder="Cari Mentor (Nama, Status)" value="{{ request('search') }}" />
-        <button type="submit" 
-            class="absolute right-2.5 bottom-2 bg-sky-300 text-white hover:bg-sky-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-full text-sm px-4 py-2 flex items-center justify-center">
-            <svg class="w-4 h-4 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-            </svg>
-        </button>
-    </div>
-</form>
-
-
-    <button id="addMentorBtn" class="ml-4 text-white px-4 py-2 rounded-md bg-sky-300 hover:bg-sky-200 focus:outline-none focus:ring-2 focus:ring-sky-500 flex items-center">
-        <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor">
-            <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344l0-64-64 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l64 0 0-64c0-13.3 10.7-24 24-24s24 10.7 24 24l0 64 64 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-64 0 0 64c0 13.3-10.7 24-24 24s-24-10.7-24-24z" />
-        </svg>
-        Tambah
-    </button>
-</div>
         @if (session('success'))
             <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
                 {{ session('success') }}
@@ -130,6 +41,7 @@
                 {{ session('info') }}
             </div>
         @endif
+
         <!-- Tabel data user -->
         <div class="overflow-x-auto">
             <table class="min-w-full" id="userTable">
@@ -149,12 +61,12 @@
                         <tr class="bg-white hover:bg-sky-50 user-row" data-role="{{ $user->role }}">
                             <td class="px-4 text-center text-gray-600 text-sm">{{ $startNumber + $index }}</td>
                             <td class="px-4 text-gray-600 text-sm">{{ $user->name }}</td>
-                            <td class="py-3 px-4 text-center">
+                            <td class="px-4 text-center">
                                 <form action="{{ route('admin.users.updateStatus', $user->id) }}" method="POST">
                                     @csrf
                                     @method('PATCH')
                                     @if($user->status === 'pending')
-                                        <button type="submit" class="text-green-500 hover:text-green-600">Set Active</button>
+                                        <button type="submit" class="text-green-500 hover:text-green-600 text-sm">Set Active</button>
                                     @else
                                         <span class="text-gray-700 text-sm">Active</span>
                                     @endif
@@ -221,14 +133,6 @@
 </div>
 
 <script>
-     document.getElementById('addMentorBtn').addEventListener('click', function () {
-                document.getElementById('addMentorModal').classList.remove('hidden');
-            });
-
-            document.getElementById('closeMentorModal').addEventListener('click', function () {
-                document.getElementById('addMentorModal').classList.add('hidden');
-            });
-
     document.addEventListener('DOMContentLoaded', function () {
         const buttons = document.querySelectorAll('.tab-button');
         const userRows = document.querySelectorAll('.user-row');
