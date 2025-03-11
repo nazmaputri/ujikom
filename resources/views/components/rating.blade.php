@@ -79,12 +79,12 @@
                     @csrf
                     <div>
                         <label for="nama" class="block text-md text-gray-700">Nama :</label>
-                        <input type="nama" id="nama" name="nama" class="border border-gray-300 rounded-md p-2 w-full max-w-xs focus:outline-none focus:ring-1 focus:ring-sky-400 focus:border-sky-400" placeholder="Masukkan nama Anda" required/>
+                        <input type="nama" id="nama" name="nama" class="text-gray-600 border border-gray-300 rounded-md p-2 w-full max-w-xs focus:outline-none focus:ring-1 focus:ring-sky-400 focus:border-sky-400" placeholder="Masukkan nama Anda" required/>
                     </div>
 
                     <div>
                         <label for="email" class="block text-md text-gray-700">Email :</label>
-                        <input type="email" id="email" name="email" class="border border-gray-300 rounded-md p-2 w-full max-w-xs focus:outline-none  focus:ring-1 focus:ring-sky-400 focus:border-sky-400" placeholder="Masukkan email Anda" required/>
+                        <input type="email" id="email" name="email" class="text-gray-600 border border-gray-300 rounded-md p-2 w-full max-w-xs focus:outline-none  focus:ring-1 focus:ring-sky-400 focus:border-sky-400" placeholder="Masukkan email Anda" required/>
                     </div>
 
                     <div>
@@ -100,7 +100,7 @@
 
                     <div>
                         <label for="comment" class="block text-md text-gray-700">Komentar :</label>
-                        <textarea id="comment" name="comment" rows="4" class="border border-gray-300 rounded-md p-2 w-full md:max-w-xs focus:outline-none  focus:ring-1 focus:ring-sky-400 focus:border-sky-400" placeholder="Tulis ulasan Anda di sini..."></textarea>
+                        <textarea id="comment" name="comment" rows="4" class="text-gray-600 border border-gray-300 rounded-md p-2 w-full md:max-w-xs focus:outline-none  focus:ring-1 focus:ring-sky-400 focus:border-sky-400" placeholder="Tulis ulasan Anda di sini..."></textarea>
                     </div>
 
                     <button type="submit" class="bg-sky-400 text-white px-4 py-2 rounded-md hover:bg-sky-500 focus:outline-none flex items-center gap-2">

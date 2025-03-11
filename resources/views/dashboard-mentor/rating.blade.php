@@ -1,7 +1,7 @@
 @extends('layouts.dashboard-mentor')
 @section('content')
 <div class="bg-white p-6 rounded-lg shadow-md">
-    <h2 class="text-2xl font-bold mb-8 border-b-2 border-gray-300 pb-2 uppercase">Daftar Kursus</h2>
+    <h2 class="text-xl font-semibold mb-8 border-b-2 border-gray-300 pb-2 text-gray-700 text-center">Daftar Kursus</h2>
     
     <!-- Cek apakah ada kursus -->
     @if ($courses->isEmpty())

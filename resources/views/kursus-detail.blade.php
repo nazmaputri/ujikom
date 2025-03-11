@@ -35,7 +35,7 @@
             <div class="flex flex-col lg:flex-row bg-white shadow-lg overflow-hidden border rounded-xl">
                 <!-- Bagian Langganan -->
                 <div class="lg:w-2/3 w-full flex flex-col justify-center bg-white shadow-lg rounded-xl p-8 text-center">
-                    <h2 class="md:text-2xl text-xl font-bold text-gray-900 mb-2" data-aos="zoom-in">
+                    <h2 class="md:text-2xl text-xl font-semibold text-gray-700 mb-2" data-aos="zoom-in">
                         Yuk Berlangganan Untuk Akses Materinya!
                     </h2>
                     <!-- Deskripsi -->
@@ -45,7 +45,7 @@
                     </p>
                     <!-- Button Langganan -->
                     <a href="/login">
-                        <button class="bg-yellow-300 hover:bg-yellow-500 text-white font-semibold py-3 px-6 rounded-full text-md shadow-lg shadow-yellow-100 hover:shadow-none" data-aos="zoom-in">
+                        <button class="bg-yellow-300 hover:bg-yellow-200 text-gray-700 font-semibold py-3 px-6 rounded-full text-md shadow-lg shadow-yellow-100 hover:shadow-none" data-aos="zoom-in">
                             Langganan Sekarang
                         </button>
                     </a>                    
@@ -55,12 +55,12 @@
                     <div class="flex flex-col">
                         <!-- Materi Kursus -->
                         <div>
-                            <h3 class="text-xl font-bold text-gray-900 mb-4">Materi</h3>
+                            <h3 class="text-xl font-semibold text-gray-700 mb-4">Materi</h3>
                             <ul class="divide-y divide-gray-200">
                                 @foreach ($course->materi as $index => $materi)
                                     <li class="flex items-center space-x-4 py-3">
                                         <!-- Icon -->
-                                        <svg class="h-5 w-5 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                        <svg class="h-5 w-5 text-gray-700" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 512 512">
                                             <path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zM188.3 147.1c7.6-4.2 16.8-4.1 24.3 .5l144 88c7.1 4.4 11.5 12.1 11.5 20.5s-4.4 16.1-11.5 20.5l-144 88c-7.4 4.5-16.7 4.7-24.3 .5s-12.3-12.2-12.3-20.9l0-176c0-8.7 4.7-16.7 12.3-20.9z"/>
                                         </svg>
                                         <!-- Nomor dan Judul Materi -->
@@ -89,17 +89,17 @@
             <div class="w-full lg:w-1/3 mb-4 lg:mb-0">
                 <img src="{{ asset('storage/' . $course->image_path) }}" alt="{{ $course->title }}" class="rounded-lg w-full h-auto">
             </div>
-            <div class="ml-6 w-2/3">
-                <h2 class="md:text-xl text-md font-semibold capitalize mb-1">{{ $course->title }}</h2>
-                <p class="text-gray-600 mb-3"><strong>Mentor :</strong> {{ $course->mentor->name }}</p>
-                <p class="text-gray-700 mb-4">{{ $course->description }}</p>
-                <p class="text-green-600 bg-green-200 inline-flex items-center text-md p-1.5 rounded-xl font-semibold">Rp. {{ number_format($course->price, 0, ',', '.') }}</p>
+            <div class="ml-6 w-2/3 space-y-2">
+                <h2 class="md:text-xl text-md font-semibold text-gray-700 capitalize mb-1">{{ $course->title }}</h2>
+                <p class="text-gray-700">{{ $course->description }}</p>
+                <p class="text-gray-600">Mentor : {{ $course->mentor->name }}</p>
+                <p class="text-red-400 inline-flex items-center text-md rounded-xl font-semibold">Rp. {{ number_format($course->price, 0, ',', '.') }}</p>
             </div>
         </div>
         
         <div class="border-t mt-8 pt-6">
             <!-- Judul -->
-            <h3 class="text-xl font-bold text-gray-800 mb-4">Yang Akan Didapatkan</h3>
+            <h3 class="text-xl font-semibold text-gray-700 mb-4">Yang Akan Didapatkan</h3>
             
             <!-- Daftar Button -->
             <div class="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
@@ -124,7 +124,7 @@
         
         <div class="border-t mt-8 pt-6">
             <!-- Judul -->
-            <h3 class="text-xl font-bold text-gray-800 mb-4">Rating Kursus</h3>
+            <h3 class="text-xl font-semibold text-gray-700 mb-4">Rating Kursus</h3>
             
             <!-- Daftar Button -->
             <div class="flex items-center space-x-2 mt-4">
@@ -144,7 +144,7 @@
                         
                             <!-- Tanggal -->
                             <div class="flex items-center text-sm text-gray-500 space-x-2 mb-4">
-                                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                <svg class="w-4 h-4 text-gray-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="currentColor">
                                     <path d="M128 0c17.7 0 32 14.3 32 32l0 32 128 0 0-32c0-17.7 14.3-32 32-32s32 14.3 32 32l0 32 48 0c26.5 0 48 21.5 48 48l0 48L0 160l0-48C0 85.5 21.5 64 48 64l48 0 0-32c0-17.7 14.3-32 32-32zM0 192l448 0 0 272c0 26.5-21.5 48-48 48L48 512c-26.5 0-48-21.5-48-48L0 192zm64 80l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0c-8.8 0-16 7.2-16 16zm128 0l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0c-8.8 0-16 7.2-16 16zm144-16c-8.8 0-16 7.2-16 16l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0c-8.8 0-16 7.2-16 16zM64 400l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0c-8.8 0-16 7.2-16 16zm144-16c-8.8 0-16 7.2-16 16l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0c-8.8 0-16 7.2-16 16z" />
                                 </svg>
                                 <span>{{ \Carbon\Carbon::parse($rating->created_at)->format('d F Y') }}</span>

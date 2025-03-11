@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="bg-white p-6 rounded-lg shadow-md">
-    <h2 class="text-xl font-semibold mb-4 inline-block border-b-2 border-gray-300 pb-1 text-gray-700">Detail Kategori</h2>
+    <h2 class="text-xl font-semibold mb-8 border-b-2 pb-2 text-gray-700 text-center">Detail Kategori</h2>
 
     <!-- Detail Kategori -->
     <div class="flex flex-col md:flex-row mb-4">
@@ -25,7 +25,7 @@
 </div>
 
 <div class="mt-6 bg-white p-6 rounded-lg shadow-md">
-    <h3 class="text-xl font-semibold mb-4 inline-block border-b-2 border-gray-300 pb-1 text-gray-700">Daftar Kursus</h3>
+    <h3 class="text-xl font-semibold mb-4 inline-block pb-1 text-gray-700">Daftar Kursus</h3>
 
     <!-- Membungkus tabel dengan div untuk pengguliran -->
     <div class="overflow-x-auto">

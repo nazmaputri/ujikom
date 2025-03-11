@@ -20,7 +20,7 @@
         <!-- Nama -->
         <div class="mb-4">
             <label for="name" class="block text-sm font-medium text-gray-700">Nama</label>
-            <input type="text" name="name" id="name" value="{{ old('name', $user->name) }}" class="p-2 mt-1 block w-full border border-gray-200 rounded-md shadow-sm" required>
+            <input type="text" name="name" id="name" value="{{ old('name', $user->name) }}" class="p-2 mt-1 block w-full border border-gray-200 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500" required>
             @error('name')
                 <p class="text-red-500 text-xs">{{ $message }}</p>
             @enderror
@@ -29,19 +29,20 @@
         <!-- Email -->
         <div class="mb-4">
             <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-            <input type="email" name="email" id="email" value="{{ old('email', $user->email) }}" class="p-2 mt-1 block w-full border border-gray-200 rounded-md shadow-sm" required>
+            <input type="email" name="email" id="email" value="{{ old('email', $user->email) }}" class="p-2 mt-1 block w-full border border-gray-200 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500" required>
             @error('email')
                 <p class="text-red-500 text-xs">{{ $message }}</p>
             @enderror
         </div>
 
-    <!-- Password -->
+        <!-- Password -->
         <div class="mb-4 relative">
             <label for="password" class="block text-sm font-medium text-gray-700">Masukkan Password Baru</label>
-            <input type="password" name="password" id="password" class="p-2 mt-1 block w-full border-gray-200 border rounded-md shadow-sm">
-            <span class="absolute top-1/2 right-3 transform -translate-x-1/2 cursor-pointer text-gray-500" id="togglePassword">
-                <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" width="20" height="20">
-                    <path id="eyePath" d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM144 256a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-64c0 35.3-28.7 64-64 64c-7.1 0-13.9-1.2-20.3-3.3c-5.5-1.8-11.9 1.6-11.7 7.4c.3 6.9 1.3 13.8 3.2 20.7c13.7 51.2 66.4 81.6 117.6 67.9s81.6-66.4 67.9-117.6c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3z"/>
+            <input type="password" name="password" id="password" class="p-2 mt-1 block w-full border-gray-200 border rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500">
+            <span class="absolute top-1/2 right-3 mt-3 transform -translate-y-1/2 cursor-pointer text-gray-500" id="togglePassword">
+                <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5">
+                    <path d="M10 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
+                    <path fill-rule="evenodd" d="M.664 10.59a1.651 1.651 0 0 1 0-1.186A10.004 10.004 0 0 1 10 3c4.257 0 7.893 2.66 9.336 6.41.147.381.146.804 0 1.186A10.004 10.004 0 0 1 10 17c-4.257 0-7.893-2.66-9.336-6.41ZM14 10a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z" clip-rule="evenodd" />
                 </svg>
             </span>
             @error('password')
@@ -52,41 +53,68 @@
         <!-- Confirm Password -->
         <div class="mb-4 relative">
             <label for="password_confirmation" class="block text-sm font-medium text-gray-700">Konfirmasi Password Baru</label>
-            <input type="password" name="password_confirmation" id="password_confirmation" class="p-2 mt-1 block w-full border border-gray-200 rounded-md shadow-sm">
-            <span class="absolute top-1/2 right-3 transform -translate-x-1/2 cursor-pointer text-gray-500" id="toggleConfirmPassword">
-                <svg id="eyeConfirmIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" width="20" height="20">
-                    <path id="eyeConfirmPath" d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM144 256a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-64c0 35.3-28.7 64-64 64c-7.1 0-13.9-1.2-20.3-3.3c-5.5-1.8-11.9 1.6-11.7 7.4c.3 6.9 1.3 13.8 3.2 20.7c13.7 51.2 66.4 81.6 117.6 67.9s81.6-66.4 67.9-117.6c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3z"/>
+            <input type="password" name="password_confirmation" id="password_confirmation" class="p-2 mt-1 block w-full border border-gray-200 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500">
+            <span class="absolute top-1/2 right-1 transform -translate-x-1/2 cursor-pointer text-gray-500" id="toggleConfirmPassword">
+                <svg id="eyeConfirmIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5">
+                    <path d="M10 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
+                    <path fill-rule="evenodd" d="M.664 10.59a1.651 1.651 0 0 1 0-1.186A10.004 10.004 0 0 1 10 3c4.257 0 7.893 2.66 9.336 6.41.147.381.146.804 0 1.186A10.004 10.004 0 0 1 10 17c-4.257 0-7.893-2.66-9.336-6.41ZM14 10a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z" clip-rule="evenodd" />
                 </svg>
             </span>
+            @error('password_confirmation')
+                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+            @enderror
         </div>
+
         <div class="flex justify-end space-x-4">
-            <!-- Tombol Simpan -->
-            <button type="submit" class="bg-sky-300 text-white font-bold py-2 px-6 rounded-lg hover:bg-sky-600">Simpan</button>
-            
             <!-- Tombol Batal -->
-            <a href="{{ route('welcome-admin') }}" class="bg-red-400 text-white font-bold py-2 px-6 rounded-lg hover:bg-red-600">Batal</a>
+            <a href="{{ route('welcome-admin') }}" class="bg-red-400 text-white font-semisbold py-2 px-6 rounded-lg hover:bg-red-300">Batal</a> 
+            <!-- Tombol Simpan -->
+            <button type="submit" class="bg-sky-400 text-white font-semibold py-2 px-6 rounded-lg hover:bg-sky-300">Simpan</button>
         </div>              
     </form>
 
-    <script>
-        // Toggle password visibility for password field
-        const togglePassword = document.getElementById('togglePassword');
-        const passwordField = document.getElementById('password');
+<script>
+    // Pengaturan Icon PAssword
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordField = document.getElementById('password');
+    const eyeIcon = document.getElementById('eyeIcon');
+
+    const eyeOpen = `<path d="M10 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
+                    <path fill-rule="evenodd" d="M.664 10.59a1.651 1.651 0 0 1 0-1.186A10.004 10.004 0 0 1 10 3c4.257 0 7.893 2.66 9.336 6.41.147.381.146.804 0 1.186A10.004 10.004 0 0 1 10 17c-4.257 0-7.893-2.66-9.336-6.41ZM14 10a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z" clip-rule="evenodd" />`;
+    const eyeClosed = `<path fill-rule="evenodd" d="M3.28 2.22a.75.75 0 0 0-1.06 1.06l14.5 14.5a.75.75 0 1 0 1.06-1.06l-1.745-1.745a10.029 10.029 0 0 0 3.3-4.38 1.651 1.651 0 0 0 0-1.185A10.004 10.004 0 0 0 9.999 3a9.956 9.956 0 0 0-4.744 1.194L3.28 2.22ZM7.752 6.69l1.092 1.092a2.5 2.5 0 0 1 3.374 3.373l1.091 1.092a4 4 0 0 0-5.557-5.557Z" clip-rule="evenodd" />
+                    <path d="m10.748 13.93 2.523 2.523a9.987 9.987 0 0 1-3.27.547c-4.258 0-7.894-2.66-9.337-6.41a1.651 1.651 0 0 1 0-1.186A10.007 10.007 0 0 1 2.839 6.02L6.07 9.252a4 4 0 0 0 4.678 4.678Z" />`;
+
+    togglePassword.addEventListener('click', function() {
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            eyeIcon.innerHTML = eyeClosed;
+        } else {
+            passwordField.type = 'password';
+            eyeIcon.innerHTML = eyeOpen;
+        }
+    });
     
-        togglePassword.addEventListener('click', function() {
-            const type = passwordField.type === 'password' ? 'text' : 'password';
-            passwordField.type = type;
-        });
-    
-        // Toggle password visibility for confirm password field
-        const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
-        const confirmPasswordField = document.getElementById('password_confirmation');
-    
-        toggleConfirmPassword.addEventListener('click', function() {
-            const type = confirmPasswordField.type === 'password' ? 'text' : 'password';
-            confirmPasswordField.type = type;
-        });
-    </script>
+    // Pengaturan Icon Konfirmasi Password
+    const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
+    const confirmPasswordField = document.getElementById('password_confirmation');
+    const eyeConfirmIcon = document.getElementById('eyeConfirmIcon');
+
+    const eyeOpenConfirm = `<path d="M10 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
+                    <path fill-rule="evenodd" d="M.664 10.59a1.651 1.651 0 0 1 0-1.186A10.004 10.004 0 0 1 10 3c4.257 0 7.893 2.66 9.336 6.41.147.381.146.804 0 1.186A10.004 10.004 0 0 1 10 17c-4.257 0-7.893-2.66-9.336-6.41ZM14 10a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z" clip-rule="evenodd" />`;
+
+    const eyeClosedConfirm = `<path fill-rule="evenodd" d="M3.28 2.22a.75.75 0 0 0-1.06 1.06l14.5 14.5a.75.75 0 1 0 1.06-1.06l-1.745-1.745a10.029 10.029 0 0 0 3.3-4.38 1.651 1.651 0 0 0 0-1.185A10.004 10.004 0 0 0 9.999 3a9.956 9.956 0 0 0-4.744 1.194L3.28 2.22ZM7.752 6.69l1.092 1.092a2.5 2.5 0 0 1 3.374 3.373l1.091 1.092a4 4 0 0 0-5.557-5.557Z" clip-rule="evenodd" />
+                    <path d="m10.748 13.93 2.523 2.523a9.987 9.987 0 0 1-3.27.547c-4.258 0-7.894-2.66-9.337-6.41a1.651 1.651 0 0 1 0-1.186A10.007 10.007 0 0 1 2.839 6.02L6.07 9.252a4 4 0 0 0 4.678 4.678Z" />`;
+
+    toggleConfirmPassword.addEventListener('click', function() {
+        if (confirmPasswordField.type === 'password') {
+            confirmPasswordField.type = 'text';
+            eyeConfirmIcon.innerHTML = eyeClosedConfirm;
+        } else {
+            confirmPasswordField.type = 'password';
+            eyeConfirmIcon.innerHTML = eyeOpenConfirm;
+        }
+    });
+</script>
 </div>
 
 @endsection

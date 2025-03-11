@@ -4,7 +4,7 @@
 <div class="container mx-auto bg-white rounded-lg p-5">
     <!-- Wrapper div dengan background putih dan padding -->
     <div class="">
-        <h2 class="text-xl font-semibold mb-4 inline-block border-b-2 border-gray-300 pb-1 text-gray-700">Diskon</h2>
+        <h2 class="text-xl font-semibold mb-8 border-b-2 pb-2 text-gray-700 text-center">Diskon</h2>
         <div>
             <a href="{{ route('discount-tambah') }}" class="bg-sky-400 text-white px-4 py-2 rounded hover:bg-sky-300 transition duration-300">Tambah Diskon</a>
         </div>

@@ -76,14 +76,13 @@
                     <a href="{{ $course->isCompletedForCertificate ? route('certificate-detail', ['courseId' => $course->id]) : '#' }}" 
                         class="flex-1 {{ !$course->isCompletedForCertificate ? 'pointer-events-none' : '' }}">
                          <button class="w-full py-2 rounded-lg font-semibold flex items-center justify-center gap-2 
-                             {{ !$course->isCompletedForCertificate ? 'bg-gray-400 text-gray-600 border-gray-600 cursor-not-allowed opacity-50' : 'bg-red-100/50 text-red-500 border border-red-500 hover:bg-red-600 hover:text-white transition-colors group' }}">
+                             {{ !$course->isCompletedForCertificate ? 'bg-gray-400 text-gray-600 border-gray-600 cursor-not-allowed opacity-50' : 'bg-green-200/50 text-green-500 border border-green-300 hover:bg-green-300 hover:text-white transition-colors group' }}">
                              
                              <!-- SVG Icon with transition effects -->
-                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="w-5 h-5 transition-all 
-                                 {{ !$course->isCompletedForCertificate ? 'grayscale opacity-50 cursor-not-allowed' : 'group-hover:fill-white fill-red-500' }}">
-                                 <path d="M0 64C0 28.7 28.7 0 64 0L224 0l0 128c0 17.7 14.3 32 32 32l128 0 0 288c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 64zm384 64l-128 0L256 0 384 128z"/>
-                             </svg>
-                             
+                             <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 48 48" class="w-5 h-5 transition-all 
+                                {{ !$course->isCompletedForCertificate ? 'grayscale opacity-50 cursor-not-allowed' : 'group-hover:fill-white fill-green-500' }}">
+                                <path d="M 9.5 7 C 6.47 7 4 9.47 4 12.5 L 4 31.5 C 4 34.53 6.47 37 9.5 37 L 30 37 L 30 35.650391 C 28.75 34.110391 28 32.14 28 30 C 28 25.03 32.03 21 37 21 C 39.83 21 42.36 22.309375 44 24.359375 L 44 12.5 C 44 9.47 41.53 7 38.5 7 L 9.5 7 z M 13.5 15 L 34.5 15 C 35.33 15 36 15.67 36 16.5 C 36 17.33 35.33 18 34.5 18 L 13.5 18 C 12.67 18 12 17.33 12 16.5 C 12 15.67 12.67 15 13.5 15 z M 37 23 A 7 7 0 1 0 37 37 A 7 7 0 1 0 37 23 z M 13.5 26 L 22.5 26 C 23.33 26 24 26.67 24 27.5 C 24 28.33 23.33 29 22.5 29 L 13.5 29 C 12.67 29 12 28.33 12 27.5 C 12 26.67 12.67 26 13.5 26 z M 32 37.480469 L 32 43.980469 C 32 44.790469 32.910312 45.260781 33.570312 44.800781 L 36.429688 42.800781 C 36.769688 42.560781 37.230312 42.560781 37.570312 42.800781 L 40.429688 44.800781 C 41.089687 45.260781 42 44.790469 42 43.980469 L 42 37.480469 C 40.57 38.440469 38.85 39 37 39 C 35.15 39 33.43 38.440469 32 37.480469 z"></path>
+                            </svg>
                              Sertifikat
                          </button>
                      </a>                            

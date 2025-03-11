@@ -5,7 +5,7 @@
 <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
 
 <div class="bg-white p-6 rounded-lg shadow-md">
-    <h2 class="text-xl font-semibold mb-4 inline-block border-b-2 border-gray-300 pb-1 text-gray-700">Detail Kursus</h2>
+    <h2 class="text-xl font-semibold mb-8 border-b-2 pb-2 text-gray-700 text-center">Detail Kursus</h2>
     <!-- Card Informasi Kursus -->
     <div class="flex mb-4">
         <!-- Thumbnail Kursus -->
@@ -26,7 +26,7 @@
 
     <!-- Silabus -->
     <div class="mt-10">
-        <h3 class="text-xl font-semibold mb-4 inline-block border-b-2 border-gray-300 pb-1 text-gray-700">Materi Kursus</h3>
+        <h3 class="text-xl font-semibold mb-4 inline-block pb-1 text-gray-700">Materi Kursus</h3>
         <div class="space-y-6">
             @foreach($course->materi as $materi)
             <div class="bg-neutral-50 p-4 rounded-lg shadow-md">
@@ -130,10 +130,11 @@
             @endforeach
         </div>
     </div>
+</div>
 
-    <!-- Tabel Peserta Terdaftar -->
-    <div class="mt-6">
-        <h3 class="text-xl font-semibold mb-4 inline-block border-b-2 border-gray-300 pb-1 text-gray-700">Peserta Terdaftar</h3>
+<!-- Tabel Peserta Terdaftar -->
+    <div class="bg-white mt-6 p-6 rounded-lg shadow-md">
+        <h3 class="text-xl font-semibold mb-4 inline-block pb-1 text-gray-700">Peserta Terdaftar</h3>
             <div class="overflow-x-auto">
                 <table class="min-w-full" id="courseTable">
                     <thead>
@@ -169,6 +170,4 @@
             </a>
         </div> 
     </div>
-</div>
-    
 @endsection

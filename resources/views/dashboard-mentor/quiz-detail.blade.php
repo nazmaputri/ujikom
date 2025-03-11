@@ -6,15 +6,15 @@
     <!-- Card Wrapper untuk Kuis -->
     <div class="bg-white p-6 rounded-lg shadow-lg">
         <!-- Judul Kuis -->
-        <h1 class="text-2xl font-bold mb-4 border-b-2 pb-2 uppercase">{{ $quiz->title }}</h1>
+        <h1 class="text-xl text-gray-700 text-center font-semibold mb-3 border-b-2 pb-2 capitalize">{{ $quiz->title }}</h1>
 
         <!-- Deskripsi Kuis -->
-        <p class="text-gray-700 mb-4">
+        <p class="text-gray-700 mb-2 text-md">
             {{ $quiz->description ?? 'Tidak ada deskripsi untuk kuis ini.' }}
         </p>
 
         <!-- Durasi Kuis -->
-        <p class="text-gray-600 mb-6">
+        <p class="text-gray-600 mb-6 text-sm">
             <strong>Durasi :</strong> {{ $quiz->duration }} Menit
         </p>
 
@@ -26,7 +26,7 @@
             <div class="bg-gray-50 border rounded-lg p-4 shadow-md text-sm">
                 <div class="flex items-start">
                     <!-- Nomor Soal -->
-                    <span class="text-2xl font-bold mr-4">{{ $index + 1 }}.</span>
+                    <span class="text-sm text-gray-700 font-semibold mr-2">{{ $index + 1 }}.</span>
                     
                     <!-- Pertanyaan -->
                     <p class="text-sm font-medium text-gray-700 flex-1 capitalize">{{ $question->question }}</p>
@@ -53,7 +53,7 @@
         <!-- Tombol Kembali -->
         <div class="mt-6 justify-end flex">
             <a href="{{ route('materi.show', ['courseId' => $course->id, 'materiId' => $materi->id]) }}"
-               class="bg-sky-400 hover:bg-sky-600 text-white font-bold py-2 px-4 rounded">
+               class="bg-sky-400 hover:bg-sky-300 text-white font-bold py-2 px-4 rounded">
                 Kembali
             </a>
         </div>

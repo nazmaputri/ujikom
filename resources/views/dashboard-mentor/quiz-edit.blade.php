@@ -4,7 +4,7 @@
 <div class="container mx-auto">
     <!-- Card Wrapper -->
     <div class="bg-white p-6 rounded-lg shadow-lg">
-        <h1 class="text-2xl uppercase font-bold mb-6 text-center border-b-2 border-gray-300 pb-2">Edit Kuis</h1>
+        <h1 class="text-xl font-semibold text-gray-700 mb-6 text-center border-b-2 pb-2">Edit Kuis</h1>
 
         <!-- Form Edit Quiz -->
         <form action="{{ route('quiz.update', ['courseId' => $courseId, 'materiId' => $materiId, $quiz->id]) }}" method="POST">
@@ -14,21 +14,21 @@
             <!-- Judul Quiz -->
             <div class="mb-4">
                 <label for="title" class="block text-gray-700 font-medium">Judul Kuis</label>
-                <input type="text" name="title" id="title" value="{{ $quiz->title }}" class="w-full border-gray-300 rounded-lg border focus:ring focus:ring-blue-300 p-2">
+                <input type="text" name="title" id="title" value="{{ $quiz->title }}" class="w-full border-gray-300 rounded-lg border focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 p-2">
                 @error('title') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
             </div>
 
             <!-- Deskripsi Quiz -->
             <div class="mb-4">
                 <label for="description" class="block text-gray-700 font-medium">Deskripsi</label>
-                <textarea name="description" id="description" rows="3" class="w-full border-gray-300 rounded-lg border focus:ring focus:ring-blue-300 p-2">{{ $quiz->description }}</textarea>
+                <textarea name="description" id="description" rows="3" class="w-full border-gray-300 rounded-lg border focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 p-2">{{ $quiz->description }}</textarea>
                 @error('description') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
             </div>
 
             <!-- Durasi Quiz -->
             <div class="mb-4">
                 <label for="duration" class="block text-gray-700 font-medium">Durasi (Menit)</label>
-                <input type="number" name="duration" id="duration" value="{{ $quiz->duration }}" class="w-full border-gray-300 border rounded-lg focus:ring focus:ring-blue-300 p-2">
+                <input type="number" name="duration" id="duration" value="{{ $quiz->duration }}" class="w-full border-gray-300 border rounded-lg focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 p-2">
                 @error('duration') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
             </div>
 
@@ -40,7 +40,7 @@
                     <!-- Soal -->
                     <div class="mb-4">
                         <label for="questions[{{ $index }}][question]" class="block text-gray-700 font-medium">Soal {{ $index + 1 }}</label>
-                        <input type="text" name="questions[{{ $index }}][question]" id="questions[{{ $index }}][question]" value="{{ $question->question }}" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-blue-300 p-2">
+                        <input type="text" name="questions[{{ $index }}][question]" id="questions[{{ $index }}][question]" value="{{ $question->question }}" class="w-full border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 p-2">
                         @error("questions.$index.question") <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                     </div>
 
@@ -97,20 +97,19 @@
                 <div id="question-list"></div>
         
                 <!-- Tombol Tambah Soal -->
-                <button type="button" onclick="addQuestion()" class="mt-4 bg-green-400 hover:bg-green-500 text-white font-bold py-2 px-4 rounded">
+                <button type="button" onclick="addQuestion()" class="mt-4 bg-green-400 hover:bg-green-500 text-white font-semibold py-2 px-4 rounded">
                     Tambah Soal
                 </button>
             </div>
 
-            <!-- Tombol Simpan -->
-             <!-- Tombol Submit -->
+            <!-- Tombol aksi -->
              <div class="mt-6 flex justify-end space-x-2">
-                <button type="submit" class="bg-sky-400 hover:bg-sky-600 text-white font-bold py-2 px-4 rounded">
-                    Edit
-                </button>
-                <a href="{{ route('materi.show', ['courseId' => $course->id, 'materiId' => $materi->id]) }}" class="bg-red-400 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
+                <a href="{{ route('materi.show', ['courseId' => $course->id, 'materiId' => $materi->id]) }}" class="bg-red-400 hover:bg-red-300 text-white font-semibold py-2 px-4 rounded">
                     Batal
                 </a>
+                <button type="submit" class="bg-sky-400 hover:bg-sky-300 text-white font-semibold py-2 px-4 rounded">
+                    Edit
+                </button>
             </div>
         </form>
     </div>

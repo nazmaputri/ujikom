@@ -3,7 +3,7 @@
 @section('content')
 <div class="container mx-auto">
     <div class="bg-white shadow-md rounded-lg p-6 mb-6">
-        <h2 class="text-xl font-semibold mb-4 inline-block border-b-2 border-gray-300 pb-1 text-gray-700">Data Peserta</h2>
+        <h2 class="text-xl font-semibold mb-8 border-b-2 pb-2 text-gray-700 text-center">Data Peserta</h2>
 
         <!-- Search Bar -->
         <form action="{{ route('datapeserta-admin') }}" method="GET" class="max-w-sm mx-auto mb-4">
