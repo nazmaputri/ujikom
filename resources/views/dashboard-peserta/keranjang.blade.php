@@ -26,6 +26,7 @@
             <div class="text-red-600 font-semibold text-lg mt-2" id="countdown-timer"></div>
         </div>
         @endif
+
         <!-- Tambahkan Countdown Timer -->
         <script>
             function startCountdown(endDate) {
@@ -123,31 +124,42 @@
                 <script>
                     document.getElementById('pay-now').addEventListener('click', function(e) {
                         e.preventDefault();
-                
+
+                        // Ambil harga normal dari atribut data-total-price
                         const totalPrice = this.getAttribute('data-total-price');
                         if (!totalPrice || isNaN(totalPrice)) {
                             alert('Harga tidak valid');
                             return;
                         }
-                
+
+                        // Ambil kode kupon dari input (nilai akan otomatis terisi jika pengguna sudah menerapkan kupon)
+                        const couponInput = document.getElementById('coupon-code');
+                        let couponCode = '';
+                        if (couponInput && couponInput.value.trim() !== '') {
+                            couponCode = couponInput.value.trim();
+                        }
+
+                        // Kirim data amount dan coupon_code ke server
                         fetch('/create-payment', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
                                 'X-CSRF-TOKEN': '{{ csrf_token() }}',
                             },
-                            body: JSON.stringify({ amount: totalPrice })
+                            body: JSON.stringify({ 
+                                amount: totalPrice, // Harga normal, server akan menghitung diskon jika ada coupon_code
+                                coupon_code: couponCode 
+                            })
                         })
                         .then(response => response.json())
                         .then(data => {
                             console.log(data); // Periksa data yang diterima
                             if (data.snapToken) {
-                                // Simpan order_id yang sudah kita kirim dari response
+                                // Simpan order_id dari response
                                 const orderId = data.order_id;
                                 snap.pay(data.snapToken, {
                                     onSuccess: function(result) {
                                         alert('Pembayaran berhasil');
-                                        // Gunakan orderId dari response jika result.order_id tidak sesuai
                                         fetch('/payment-success', {
                                             method: 'POST',
                                             headers: {
@@ -180,6 +192,7 @@
                         .catch(error => alert('Terjadi kesalahan saat memproses pembayaran.'));
                     });
                 </script>
+
                 
 
                 <!-- Tambahkan JavaScript -->

@@ -6,6 +6,7 @@ use App\Models\Course;
 use App\Models\Payment;
 use App\Models\Keranjang;
 use App\Models\Purchase;
+use App\Models\Discount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Midtrans\Config;
@@ -23,38 +24,71 @@ class PaymentController extends Controller
         }
     
         // Ambil semua item di keranjang berdasarkan user_id
-        $keranjangItems = Keranjang::where('user_id', $user->id)->get();
+        $keranjangItems = Keranjang::where('user_id', $user->id)->with('course')->get();
     
         if ($keranjangItems->isEmpty()) {
             return response()->json(['error' => 'Keranjang kosong'], 400);
         }
     
-        // Hitung total harga semua kursus dalam keranjang
+        // Hitung total harga sebelum diskon
         $totalAmount = 0;
         $itemDetails = [];
     
         foreach ($keranjangItems as $item) {
-            $totalAmount += $item->course->price; // Pastikan kolom price ada di tabel courses
-    
+            $totalAmount += $item->course->price;
             $itemDetails[] = [
-                'id' => 'COURSE-' . $item->course_id,
-                'price' => $item->course->price,
+                'id'       => 'COURSE-' . $item->course_id,
+                'price'    => $item->course->price,
                 'quantity' => 1,
-                'name' => $item->course->title,
+                'name'     => $item->course->title,
             ];
+        }
+    
+        // Cek apakah ada kode kupon yang dikirim
+        $couponCode = $request->input('coupon_code');
+        if ($couponCode) {
+            // Cari diskon aktif berdasarkan kode kupon
+            $discount = Discount::where('coupon_code', $couponCode)
+                ->where('start_date', '<=', now())
+                ->where('end_date', '>=', now())
+                ->first();
+    
+            if ($discount) {
+                // Hitung diskon sesuai dengan properti apply_to_all
+                if ($discount->apply_to_all) {
+                    $discountAmount = $totalAmount * ($discount->discount_percentage / 100);
+                } else {
+                    // Diskon hanya berlaku untuk kursus tertentu
+                    $discountAmount = 0;
+                    foreach ($keranjangItems as $item) {
+                        if ($discount->courses->contains($item->course->id)) {
+                            $discountAmount += $item->course->price * ($discount->discount_percentage / 100);
+                        }
+                    }
+                }
+                $totalAmount = $totalAmount - $discountAmount;
+    
+                // Tambahkan item detail untuk diskon sebagai item dengan nilai negatif
+                $itemDetails[] = [
+                    'id'       => 'DISCOUNT-' . $couponCode,
+                    'price'    => -$discountAmount,
+                    'quantity' => 1,
+                    'name'     => 'Diskon Kupon ' . $couponCode,
+                ];
+            }
         }
     
         // Buat Order ID unik yang akan digunakan sebagai transaction_id
         $orderId = 'ORDER-' . time();
     
         // Konfigurasi Midtrans
-        Config::$serverKey   = env('MIDTRANS_SERVER_KEY');
-        Config::$clientKey   = env('MIDTRANS_CLIENT_KEY'); // Pastikan clientKey diambil dari .env
+        Config::$serverKey    = env('MIDTRANS_SERVER_KEY');
+        Config::$clientKey    = env('MIDTRANS_CLIENT_KEY'); // Pastikan clientKey diambil dari .env
         Config::$isProduction = false;
         Config::$isSanitized  = true;
         Config::$is3ds        = true;
     
-        // Data transaksi Midtrans
+        // Data transaksi Midtrans dengan harga total yang sudah didiskon (jika ada)
         $transactionData = [
             'transaction_details' => [
                 'order_id'     => $orderId,
@@ -69,10 +103,10 @@ class PaymentController extends Controller
         ];
     
         try {
-            // Ambil Snap Token dari Midtrans
+            // Ambil Snap Token dari Midtrans dengan data transaksi yang sudah diperbarui
             $snapToken = Snap::getSnapToken($transactionData);
     
-            // Simpan transaksi ke tabel `payments` tanpa course_id
+            // Simpan transaksi ke tabel `payments`
             $payment = Payment::create([
                 'user_id'            => $user->id,
                 'transaction_id'     => $orderId,
@@ -87,7 +121,7 @@ class PaymentController extends Controller
                 Purchase::create([
                     'user_id'        => $user->id,
                     'course_id'      => $item->course_id,
-                    'transaction_id' => $orderId, // Menghubungkan pembelian ke Payment via transaction_id
+                    'transaction_id' => $orderId,
                     'status'         => 'pending'
                 ]);
             }
@@ -97,7 +131,8 @@ class PaymentController extends Controller
     
             return response()->json([
                 'snapToken' => $snapToken,
-                'payment'   => $payment
+                'payment'   => $payment,
+                'order_id'  => $orderId,
             ]);
         } catch (\Exception $e) {
             return response()->json([
@@ -111,22 +146,29 @@ class PaymentController extends Controller
     {
         $orderId = $request->input('order_id');
         $transactionStatus = $request->input('transaction_status');
-
+    
         // Cari transaksi berdasarkan order_id
         $payment = Payment::where('transaction_id', $orderId)->first();
-
+    
         if (!$payment) {
             return response()->json(['message' => 'Transaksi tidak ditemukan'], 404);
         }
-
-        // Perbarui status pembayaran
+    
+        // Perbarui status pembayaran di tabel payments
         $payment->transaction_status = $transactionStatus;
         $payment->save();
-
+    
+        // Jika status transaksi sukses, perbarui status pembelian di tabel purchases
+        if ($transactionStatus === 'success') {
+            Purchase::where('transaction_id', $orderId)
+                ->update(['status' => 'success']);
+        }
+    
         return response()->json([
             'message' => 'Status pembayaran berhasil diperbarui.',
             'payment' => $payment,
         ]);
     }
+    
 }
 

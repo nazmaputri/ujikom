@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardMentor\CourseController;
 use App\Http\Controllers\DashboardAdmin\CategoryController;
 use App\Models\Category;
 use App\Models\Course;
+use App\Models\Purchase;
 use App\Models\Payment;
 use App\Models\RatingKursus;
 use Illuminate\Http\Request;
@@ -115,28 +116,29 @@ class DashboardPesertaController extends Controller
         // Ambil kategori yang terkait dengan kursus ini
         $category = Category::findOrFail($categoryId);
     
-        // Cek apakah user sudah membeli kursus ini
-        $hasPurchased = Payment::where('course_id', $course->id)
+        // Cek apakah user sudah membeli kursus ini melalui tabel purchases
+        $hasPurchased = Purchase::where('course_id', $course->id)
                                 ->where('user_id', auth('student')->id())
-                                ->where('transaction_status', 'success')
+                                ->where('status', 'success')
                                 ->exists();
     
-        // Ambil status pembayaran berdasarkan user yang login dan kursus yang dibeli
+        // Ambil status pembelian dari tabel purchases
         $paymentStatus = null;
         if ($hasPurchased) {
             $course->is_purchased = true;
         } else {
-            $payment = Payment::where('course_id', $course->id)
-                              ->where('user_id', auth('student')->id())
-                              ->first();
-            if ($payment) {
-                $paymentStatus = $payment->transaction_status;
+            $purchase = Purchase::where('course_id', $course->id)
+                                ->where('user_id', auth('student')->id())
+                                ->first();
+            if ($purchase) {
+                $paymentStatus = $purchase->status;
             }
         }
     
         // Kirim data kursus dan kategori ke view
         return view('dashboard-peserta.detail', compact('course', 'paymentStatus', 'hasPurchased', 'category'));
-    }    
+    }
+    
     
     public function study($id)
     {
