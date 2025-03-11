@@ -10,6 +10,7 @@ use App\Models\Course;
 use App\Models\Materi;
 use App\Models\User;
 use App\Models\RatingKursus;
+use App\Models\Purchase;
 use App\Models\Payment;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -46,12 +47,13 @@ class DashboardMentorController extends Controller
         $mentorId = Auth::id();
     
         // Menghitung jumlah peserta unik dengan status pembayaran 'success' untuk kursus mentor
-        $jumlahPeserta = Payment::where('transaction_status', 'success')
-            ->whereHas('course', function ($query) use ($mentorId) {
-                $query->where('mentor_id', $mentorId);
-            })
-            ->distinct('user_id')
-            ->count('user_id'); 
+        $jumlahPeserta = Purchase::where('status', 'success')
+        ->whereHas('course', function ($query) use ($mentorId) {
+            $query->where('mentor_id', $mentorId);
+        })
+        ->distinct('user_id')
+        ->count('user_id');
+    
     
         // Menghitung jumlah kursus milik mentor
         $jumlahKursus = Course::where('mentor_id', $mentorId)->count(); 
@@ -82,13 +84,12 @@ class DashboardMentorController extends Controller
         $mentorId = Auth::id();
         $currentYear = $request->input('year', date('Y')); // Ambil tahun dari URL atau gunakan tahun sekarang sebagai default
     
-        // Ambil data pendapatan bulanan berdasarkan kursus mentor dan tahun yang dipilih
-        $payments = DB::table('payments')
-            ->join('courses', 'payments.course_id', '=', 'courses.id') // Gabungkan dengan tabel courses
-            ->selectRaw('MONTH(payments.created_at) as month, SUM(payments.amount) as total')
+        $payments = DB::table('purchases')
+            ->join('courses', 'purchases.course_id', '=', 'courses.id')
+            ->selectRaw('MONTH(purchases.created_at) as month, SUM(courses.price) as total')
             ->where('courses.mentor_id', $mentorId) // Filter berdasarkan mentor yang login
-            ->where('payments.transaction_status', 'success') // Hanya transaksi sukses
-            ->whereYear('payments.created_at', $currentYear) // Filter berdasarkan tahun
+            ->where('purchases.status', 'success')  // Hanya pembelian (purchases) dengan status sukses
+            ->whereYear('purchases.created_at', $currentYear) // Filter berdasarkan tahun
             ->groupBy('month')
             ->orderBy('month')
             ->get();
