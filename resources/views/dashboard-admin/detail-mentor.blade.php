@@ -65,18 +65,11 @@
         <div class="text-left mb-4 border-b-2 border-gray-300 pb-2">
             <h2 class="text-lg font-semibold text-gray-700">Kursus</h2>
         </div>
-        <div class="border p-2 rounded-lg shadow-sm border-gray-200">
-            <h4 class="text-gray-500 font-medium">Kursus:</h4>
-            <p class="text-gray-700">{{ $user->course ?? '-' }}</p>
-        </div>
-    </div>
-
-    <!-- Tombol Kembali -->
-    <div class="text-right">
+        <div class="text-right">
         <a href="{{ route('datamentor-admin') }}" class="bg-sky-400 hover:bg-sky-300 text-white font-semibold py-2 px-6 rounded-lg shadow-md hover:shadow-none">
             Kembali
         </a>
+        </div>
     </div>
-</div>
 
 @endsection

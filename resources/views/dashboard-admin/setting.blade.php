@@ -2,8 +2,8 @@
 
 @section('content')
 
-<div class="w-full mx-auto bg-white p-6 rounded-lg shadow-lg">
-    <h2 class="text-xl font-semibold mb-6 text-center border-b-2 border-gray-300 text-gray-700 pb-2">Pengaturan Akun</h2>
+<div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-lg">
+    <h2 class="text-2xl font-semibold text-gray-800 border-b-2 pb-2 mb-4">Pengaturan Akun</h2>
     <form action="{{ url('/settings') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="mb-4">
@@ -64,12 +64,11 @@
                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
             @enderror
         </div>
-
         <div class="flex justify-end space-x-4">
             <!-- Tombol Batal -->
-            <a href="{{ route('welcome-admin') }}" class="bg-red-400 text-white font-semisbold py-2 px-6 rounded-lg hover:bg-red-300">Batal</a> 
+            <a href="{{ route('welcome-admin') }}" class="bg-red-400 text-white font-bold py-2 px-6 rounded-lg hover:bg-red-300">Batal</a>
             <!-- Tombol Simpan -->
-            <button type="submit" class="bg-sky-400 text-white font-semibold py-2 px-6 rounded-lg hover:bg-sky-300">Simpan</button>
+            <button type="submit" class="bg-sky-400 text-white font-bold py-2 px-6 rounded-lg hover:bg-sky-300">Simpan</button>
         </div>              
     </form>
 
