@@ -13,7 +13,7 @@
         <div class="overflow-x-auto mt-6">
             <table class="min-w-full">
                 <thead>
-                    <tr class="bg-sky-100 text-gray-700">
+                    <tr class="bg-sky-100 text-gray-700 text-sm">
                         <th class="py-2 px-2 text-center text-gray-700">Kode Kupon</th>
                         <th class="py-2 px-2 text-center text-gray-700">Diskon (%)</th>
                         <th class="py-2 px-2 text-center text-gray-700">Tanggal</th>

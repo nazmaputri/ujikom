@@ -5,7 +5,7 @@
 <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
 
 <div class="bg-white p-8 rounded-lg shadow-md">
-    <h2 class="text-xl text-gray-700 font-semibold mb-6 border-b-2 border-gray-300 pb-2">Detail Kursus</h2>
+    <h2 class="text-xl text-gray-700 font-semibold mb-6 border-b-2 border-gray-300 pb-2 text-center">Detail Kursus</h2>
     <div class="flex flex-col sm:flex-row mb-4 space-y-4 sm:space-y-0 sm:space-x-4">
         <div class="w-full sm:w-1/3">
             <img src="{{ asset('storage/' . $course->image_path) }}" alt="{{ $course->title }}" class="rounded-lg w-full h-auto">

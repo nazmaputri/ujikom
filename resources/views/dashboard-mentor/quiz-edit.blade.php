@@ -13,22 +13,22 @@
 
             <!-- Judul Quiz -->
             <div class="mb-4">
-                <label for="title" class="block text-gray-700 font-medium">Judul Kuis</label>
-                <input type="text" name="title" id="title" value="{{ $quiz->title }}" class="w-full border-gray-300 rounded-lg border focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 p-2">
+                <label for="title" class="block text-gray-700 font-semibold text-md">Judul Kuis</label>
+                <input type="text" name="title" id="title" value="{{ $quiz->title }}" class="w-full text-gray-700 border-gray-300 rounded-lg border focus:outline-none focus:ring-1 focus:ring-sky-300 focus:border-sky-300 p-2">
                 @error('title') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
             </div>
 
             <!-- Deskripsi Quiz -->
             <div class="mb-4">
-                <label for="description" class="block text-gray-700 font-medium">Deskripsi</label>
-                <textarea name="description" id="description" rows="3" class="w-full border-gray-300 rounded-lg border focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 p-2">{{ $quiz->description }}</textarea>
+                <label for="description" class="block text-gray-700 font-semibold text-md">Deskripsi</label>
+                <textarea name="description" id="description" rows="3" class="w-full text-gray-700 border-gray-300 rounded-lg border focus:outline-none focus:ring-1 focus:ring-sky-300 focus:border-sky-300 p-2">{{ $quiz->description }}</textarea>
                 @error('description') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
             </div>
 
             <!-- Durasi Quiz -->
             <div class="mb-4">
-                <label for="duration" class="block text-gray-700 font-medium">Durasi (Menit)</label>
-                <input type="number" name="duration" id="duration" value="{{ $quiz->duration }}" class="w-full border-gray-300 border rounded-lg focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 p-2">
+                <label for="duration" class="block text-gray-700 font-semibold text-md">Durasi (Menit)</label>
+                <input type="number" name="duration" id="duration" value="{{ $quiz->duration }}" class="w-full text-gray-700 border-gray-300 border rounded-lg focus:outline-none focus:ring-1 focus:ring-sky-300 focus:border-sky-300 p-2">
                 @error('duration') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
             </div>
 
@@ -39,8 +39,8 @@
                 <div class="bg-gray-50 p-4 rounded-md shadow-md mb-4">
                     <!-- Soal -->
                     <div class="mb-4">
-                        <label for="questions[{{ $index }}][question]" class="block text-gray-700 font-medium">Soal {{ $index + 1 }}</label>
-                        <input type="text" name="questions[{{ $index }}][question]" id="questions[{{ $index }}][question]" value="{{ $question->question }}" class="w-full border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 p-2">
+                        <label for="questions[{{ $index }}][question]" class="block text-gray-700 font-semibold">Soal {{ $index + 1 }}</label>
+                        <input type="text" name="questions[{{ $index }}][question]" id="questions[{{ $index }}][question]" value="{{ $question->question }}" class="w-full text-gray-700 border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-sky-300 focus:border-sky-300 p-2">
                         @error("questions.$index.question") <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                     </div>
 
@@ -48,8 +48,8 @@
                     <div class="space-y-3">
                         @foreach($question->answers as $answerIndex => $answer)
                         <div class="flex items-center space-x-4">
-                            <label for="questions[{{ $index }}][answers][{{ $answerIndex }}]" class="block text-gray-700 font-medium">Jawaban {{ $answerIndex + 1 }}</label>
-                            <input type="text" name="questions[{{ $index }}][answers][{{ $answerIndex }}]" id="questions[{{ $index }}][answers][{{ $answerIndex }}]" value="{{ $answer->answer }}" class="flex-1 border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-blue-300 p-2">
+                            <label for="questions[{{ $index }}][answers][{{ $answerIndex }}]" class="block text-gray-700 font-semibold">Jawaban {{ $answerIndex + 1 }}</label>
+                            <input type="text" name="questions[{{ $index }}][answers][{{ $answerIndex }}]" id="questions[{{ $index }}][answers][{{ $answerIndex }}]" value="{{ $answer->answer }}" class="flex-1 text-gray-600 border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-sky-300 focus:border-sky-500 p-2">
 
                             <!-- Checkbox untuk Jawaban Benar -->
                             <input type="radio" name="questions[{{ $index }}][correct_answer]" value="{{ $answerIndex }}" {{ $answer->is_correct ? 'checked' : '' }} class="focus:ring focus:ring-blue-300">

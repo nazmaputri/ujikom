@@ -6,7 +6,7 @@
         <h2 class="text-xl font-semibold mb-8 border-b-2 pb-2 text-gray-700 text-center">Data Peserta</h2>
 
         <!-- Search Bar -->
-        <form action="{{ route('datapeserta-admin') }}" method="GET" class="max-w-sm mx-auto mb-4">
+        <form action="{{ route('datapeserta-admin') }}" method="GET" class="w-full max-w-xs mb-4">
             <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Cari</label>
             <div class="relative flex items-center">
                 <!-- Input Search -->
@@ -27,7 +27,7 @@
         <div class="overflow-x-auto">
             <table class="min-w-full" id="userTable">
                 <thead>
-                    <tr class="bg-sky-100 text-gray-700">
+                    <tr class="bg-sky-100 text-gray-700 text-sm">
                         <th class="py-2">No</th>
                         <th class="py-2">Nama</th>
                         <th class="py-2">Email</th>
