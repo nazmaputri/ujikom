@@ -68,7 +68,7 @@
         <div class="flex flex-col items-center mb-4">
             <div class="flex items-center space-x-4">
                 <h2 class="text-xl font-semibold inline-block pb-1 text-gray-700">
-                    Laporan Perkembangan Pengguna Bulanan - Tahun {{ $year }}
+                    Laporan Perkembangan Pengguna Bulanan
                 </h2>
                 <select id="yearFilter" class="p-1 border rounded-md focus:outline-none focus:ring focus:ring-sky-200">
                     @foreach ($years as $availableYear)

@@ -23,16 +23,17 @@ class PaymentController extends Controller
             return response()->json(['error' => 'User tidak ditemukan'], 401);
         }
     
-        // Ambil semua item di keranjang berdasarkan user_id beserta relasi course
+        // Ambil semua item di keranjang berdasarkan user_id
         $keranjangItems = Keranjang::where('user_id', $user->id)->with('course')->get();
     
         if ($keranjangItems->isEmpty()) {
             return response()->json(['error' => 'Keranjang kosong'], 400);
         }
     
-        // Hitung total harga sebelum diskon dan susun item detail
+        // Hitung total harga sebelum diskon
         $totalAmount = 0;
         $itemDetails = [];
+    
         foreach ($keranjangItems as $item) {
             $totalAmount += $item->course->price;
             $itemDetails[] = [
@@ -67,7 +68,7 @@ class PaymentController extends Controller
                 }
                 $totalAmount = $totalAmount - $discountAmount;
     
-                // Tambahkan item detail untuk diskon (dengan nilai negatif)
+                // Tambahkan item detail untuk diskon sebagai item dengan nilai negatif
                 $itemDetails[] = [
                     'id'       => 'DISCOUNT-' . $couponCode,
                     'price'    => -$discountAmount,
@@ -82,12 +83,12 @@ class PaymentController extends Controller
     
         // Konfigurasi Midtrans
         Config::$serverKey    = env('MIDTRANS_SERVER_KEY');
-        Config::$clientKey    = env('MIDTRANS_CLIENT_KEY');
+        Config::$clientKey    = env('MIDTRANS_CLIENT_KEY'); // Pastikan clientKey diambil dari .env
         Config::$isProduction = false;
         Config::$isSanitized  = true;
         Config::$is3ds        = true;
     
-        // Data transaksi Midtrans dengan harga total (setelah diskon jika ada)
+        // Data transaksi Midtrans dengan harga total yang sudah didiskon (jika ada)
         $transactionData = [
             'transaction_details' => [
                 'order_id'     => $orderId,
@@ -102,12 +103,10 @@ class PaymentController extends Controller
         ];
     
         try {
-            DB::beginTransaction();
-    
-            // Ambil Snap Token dari Midtrans dengan data transaksi di atas
+            // Ambil Snap Token dari Midtrans dengan data transaksi yang sudah diperbarui
             $snapToken = Snap::getSnapToken($transactionData);
     
-            // Simpan transaksi ke tabel payments
+            // Simpan transaksi ke tabel `payments`
             $payment = Payment::create([
                 'user_id'            => $user->id,
                 'transaction_id'     => $orderId,
@@ -117,7 +116,7 @@ class PaymentController extends Controller
                 'payment_url'        => null,
             ]);
     
-            // Simpan setiap item keranjang ke tabel purchases (menggunakan transaction_id yang sama)
+            // Simpan setiap item keranjang ke tabel `purchases` dengan transaction_id yang sama
             foreach ($keranjangItems as $item) {
                 Purchase::create([
                     'user_id'        => $user->id,
@@ -130,21 +129,18 @@ class PaymentController extends Controller
             // Opsional: Hapus data keranjang setelah checkout berhasil
             Keranjang::where('user_id', $user->id)->delete();
     
-            DB::commit();
-    
             return response()->json([
                 'snapToken' => $snapToken,
                 'payment'   => $payment,
                 'order_id'  => $orderId,
             ]);
         } catch (\Exception $e) {
-            DB::rollBack();
             return response()->json([
                 'error'   => 'Gagal mendapatkan token pembayaran',
                 'message' => $e->getMessage()
             ], 500);
         }
-    }    
+    }      
     
     public function updatePaymentStatus(Request $request)
     {

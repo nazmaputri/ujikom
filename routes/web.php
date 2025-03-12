@@ -39,13 +39,15 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::get('/kursus/{id}/{name}', [DashboardAdminController::class, 'detailkursus'])->name('detail-kursusadmin');
     Route::get('dashboard-admin/laporan', [DashboardAdminController::class, 'laporan'])->name('laporan-admin');
     Route::get('dashboard-admin/rating', [DashboardAdminController::class, 'rating'])->name('rating-admin');
-    Route::get('/ratings/toggle-display/{id}', [RatingController::class, 'toggleDisplay'])->name('toggle.display');
     Route::patch('/admin/users/{id}/status', [DashboardAdminController::class, 'updateStatus'])->name('admin.users.updateStatus');
     Route::delete('/admin/users/{id}', [DashboardAdminController::class, 'deleteUser'])->name('admin.delete');
     Route::get('/mentor/user/{id}', [DashboardAdminController::class, 'detailmentor'])->name('detaildata-mentor');
     Route::get('/peserta/user/{id}', [DashboardAdminController::class, 'detailpeserta'])->name('detaildata-peserta');
     Route::get('/settings-admin', [SettingController::class, 'admin'])->name('settings.admin');
     Route::post('/settings', [SettingController::class, 'update']);
+
+    //Rating
+    Route::post('toggle/displayadmin/{id}', [RatingController::class, 'toggleDisplayAdmin'])->name('toggle.displayadmin');
     Route::delete('/ratings/{id}', [RatingController::class, 'destroy'])->name('ratings.destroy');
 
     Route::delete('/dashboard/mentor/{id}', [DashboardAdminController::class, 'deleteMentor']);
@@ -55,6 +57,9 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::get('discount', [DiscountController::class, 'index'])->name('discount');
     Route::get('discount-tambah', [DiscountController::class, 'create'])->name('discount-tambah');
     Route::post('discount.store', [DiscountController::class, 'store'])->name('discount.store');
+    Route::get('discount/{id}/edit', [DiscountController::class, 'edit'])->name('discount.edit');
+    Route::put('discount/{id}', [DiscountController::class, 'update'])->name('discount.update');
+    Route::delete('discount/{id}', [DiscountController::class, 'destroy'])->name('discount.destroy');
 
     // Kategori
     Route::patch('/courses/{id}/{name}/approve', [DashboardAdminController::class, 'approve'])->name('courses.approve');

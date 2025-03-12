@@ -2,17 +2,19 @@
 
 @section('content')
 <div class="container mx-auto">
-    @php
-        // Gunakan tahun yang diterima dari controller
-        $currentYear = $year;
-    @endphp
     <!-- Laporan Pendapatan Mentor (2% Komisi) -->
     <div class="bg-white shadow-md rounded-lg p-6 mb-6">
         <div class="flex flex-col items-center mb-4">
             <div class="flex items-center space-x-4">
                 <h2 class="text-xl font-semibold inline-block pb-1 text-gray-700">
-                    Laporan Pendapatan Mentor (2% Komisi) - Tahun {{ $currentYear }}
+                    Laporan Pendapatan Mentor (2% Komisi)
                 </h2>
+                @php
+                    // Rentang tahun yang ditampilkan dari 2023 hingga 2025
+                    $years = range(2023, 2025);
+                    // Gunakan tahun yang dikirim dari controller (variabel $year) jika ada, jika tidak gunakan tahun sekarang
+                    $currentYear = isset($year) ? $year : date('Y');
+                @endphp
                 <select id="yearFilter" class="p-1 border rounded-md focus:outline-none focus:ring focus:ring-sky-200">
                     @foreach ($years as $availableYear)
                         <option value="{{ $availableYear }}" {{ $availableYear == $currentYear ? 'selected' : '' }}>
