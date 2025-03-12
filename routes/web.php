@@ -48,6 +48,8 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::post('/settings', [SettingController::class, 'update']);
     Route::delete('/ratings/{id}', [RatingController::class, 'destroy'])->name('ratings.destroy');
 
+    Route::delete('/dashboard/user/{id}', [DashboardAdminController::class, 'destroy']);
+
     //Discount 
     Route::get('discount', [DiscountController::class, 'index'])->name('discount');
     Route::get('discount-tambah', [DiscountController::class, 'create'])->name('discount-tambah');

@@ -187,15 +187,13 @@ class DashboardAdminController extends Controller
     }
     
     
-    public function destroy($id)
+    public function deleteUser($id)
     {
-        // Cari user berdasarkan ID
         $user = User::findOrFail($id);
-        // Hapus user
         $user->delete();
-
-        // Redirect ke halaman sebelumnya dengan pesan sukses
+    
         return redirect()->route('datamentor-admin')->with('success', 'User berhasil dihapus.');
     }
+    
 
 }
