@@ -19,7 +19,8 @@
                             {{ $availableYear }}
                         </option>
                     @endforeach
-                </select>                
+                </select>  
+          
                 <script>
                     function filterByYear() {
                         const year = document.getElementById('yearFilter').value;
@@ -29,6 +30,12 @@
                     }
                 </script>
             </div>
+        <!-- Pemberitahuan potongan 2% -->
+        <div class="my-4">
+            <div class="alert alert-info bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded relative" role="alert">
+                <strong>Info!</strong> Setiap kursus yang dibeli peserta sudah dipotong 2% oleh admin.
+            </div>
+        </div>    
             <div class="border-b-2 w-full mt-2"></div>
         </div>  
         <div style="position: relative; height: 300px; width: 100%;">

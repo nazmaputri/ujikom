@@ -153,47 +153,65 @@ class DashboardAdminController extends Controller
     
     public function laporan(Request $request)
     {
-        // Ambil tahun dari request atau default ke tahun saat ini
         $year = $request->input('year', date('Y'));
     
-        // Ambil data jumlah pengguna yang mendaftar setiap bulan di tahun tertentu
-        $userGrowth = User::select(
-                            DB::raw('MONTH(created_at) as month'),
-                            DB::raw('COUNT(*) as user_count')
-                        )
-                        ->whereYear('created_at', $year) // Filter berdasarkan tahun
-                        ->groupBy(DB::raw('MONTH(created_at)'))
-                        ->orderBy(DB::raw('MONTH(created_at)'), 'asc')
-                        ->get();
+        // Ambil data pendapatan admin (2% dari harga kursus) per kursus per bulan
+        $revenues = DB::table('purchases')
+            ->join('courses', 'purchases.course_id', '=', 'courses.id')
+            ->selectRaw('
+                courses.id as course_id, 
+                courses.title, 
+                MONTH(purchases.created_at) as month, 
+                SUM(courses.price * 0.02) as admin_revenue
+            ')
+            ->where('purchases.status', 'success')
+            ->whereYear('purchases.created_at', $year)
+            ->groupBy('course_id', 'month', 'courses.title')
+            ->orderBy('month', 'asc')
+            ->get();
     
-        // Nama bulan
+        // Siapkan nama bulan (1 s.d 12)
         $monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     
-        // Inisialisasi data untuk grafik
-        $userGrowthData = array_fill(0, 12, 0);
-    
-        // Isi data pengguna yang terdaftar di bulan yang sesuai
-        foreach ($userGrowth as $data) {
-            $userGrowthData[$data->month - 1] = $data->user_count; // Month-1 untuk indexing dari 0
+        // Untuk keperluan grafik, kita bisa mengelompokkan data revenue per kursus.
+        $coursesRevenue = [];
+        foreach ($revenues as $rev) {
+            // Inisialisasi jika belum ada
+            if (!isset($coursesRevenue[$rev->course_id])) {
+                $coursesRevenue[$rev->course_id] = [
+                    'title' => $rev->title,
+                    'monthly' => array_fill(1, 12, 0)
+                ];
+            }
+            // Set nilai revenue untuk bulan tertentu
+            $coursesRevenue[$rev->course_id]['monthly'][(int)$rev->month] = (float)$rev->admin_revenue;
         }
     
-        // Ambil daftar tahun dari data pengguna
-        $years = User::select(DB::raw('YEAR(created_at) as year'))
-                    ->distinct()
-                    ->orderBy('year', 'asc')
-                    ->pluck('year');
+        // Ambil daftar tahun yang tersedia dari data purchases (opsional)
+        $years = DB::table('purchases')
+            ->select(DB::raw('YEAR(created_at) as year'))
+            ->distinct()
+            ->orderBy('year', 'asc')
+            ->pluck('year');
     
-        return view('dashboard-admin.laporan', compact('userGrowthData', 'monthNames', 'years', 'year'));
-    }
+        return view('dashboard-admin.laporan', compact('coursesRevenue', 'monthNames', 'years', 'year'));
+    }    
     
     
-    public function deleteUser($id)
+    public function deleteMentor($id)
     {
         $user = User::findOrFail($id);
         $user->delete();
     
         return redirect()->route('datamentor-admin')->with('success', 'User berhasil dihapus.');
-    }
+    }    
+
+    public function deletePeserta($id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
     
+        return redirect()->route('datapeserta-admin')->with('success', 'User berhasil dihapus.');
+    }
 
 }

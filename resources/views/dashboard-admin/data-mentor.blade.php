@@ -192,7 +192,6 @@
                                         </div>
                                     </div>
 
-
                                     <!-- Script untuk membuka dan menutup modal -->
                                     <script>
                                         function openDeleteModal() {

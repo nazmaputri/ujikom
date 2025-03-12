@@ -48,7 +48,8 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::post('/settings', [SettingController::class, 'update']);
     Route::delete('/ratings/{id}', [RatingController::class, 'destroy'])->name('ratings.destroy');
 
-    Route::delete('/dashboard/user/{id}', [DashboardAdminController::class, 'destroy']);
+    Route::delete('/dashboard/mentor/{id}', [DashboardAdminController::class, 'deleteMentor']);
+    Route::delete('/dashboard/peserta/{id}', [DashboardAdminController::class, 'deletePeserta'])->name('datapeserta-admin.delete');
 
     //Discount 
     Route::get('discount', [DiscountController::class, 'index'])->name('discount');
