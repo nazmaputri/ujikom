@@ -1,18 +1,19 @@
 @extends('layouts.dashboard-admin')
 @section('content')
-
     <!-- Notifikasi -->
     @if (session('success'))
         <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
             {{ session('success') }}
         </div>
     @endif
+
+    <!-- Cards Informasi -->
     <div class="bg-white rounded-lg shadow-md p-5 w-full flex flex-col md:flex-row h-auto items-center">
         <!-- Text Content -->
         <div class="w-full text-center md:text-left mb-4 md:mb-0">
             <h1 class="text-xl font-semibold mb-4 text-gray-700">Selamat datang, {{ Auth::user()->name }}!</h1>
             <p class="mb-6 text-gray-600">
-                Semoga hari ini membawa kemudahan dan kelancaran dalam tugas-tugas Anda. 
+                Semoga hari ini membawa kemudahan dan kelancaran dalam tugas-tugas Anda.
                 <br>Mari kita capai hal-hal hebat bersama.
             </p>
         </div>
@@ -20,8 +21,9 @@
         <div class="md:w-1/4 flex justify-center md:justify-end">
             <img src="{{ asset('storage/admin.png') }}" alt="Welcome Image" class="w-full h-auto md:w-54"/>
         </div>
-    </div>      
+    </div>
 
+    <!-- Cards Statistik -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-10">
         <!-- Card Jumlah Mentor -->
         <div class="bg-red-100 rounded-lg shadow-md p-5 flex items-center">
@@ -60,4 +62,73 @@
             </div>
         </div>
     </div>
+
+    <!-- Grafik Perkembangan Pengguna Bulanan -->
+    <div class="bg-white shadow-md rounded-lg p-6 mb-6 mt-10">
+        <div class="flex flex-col items-center mb-4">
+            <div class="flex items-center space-x-4">
+                <h2 class="text-xl font-semibold inline-block pb-1 text-gray-700">
+                    Laporan Perkembangan Pengguna Bulanan - Tahun {{ $year }}
+                </h2>
+                <select id="yearFilter" class="p-1 border rounded-md focus:outline-none focus:ring focus:ring-sky-200">
+                    @foreach ($years as $availableYear)
+                        <option value="{{ $availableYear }}" {{ $availableYear == $year ? 'selected' : '' }}>
+                            {{ $availableYear }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="border-b-2 w-full mt-1"></div>
+        </div>
+        <div style="position: relative; height: 300px; width: 100%;">
+            <canvas id="userGrowthChart"></canvas>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const ctx = document.getElementById('userGrowthChart').getContext('2d');
+        
+            // Buat grafik menggunakan Chart.js dengan data dari controller
+            const userGrowthChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: @json($monthNames),
+                    datasets: [{
+                        label: 'Pengguna Baru',
+                        data: @json($userGrowthData),
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderWidth: 2,
+                        fill: true,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Jumlah Pengguna'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Bulan'
+                            }
+                        }
+                    }
+                }
+            });
+        
+            // Update grafik saat tahun dipilih
+            document.getElementById('yearFilter').addEventListener('change', function () {
+                const selectedYear = this.value;
+                window.location.href = `?year=${selectedYear}`;
+            });
+        });
+    </script>    
 @endsection

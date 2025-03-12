@@ -107,17 +107,52 @@ class DashboardAdminController extends Controller
         return view('dashboard-admin.data-peserta', compact('users', 'query'));
     }    
 
-    public function show() {
+    public function show(Request $request)
+    {
         $jumlahMentor = User::where('role', 'mentor')->count();
         $jumlahPeserta = User::where('role', 'student')->count(); 
         $jumlahKursus = Course::count();
-
+    
+        // Ambil tahun dari request atau default ke tahun saat ini
+        $year = $request->input('year', date('Y'));
+        
+        // Ambil data jumlah pengguna yang mendaftar setiap bulan di tahun tertentu
+        $userGrowth = User::select(
+                            DB::raw('MONTH(created_at) as month'),
+                            DB::raw('COUNT(*) as user_count')
+                        )
+                        ->whereYear('created_at', $year) // Filter berdasarkan tahun
+                        ->groupBy(DB::raw('MONTH(created_at)'))
+                        ->orderBy(DB::raw('MONTH(created_at)'), 'asc')
+                        ->get();
+        
+        // Nama bulan
+        $monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        
+        // Inisialisasi data untuk grafik
+        $userGrowthData = array_fill(0, 12, 0);
+        
+        // Isi data pengguna yang terdaftar di bulan yang sesuai
+        foreach ($userGrowth as $data) {
+            $userGrowthData[$data->month - 1] = $data->user_count; // Month-1 untuk indexing dari 0
+        }
+        
+        // Ambil daftar tahun dari data pengguna
+        $years = User::select(DB::raw('YEAR(created_at) as year'))
+                    ->distinct()
+                    ->orderBy('year', 'asc')
+                    ->pluck('year');
+        
         return view('dashboard-admin.welcome', [
-            'jumlahMentor' => $jumlahMentor,
-            'jumlahPeserta' => $jumlahPeserta,
-            'jumlahKursus' => $jumlahKursus,
+            'jumlahMentor'    => $jumlahMentor,
+            'jumlahPeserta'   => $jumlahPeserta,
+            'jumlahKursus'    => $jumlahKursus,
+            'userGrowthData'  => $userGrowthData,
+            'monthNames'      => $monthNames,
+            'years'           => $years,
+            'year'            => $year
         ]);
-    }
+    }    
 
     public function detailkursus($id, $name) {
         $category = Category::with('courses')->where('name', $name)->firstOrFail();
