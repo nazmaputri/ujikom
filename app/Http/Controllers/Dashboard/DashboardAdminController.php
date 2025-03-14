@@ -39,7 +39,7 @@ class DashboardAdminController extends Controller
 
     public function rating()
     {
-        $ratings = Rating::paginate(3); 
+        $ratings = Rating::paginate(5); 
 
         return view('dashboard-admin.rating', compact('ratings'));
     }
