@@ -30,52 +30,39 @@ class PaymentController extends Controller
             return response()->json(['error' => 'Keranjang kosong'], 400);
         }
     
-        // Hitung total harga sebelum diskon
-        $totalAmount = 0;
-        $itemDetails = [];
-    
-        foreach ($keranjangItems as $item) {
-            $totalAmount += $item->course->price;
-            $itemDetails[] = [
-                'id'       => 'COURSE-' . $item->course_id,
-                'price'    => $item->course->price,
-                'quantity' => 1,
-                'name'     => $item->course->title,
-            ];
-        }
-    
-        // Cek apakah ada kode kupon yang dikirim
+        // Cek apakah ada kode kupon yang dikirim dan valid
         $couponCode = $request->input('coupon_code');
+        $discount = null;
         if ($couponCode) {
-            // Cari diskon aktif berdasarkan kode kupon
             $discount = Discount::where('coupon_code', $couponCode)
                 ->where('start_date', '<=', now())
                 ->where('end_date', '>=', now())
                 ->first();
+        }
     
+        $totalAmount = 0;
+        $itemDetails = [];
+    
+        // Iterasi tiap item di keranjang untuk menghitung harga diskon (jika ada)
+        foreach ($keranjangItems as $item) {
+            $originalPrice = $item->course->price;
+            $price = $originalPrice;
+    
+            // Jika ada diskon dan berlaku untuk item ini
             if ($discount) {
-                // Hitung diskon sesuai dengan properti apply_to_all
-                if ($discount->apply_to_all) {
-                    $discountAmount = $totalAmount * ($discount->discount_percentage / 100);
-                } else {
-                    // Diskon hanya berlaku untuk kursus tertentu
-                    $discountAmount = 0;
-                    foreach ($keranjangItems as $item) {
-                        if ($discount->courses->contains($item->course->id)) {
-                            $discountAmount += $item->course->price * ($discount->discount_percentage / 100);
-                        }
-                    }
+                if ($discount->apply_to_all || $discount->courses->contains($item->course->id)) {
+                    $price = $originalPrice - ($originalPrice * $discount->discount_percentage / 100);
                 }
-                $totalAmount = $totalAmount - $discountAmount;
-    
-                // Tambahkan item detail untuk diskon sebagai item dengan nilai negatif
-                $itemDetails[] = [
-                    'id'       => 'DISCOUNT-' . $couponCode,
-                    'price'    => -$discountAmount,
-                    'quantity' => 1,
-                    'name'     => 'Diskon Kupon ' . $couponCode,
-                ];
             }
+    
+            $totalAmount += $price;
+    
+            $itemDetails[] = [
+                'id'       => 'COURSE-' . $item->course_id,
+                'price'    => $price,
+                'quantity' => 1,
+                'name'     => $item->course->title,
+            ];
         }
     
         // Buat Order ID unik yang akan digunakan sebagai transaction_id
@@ -111,7 +98,7 @@ class PaymentController extends Controller
                 'user_id'            => $user->id,
                 'transaction_id'     => $orderId,
                 'payment_type'       => 'midtrans',
-                'transaction_status' => 'pending',
+                'transaction_status' => 'pending', // status awal pending
                 'amount'             => $totalAmount,
                 'payment_url'        => null,
             ]);
@@ -126,8 +113,8 @@ class PaymentController extends Controller
                 ]);
             }
     
-            // Opsional: Hapus data keranjang setelah checkout berhasil
-            Keranjang::where('user_id', $user->id)->delete();
+            // Data keranjang tidak dihapus di sini karena status awalnya pending.
+            // Penghapusan data keranjang akan dilakukan pada notifikasi Midtrans ketika status transaksi sudah success.
     
             return response()->json([
                 'snapToken' => $snapToken,
@@ -140,7 +127,8 @@ class PaymentController extends Controller
                 'message' => $e->getMessage()
             ], 500);
         }
-    }      
+    }
+        
     
     public function updatePaymentStatus(Request $request)
     {
@@ -158,17 +146,20 @@ class PaymentController extends Controller
         $payment->transaction_status = $transactionStatus;
         $payment->save();
     
-        // Jika status transaksi sukses, perbarui status pembelian di tabel purchases
+        // Jika status transaksi sukses, perbarui status pembelian di tabel purchases dan hapus data keranjang untuk user terkait
         if ($transactionStatus === 'success') {
             Purchase::where('transaction_id', $orderId)
                 ->update(['status' => 'success']);
+    
+            // Hapus data keranjang
+            Keranjang::where('user_id', $payment->user_id)->delete();
         }
     
         return response()->json([
             'message' => 'Status pembayaran berhasil diperbarui.',
             'payment' => $payment,
         ]);
-    }
+    }    
     
 }
 

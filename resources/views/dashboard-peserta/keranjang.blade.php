@@ -114,70 +114,92 @@
         @endif
     </div>
 
-<script>
-    document.getElementById('pay-now').addEventListener('click', function(e) {
-    e.preventDefault();
-
-    const totalPrice = this.getAttribute('data-total-price');
-    if (!totalPrice || isNaN(totalPrice)) {
-        alert('Harga tidak valid');
-        return;
-    }
-
-    fetch('/create-payment', {
-        method: 'POST',
-        headers: {
-        'Content-Type': 'application/json',
-        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-    },
-    body: JSON.stringify({ amount: totalPrice })
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log(data); // Periksa data yang diterima
-        if (data.snapToken) {
-            snap.pay(data.snapToken, {
-            onSuccess: function(result) {
-            alert('Pembayaran berhasil');
-            fetch('/payment-success', {
-            method: 'POST',
+    <script>
+        document.getElementById('pay-now').addEventListener('click', function(e) {
+            e.preventDefault();
+        
+            const totalPrice = this.getAttribute('data-total-price');
+            if (!totalPrice || isNaN(totalPrice)) {
+                alert('Harga tidak valid');
+                return;
+            }
+        
+            // Jika terdapat input kode kupon, ambil nilainya
+            const couponInput = document.getElementById('coupon-code');
+            const couponCode = couponInput ? couponInput.value : null;
+        
+            // Buat payload untuk payment creation
+            const payload = { amount: totalPrice };
+            if (couponCode) {
+                payload.coupon_code = couponCode;
+            }
+        
+            fetch('/create-payment', {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    },
-                body: JSON.stringify({
-                    order_id: result.order_id,
-                    transaction_status: 'success',
-                    }),
-                })
-                .then(res => res.json())
-                .then(response => {
-                    alert(response.message);
-                        location.reload();
-                    })
-                .catch(error => console.error('Error updating payment status:', error));
                 },
-                    onPending: function(result) {
-                    alert('Pembayaran sedang diproses');
-                },
-                onError: function(result) {
-                    alert('Pembayaran gagal');
-                }
-                });
+                body: JSON.stringify(payload)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data); // Periksa data yang diterima
+                if (data.snapToken) {
+                    snap.pay(data.snapToken, {
+                        onSuccess: function(result) {
+                            alert('Pembayaran berhasil');
+                            // Pastikan order_id tersedia, jika tidak, gunakan alternatif field (misal transaction_id)
+                            let orderId = result.order_id || result.transaction_id;
+                            if (!orderId) {
+                                alert('Order ID tidak ditemukan dari response pembayaran.');
+                                return;
+                            }
+                            // Update status pembayaran melalui endpoint update-payment-status
+                            fetch('/update-payment-status', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                },
+                                body: JSON.stringify({
+                                    order_id: orderId,
+                                    transaction_status: 'success'
+                                }),
+                            })
+                            .then(res => res.json())
+                            .then(response => {
+                                alert(response.message);
+                                location.reload();
+                            })
+                            .catch(error => console.error('Error updating payment status:', error));
+                        },
+                        onPending: function(result) {
+                            alert('Pembayaran sedang diproses');
+                        },
+                        onError: function(result) {
+                            alert('Pembayaran gagal');
+                        }
+                    });
                 } else {
-                        alert('Gagal mendapatkan token pembayaran');
+                    alert('Gagal mendapatkan token pembayaran');
                 }
-                })
-                .catch(error => alert('Terjadi kesalahan saat memproses pembayaran.'));
-                });
-    
-    document.getElementById('apply-coupon').addEventListener('click', function() {
-        let couponCode = document.getElementById('coupon-code').value;
-        if (couponCode) {
-            window.location.href = "{{ route('cart.index') }}?coupon=" + couponCode;
-        } else {
-            alert("Masukkan kode kupon terlebih dahulu!");
-        }
-    });
-</script> 
+            })
+            .catch(error => {
+                console.error('Error creating payment:', error);
+                alert('Terjadi kesalahan saat memproses pembayaran.');
+            });
+        });
+        
+        document.getElementById('apply-coupon').addEventListener('click', function() {
+            let couponCode = document.getElementById('coupon-code').value;
+            if (couponCode) {
+                window.location.href = "{{ route('cart.index') }}?coupon=" + couponCode;
+            } else {
+                alert("Masukkan kode kupon terlebih dahulu!");
+            }
+        });
+    </script>
+        
+        
 @endsection
