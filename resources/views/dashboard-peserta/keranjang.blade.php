@@ -67,7 +67,7 @@
         <!-- kontainer untuk kursus yang ada di keranjang -->
         <div class="flex flex-col bg-white p-3 rounded-lg shadow lg:w-2/3 md:min-h-40">
         @foreach ($carts as $cart)
-            <div class="flex items-center space-x-4 mb-3 pb-2 border-b border-gray-200">
+            <div class="flex items-center space-x-4 mb-3 pb-2 @if(!$loop->last || $loop->first && !$loop->last) border-b border-gray-200 @endif">
                 <img 
                     src="{{ asset('storage/' . $cart->course->image_path) }}" 
                     alt="Course Image" 
