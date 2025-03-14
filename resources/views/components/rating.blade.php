@@ -77,26 +77,64 @@
                 <!-- Rating Form -->
                 <form class="space-y-4" method="POST" action="{{ route('rating.store') }}">
                     @csrf
+                    <!-- label for name -->
                     <div>
                         <label for="nama" class="block text-md text-gray-700">Nama :</label>
                         <input type="nama" id="nama" name="nama" class="text-gray-600 border border-gray-300 rounded-md p-2 w-full max-w-xs focus:outline-none focus:ring-1 focus:ring-sky-400 focus:border-sky-400" placeholder="Masukkan nama Anda" required/>
                     </div>
 
+                    <!-- label for input email -->
                     <div>
                         <label for="email" class="block text-md text-gray-700">Email :</label>
                         <input type="email" id="email" name="email" class="text-gray-600 border border-gray-300 rounded-md p-2 w-full max-w-xs focus:outline-none  focus:ring-1 focus:ring-sky-400 focus:border-sky-400" placeholder="Masukkan email Anda" required/>
                     </div>
 
+                    <!-- label for rating star -->
                     <div>
                         <label for="rating" class="block text-md text-gray-700">Rating :</label>
-                        <select id="rating" name="rating" class="border border-gray-300 rounded-md p-2 w-full max-w-xs focus:ring-1 focus:ring-sky-400 focus:border-sky-400" required>
-                            <option value="5">⭐️⭐️⭐️⭐️⭐️ (5/5)</option>
-                            <option value="4">⭐️⭐️⭐️⭐️ (4/5)</option>
-                            <option value="3">⭐️⭐️⭐️ (3/5)</option>
-                            <option value="2">⭐️⭐️ (2/5)</option>
-                            <option value="1">⭐️ (1/5)</option>
-                        </select>
+                        <div id="rating" class="flex space-x-1 text-gray-600 border border-gray-300 rounded-md p-2.5 w-full max-w-xs bg-white focus:outline-none  focus:ring-1 focus:ring-sky-400 focus:border-sky-400">
+                            @for ($i = 1; $i <= 5; $i++)
+                                <svg data-value="{{ $i }}" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 cursor-pointer transition-colors duration-200" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 .587l3.668 7.451 8.332 1.151-6.064 5.865 1.486 8.246L12 18.897l-7.422 4.403 1.486-8.246L.667 9.189l8.332-1.151z" />
+                                </svg>
+                            @endfor
+                        </div>
+                        <input type="hidden" name="rating" id="rating-input" required>
                     </div>
+
+                    <!-- js for rating star -->
+                    <script>
+                        const stars = document.querySelectorAll('#rating svg');
+                        const ratingInput = document.getElementById('rating-input');
+
+                        function updateStars(value) {
+                            stars.forEach((star, index) => {
+                                if (index < value) {
+                                    star.classList.add('text-yellow-500');
+                                    star.classList.remove('text-gray-400');
+                                } else {
+                                    star.classList.add('text-gray-400');
+                                    star.classList.remove('text-yellow-500');
+                                }
+                            });
+                        }
+
+                        stars.forEach(star => {
+                            star.addEventListener('click', () => {
+                                const value = parseInt(star.getAttribute('data-value'));
+                                ratingInput.value = value;
+                                updateStars(value);
+                            });
+
+                            star.addEventListener('mouseover', () => {
+                                updateStars(parseInt(star.getAttribute('data-value')));
+                            });
+
+                            star.addEventListener('mouseleave', () => {
+                                updateStars(parseInt(ratingInput.value) || 0);
+                            });
+                        });
+                    </script>
 
                     <div>
                         <label for="comment" class="block text-md text-gray-700">Komentar :</label>
@@ -128,16 +166,17 @@
         </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Menampilkan modal pop-up jika ada pesan sukses
-            const modal = document.getElementById('successModal');
-            const closeModal = document.getElementById('closeModal');
+<script>
+    // js for modal
+    document.addEventListener('DOMContentLoaded', function () {
+    // Menampilkan modal pop-up jika ada pesan sukses
+    const modal = document.getElementById('successModal');
+    const closeModal = document.getElementById('closeModal');
 
-            // Menutup modal ketika tombol OK diklik
-            closeModal.addEventListener('click', function () {
-                modal.style.display = 'none';
-            });
+    // Menutup modal ketika tombol OK diklik
+    closeModal.addEventListener('click', function () {
+        modal.style.display = 'none';
         });
-    </script>
+    });
+</script>
 @endif

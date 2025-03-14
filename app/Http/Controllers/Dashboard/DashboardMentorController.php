@@ -83,30 +83,32 @@ class DashboardMentorController extends Controller
     {
         $mentorId = Auth::id();
         $currentYear = $request->input('year', date('Y')); // Ambil tahun dari URL atau gunakan tahun sekarang sebagai default
-    
+
+        // Hitung total pendapatan per bulan dari pembelian kursus,
+        // dengan mengalikan harga kursus dengan 0.98 agar pendapatan mentor dipotong 2%.
         $payments = DB::table('purchases')
             ->join('courses', 'purchases.course_id', '=', 'courses.id')
-            ->selectRaw('MONTH(purchases.created_at) as month, SUM(courses.price) as total')
+            ->selectRaw('MONTH(purchases.created_at) as month, SUM(courses.price * 0.98) as total')
             ->where('courses.mentor_id', $mentorId) // Filter berdasarkan mentor yang login
-            ->where('purchases.status', 'success')  // Hanya pembelian (purchases) dengan status sukses
+            ->where('purchases.status', 'success')  // Hanya pembelian dengan status sukses
             ->whereYear('purchases.created_at', $currentYear) // Filter berdasarkan tahun
             ->groupBy('month')
             ->orderBy('month')
             ->get();
-    
-        // Siapkan data untuk grafik
+
+        // Siapkan data untuk grafik: nama bulan dari 1 sampai 12
         $months = collect(range(1, 12))->map(function ($month) {
-            return Carbon::create()->month($month)->format('F'); // Nama bulan
+            return Carbon::create()->month($month)->format('F');
         });
-    
+
+        // Cocokkan data pendapatan per bulan dari query, jika tidak ada data, default ke 0
         $revenueData = $months->map(function ($monthName, $index) use ($payments) {
             $payment = $payments->firstWhere('month', $index + 1);
-            return $payment ? $payment->total : 0; // Isi dengan 0 jika tidak ada data
+            return $payment ? $payment->total : 0;
         });
-    
-        $years = range(date('Y'), date('Y') - 2); // Tahun saat ini hingga 2 tahun terakhir
-    
-        return view('dashboard-mentor.laporan', compact('revenueData', 'months', 'years', 'currentYear'));
-    }    
 
+        $years = range(date('Y'), date('Y') - 2); // Tahun saat ini hingga 2 tahun terakhir
+
+        return view('dashboard-mentor.laporan', compact('revenueData', 'months', 'years', 'currentYear'));
+    }
 }

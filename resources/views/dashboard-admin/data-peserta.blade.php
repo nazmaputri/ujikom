@@ -53,7 +53,7 @@
                                         </svg>
                                     </a>
                                     <!-- Form hapus user -->
-                                    <form id="deleteForm" action="" method="POST" class="inline">
+                                    <form id="deleteForm" action="{{ route('datapeserta-admin.delete', $user->id) }}" method="POST" class="inline">
                                         @csrf
                                         @method('DELETE')
                                         <button type="button" class="text-white bg-red-400 p-1 rounded-md hover:bg-red-300" onclick="openDeleteModal()">
@@ -62,6 +62,7 @@
                                             </svg>
                                         </button>
                                     </form>
+
                                     <!-- Modal Konfirmasi -->
                                     <div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
                                         <div class="bg-white p-6 rounded-lg shadow-lg">
@@ -74,7 +75,6 @@
                                         </div>
                                     </div>
 
-                                    <!-- Script untuk membuka dan menutup modal -->
                                     <script>
                                         function openDeleteModal() {
                                             document.getElementById('deleteModal').classList.remove('hidden');
@@ -85,9 +85,10 @@
                                         }
 
                                         function confirmDelete() {
-                                            document.getElementById('deleteForm').submit(); // Kirim form untuk menghapus user
+                                            document.getElementById('deleteForm').submit();
                                         }
                                     </script>
+
                                 </div>
                             </td>                            
                         </tr>

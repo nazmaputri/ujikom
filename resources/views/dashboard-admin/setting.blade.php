@@ -37,7 +37,7 @@
 
         <!-- Password -->
         <div class="mb-4 relative">
-            <label for="password" class="block text-sm font-medium text-gray-700">Masukkan Password Baru</label>
+            <label for="password" class="block text-sm font-medium text-gray-700">Masukkan Kata Sandi Baru</label>
             <input type="password" name="password" id="password" class="p-2 mt-1 block w-full border-gray-200 border rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500">
             <span class="absolute top-1/2 right-3 mt-3 transform -translate-y-1/2 cursor-pointer text-gray-500" id="togglePassword">
                 <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5">
@@ -52,7 +52,7 @@
 
         <!-- Confirm Password -->
         <div class="mb-4 relative">
-            <label for="password_confirmation" class="block text-sm font-medium text-gray-700">Konfirmasi Password Baru</label>
+            <label for="password_confirmation" class="block text-sm font-medium text-gray-700">Konfirmasi Kata Sandi Baru</label>
             <input type="password" name="password_confirmation" id="password_confirmation" class="p-2 mt-1 block w-full border border-gray-200 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500">
             <span class="absolute top-1/2 right-1 transform -translate-x-1/2 cursor-pointer text-gray-500" id="toggleConfirmPassword">
                 <svg id="eyeConfirmIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5">
