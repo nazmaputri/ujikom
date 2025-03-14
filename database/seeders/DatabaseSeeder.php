@@ -29,6 +29,14 @@ class DatabaseSeeder extends Seeder
             'password'  => Hash::make('12345678'), 
             'role'      => 'student',
             'status'    => 'active',
-        ]); 
+        ]);
+        
+        User::factory()->create([
+            'name'      => 'Intan',
+            'email'     => 'intanosaurusss@gmail.com',
+            'password'  => Hash::make('intanosaurusss'), 
+            'role'      => 'mentor',
+            'status'    => 'inactive',
+        ]);
     }
 }

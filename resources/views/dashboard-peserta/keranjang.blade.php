@@ -26,7 +26,6 @@
             <div class="text-red-600 font-semibold text-sm mt-2" id="countdown-timer"></div>
         </div>
         @endif
-
         <!-- Tambahkan Countdown Timer -->
         <script>
             function startCountdown(endDate) {
@@ -47,7 +46,7 @@
                     let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                     let seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-                    document.getElementById("countdown-timer").innerHTML = `⏳ Berakhir dalam: ${days} hari, ${hours} jam, ${minutes} menit, ${seconds} detik`;
+                    document.getElementById("countdown-timer").innerHTML = ⏳ Berakhir dalam: ${days} hari, ${hours} jam, ${minutes} menit, ${seconds} detik;
                 }, 1000);
             }
 

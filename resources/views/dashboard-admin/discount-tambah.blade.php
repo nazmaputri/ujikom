@@ -4,7 +4,7 @@
 <div class="container mx-auto bg-white rounded-lg p-5">
     <!-- Wrapper div dengan background putih, padding, dan shadow -->
     <div class="">
-        <h2 class="text-xl font-semibold mb-4 inline-block border-b-2 border-gray-300 pb-1 text-gray-700">Tambah Diskon</h2>
+        <h2 class="text-xl font-semibold text-gray-700 text-center w-full border-b-2 border-gray-300 pb-2">Tambah Diskon</h2>
 
         <!-- Menampilkan pesan sukses -->
         @if(session('success'))
@@ -14,42 +14,42 @@
         @endif
 
         <!-- Formulir Diskon -->
-        <form action="{{ route('discount.store') }}" method="POST">
+        <form action="{{ route('discount.store') }}" method="POST" class="mt-4 grid grid-col-1 md:grid-cols-2 space-x-3">
             @csrf
 
             <!-- Kode Kupon -->
             <div class="mb-4">
-                <label class="block text-gray-600 font-medium">Kode Kupon</label>
+                <label class="block text-gray-700 pb-2 font-medium">Kode Kupon</label>
                 <input type="text" name="coupon_code" required class="border p-3 w-full rounded-lg focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500">
             </div>
 
             <!-- Persen Diskon -->
             <div class="mb-4">
-                <label class="block text-gray-600 font-medium">Persen Diskon (%)</label>
+                <label class="block text-gray-700 pb-2 font-medium">Persen Diskon (%)</label>
                 <input type="number" name="discount_percentage" required min="1" max="100" class="border p-3 w-full rounded-lg focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500">
             </div>
 
             <!-- Tanggal Mulai -->
             <div class="mb-4">
-                <label class="block text-gray-600 font-medium">Tanggal Mulai</label>
+                <label class="block text-gray-700 pb-2 font-medium">Tanggal Mulai</label>
                 <input type="date" name="start_date" required class="border p-3 w-full rounded-lg focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500">
             </div>
 
             <!-- Tanggal Berakhir -->
             <div class="mb-4">
-                <label class="block text-gray-600 font-medium">Tanggal Berakhir</label>
+                <label class="block text-gray-700 pb-2 font-medium">Tanggal Berakhir</label>
                 <input type="date" name="end_date" required class="border p-3 w-full rounded-lg focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500">
             </div>
 
             <!-- Jam Mulai -->
             <div class="mb-4">
-                <label class="block text-gray-600 font-medium">Jam Mulai</label>
+                <label class="block text-gray-700 pb-2 font-medium">Jam Mulai</label>
                 <input type="time" name="start_time" required class="border p-3 w-full rounded-lg focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500">
             </div>
 
             <!-- Jam Berakhir -->
             <div class="mb-4">
-                <label class="block text-gray-600 font-medium">Jam Berakhir</label>
+                <label class="block text-gray-700 pb-2 font-medium">Jam Berakhir</label>
                 <input type="time" name="end_time" required class="border p-3 w-full rounded-lg focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500">
             </div>
 
@@ -59,13 +59,13 @@
                 <label class="flex items-center space-x-2">
                     <input type="checkbox" name="apply_to_all" id="applyToAll" value="1"
                         class="rounded border-gray-300 text-blue-600 focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500">
-                    <span class="text-gray-600">Terapkan ke semua kursus</span>
+                    <span class="text-gray-700 pb-2">Terapkan ke semua kursus</span>
                 </label>
             </div>
 
             <!-- Dropdown Pilih Kursus -->
             <div id="courseSelection" class="mt-4" x-data="{ open: false, selectedCourses: [], searchTerm: '' }" x-show="!applyToAll">
-                <label class="block text-gray-600 font-medium">Pilih Kursus</label>
+                <label class="block text-gray-700 pb-2 font-medium">Pilih Kursus</label>
 
                 <div class="relative">
                     <!-- Button untuk membuka dropdown -->
@@ -101,7 +101,7 @@
             </div>
 
             <!-- Tombol -->
-            <div class="mt-6 flex justify-end space-x-2">
+            <div class="col-span-1 md:col-span-2 mt-6 flex justify-end space-x-2">
                 <a href="{{ route('discount') }}" class="bg-red-400 hover:bg-red-300 text-white font-semibold py-2 px-4 rounded">
                     Batal
                 </a>

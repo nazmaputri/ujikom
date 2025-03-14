@@ -6,6 +6,18 @@
         $currentYear = date('Y');
         $years = range($currentYear, $currentYear - 2); // Tahun saat ini hingga 5 tahun terakhir
     @endphp
+
+    <!-- container info potongan royalti -->
+    <div class="flex items-center p-3 mb-4 text-sm text-sky-700 rounded-lg bg-sky-200" role="alert">
+        <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+        </svg>
+        <span class="sr-only">Info</span>
+        <div>
+            <span class="font-medium">Info!</span> Setiap kursus yang dibeli oleh peserta sudah terpotong <strong>2%</strong> untuk admin
+        </div>
+    </div>
+
     <!-- Grafik Pendapatan -->
     <div class="bg-white shadow-md rounded-lg p-6 mb-6">
         <div class="flex flex-col items-center mb-4">
@@ -29,13 +41,7 @@
                         window.location.href = url.toString(); // Redirect ke URL dengan parameter tahun
                     }
                 </script>
-            </div>
-        <!-- Pemberitahuan potongan 2% -->
-        <div class="my-4">
-            <div class="alert alert-info bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded relative" role="alert">
-                <strong>Info!</strong> Setiap kursus yang dibeli peserta sudah dipotong 2% oleh admin.
-            </div>
-        </div>    
+            </div>   
             <div class="border-b-2 w-full mt-2"></div>
         </div>  
         <div style="position: relative; height: 300px; width: 100%;">
