@@ -64,7 +64,7 @@
                                             <path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zM188.3 147.1c7.6-4.2 16.8-4.1 24.3 .5l144 88c7.1 4.4 11.5 12.1 11.5 20.5s-4.4 16.1-11.5 20.5l-144 88c-7.4 4.5-16.7 4.7-24.3 .5s-12.3-12.2-12.3-20.9l0-176c0-8.7 4.7-16.7 12.3-20.9z"/>
                                         </svg>
                                         <!-- Nomor dan Judul Materi -->
-                                        <span class="text-sm font-semibold text-gray-700">
+                                        <span class="text-sm font-semibold text-gray-700 capitalize">
                                             {{ $index + 1 }}. {{ $materi->judul }}
                                         </span>
                                     </li>
@@ -90,9 +90,9 @@
                 <img src="{{ asset('storage/' . $course->image_path) }}" alt="{{ $course->title }}" class="rounded-lg w-full h-auto">
             </div>
             <div class="ml-6 w-2/3 space-y-2">
-                <h2 class="md:text-xl text-md font-semibold text-gray-700 capitalize mb-1">{{ $course->title }}</h2>
+                <h2 class="md:text-xl text-md font-semibold text-gray-700 capitalize mb-1 capitalize">{{ $course->title }}</h2>
                 <p class="text-gray-700">{{ $course->description }}</p>
-                <p class="text-gray-600">Mentor : {{ $course->mentor->name }}</p>
+                <p class="text-gray-600 capitalize">Mentor : {{ $course->mentor->name }}</p>
                 <p class="text-red-400 inline-flex items-center text-md rounded-xl font-semibold">Rp. {{ number_format($course->price, 0, ',', '.') }}</p>
             </div>
         </div>
@@ -103,19 +103,19 @@
             
             <!-- Daftar Button -->
             <div class="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
-                <button class="bg-blue-400 hover:bg-blue-600 text-white font-semibold py-2 px-3 rounded-lg text-sm shadow-lg shadow-blue-100 hover:shadow-none flex items-center space-x-2" data-aos="zoom-in-right">
+                <button class="bg-sky-400 hover:bg-sky-300 text-white font-semibold py-2 px-3 rounded-lg text-sm shadow-lg shadow-blue-100 hover:shadow-none flex items-center space-x-2" data-aos="zoom-in-right">
                     <img class="w-6 h-6" style="filter: invert(1);" src="https://img.icons8.com/fluency-systems-regular/50/certificate--v1.png" alt="certificate--v1"/>
                     <span>Sertifikat</span>
                 </button>
-                <button class="bg-blue-400 hover:bg-blue-600 text-white font-semibold py-2 px-3 rounded-lg text-sm shadow-lg shadow-blue-100 hover:shadow-none flex items-center space-x-2" data-aos="zoom-in-right">
+                <button class="bg-sky-400 hover:bg-sky-300 text-white font-semibold py-2 px-3 rounded-lg text-sm shadow-lg shadow-blue-100 hover:shadow-none flex items-center space-x-2" data-aos="zoom-in-right">
                     <img class="w-6 h-6" style="filter: invert(1);" src="https://img.icons8.com/ios-glyphs/30/last-24-hours.png" alt="last-24-hours"/>
                     <span>Akses Materi 24 Jam</span>
                 </button>
-                <button class="bg-blue-400 hover:bg-blue-600 text-white font-semibold py-2 px-3 rounded-lg text-sm shadow-lg shadow-blue-100 hover:shadow-none flex items-center space-x-2" data-aos="zoom-in-right">
+                <button class="bg-sky-400 hover:bg-sky-300 text-white font-semibold py-2 px-3 rounded-lg text-sm shadow-lg shadow-blue-100 hover:shadow-none flex items-center space-x-2" data-aos="zoom-in-right">
                     <img class="w-6 h-6" style="filter: invert(1);" src="https://img.icons8.com/material-outlined/24/book.png" alt="book"/>
                     <span>Bahan Bacaan</span>
                 </button>
-                <button class="bg-blue-400 hover:bg-blue-600 text-white font-semibold py-2 px-3 rounded-lg text-sm shadow-lg shadow-blue-100 hover:shadow-none flex items-center space-x-2" data-aos="zoom-in-right">
+                <button class="bg-sky-400 hover:bg-sky-300 text-white font-semibold py-2 px-3 rounded-lg text-sm shadow-lg shadow-blue-100 hover:shadow-none flex items-center space-x-2" data-aos="zoom-in-right">
                     <img class="w-6 h-6" style="filter: invert(1);" src="https://img.icons8.com/sf-black/64/cinema-.png" alt="cinema-"/>
                     <span>Video Pembelajaran</span>
                 </button>
@@ -128,35 +128,40 @@
             
             <!-- Daftar Button -->
             <div class="flex items-center space-x-2 mt-4">
-                <!-- Rating Bintang -->
-                @foreach ($ratings as $rating)
-                    @if ($rating->display == 1) <!-- Memastikan hanya rating dengan status 1 yang ditampilkan -->
+                @php
+                    $filteredRatings = $ratings->filter(fn($rating) => $rating->display == 1);
+                @endphp
+
+                @if ($filteredRatings->isEmpty())
+                    <p class="text-gray-500 w-full">Belum ada rating</p>
+                @else
+                    @foreach ($filteredRatings as $rating)
                         <div class="border border-gray-200 rounded-xl w-full md:w-1/2 lg:w-1/3 p-6 mt-6 mx-2 hover:shadow-lg transition-shadow duration-300 ease-in-out" data-aos="zoom-in-up">
                             <!-- Nama User -->
-                            <h4 class="text-xl font-semibold text-gray-800">{{ $rating->user->name }}</h4>
+                            <h4 class="text-md font-semibold text-gray-800">{{ $rating->user->name }}</h4>
                         
                             <!-- Rating Bintang -->
-                            <div class="flex items-center space-x-1 mb-4">
+                            <div class="flex items-center space-x-1 mb-1">
                                 @for ($i = 0; $i < 5; $i++)
                                     <span class="{{ $i < $rating->stars ? 'text-yellow-500' : 'text-gray-300' }}">&starf;</span>
                                 @endfor
                             </div>
                         
                             <!-- Tanggal -->
-                            <div class="flex items-center text-sm text-gray-500 space-x-2 mb-4">
-                                <svg class="w-4 h-4 text-gray-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="currentColor">
+                            <div class="flex items-center text-sm text-gray-500 space-x-2 mb-1">
+                                <svg class="w-3 h-3 text-gray-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="currentColor">
                                     <path d="M128 0c17.7 0 32 14.3 32 32l0 32 128 0 0-32c0-17.7 14.3-32 32-32s32 14.3 32 32l0 32 48 0c26.5 0 48 21.5 48 48l0 48L0 160l0-48C0 85.5 21.5 64 48 64l48 0 0-32c0-17.7 14.3-32 32-32zM0 192l448 0 0 272c0 26.5-21.5 48-48 48L48 512c-26.5 0-48-21.5-48-48L0 192zm64 80l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0c-8.8 0-16 7.2-16 16zm128 0l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0c-8.8 0-16 7.2-16 16zm144-16c-8.8 0-16 7.2-16 16l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0c-8.8 0-16 7.2-16 16zM64 400l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0c-8.8 0-16 7.2-16 16zm144-16c-8.8 0-16 7.2-16 16l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0c-8.8 0-16 7.2-16 16z" />
                                 </svg>
-                                <span>{{ \Carbon\Carbon::parse($rating->created_at)->format('d F Y') }}</span>
+                                <span class="text-xs">{{ \Carbon\Carbon::parse($rating->created_at)->format('d F Y') }}</span>
                             </div>
                         
                             <!-- Ulasan -->
                             <p class="text-gray-700 text-sm">"{{ $rating->comment }}"</p>
                         </div>
-                    @endif
-                @endforeach
+                    @endforeach
+                @endif
             </div>
-            
+
         </div>       
     </section>
 

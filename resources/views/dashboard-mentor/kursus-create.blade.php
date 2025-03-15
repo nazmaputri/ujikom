@@ -112,8 +112,8 @@
                             <!-- Toggle Switch -->
                             <div class="relative">
                                 <input type="checkbox" name="chat" id="chat-toggle" class="hidden peer" {{ old('chat', $course->chat ?? false) ? 'checked' : '' }} value="1"/>
-                                <div class="block bg-gray-300 w-14 h-8 rounded-full peer-checked:bg-green-500 peer-checked:justify-end"></div>
-                                <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition-transform peer-checked:translate-x-6"></div>
+                                <div class="block bg-gray-300 w-9 h-5 rounded-full peer-checked:bg-green-500 peer-checked:justify-end"></div>
+                                <div class="dot absolute top-0.5 start-[2px] bg-white w-4 h-4 rounded-full transition-transform peer-checked:translate-x-full"></div>
                             </div>
                         </label>
                     

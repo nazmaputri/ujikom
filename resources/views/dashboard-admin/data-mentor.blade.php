@@ -6,7 +6,7 @@
     <div class="flex items-center justify-between mb-4">
         <h2 class="text-xl font-semibold text-gray-700 text-center w-full border-b-2 border-gray-300 pb-2">Data Mentor</h2>
     </div> 
-        <div class="flex items-center justify-between mb-4">
+        <div class="flex flex-col md:flex-row items-center justify-between space-y-4 mb-4">
             <form action="{{ route('datamentor-admin') }}" method="GET" class="w-full max-w-xs">
                 <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Cari</label>
                 <div class="relative flex items-center">
@@ -86,7 +86,7 @@
                                         method="POST" class="toggle-form">
                                         @csrf
                                         <button type="submit" class="relative w-9 h-5 rounded-full transition-colors duration-300 ease-in-out 
-                                            {{ $user->status === 'active' ? 'bg-sky-400' : 'bg-gray-300' }}">
+                                            {{ $user->status === 'active' ? 'bg-green-400' : 'bg-gray-300' }}">
                                             <div class="absolute top-0.5 start-[2px] bg-white border-gray-300 border rounded-full h-4 w-4 
                                                 transition-transform duration-300 ease-in-out 
                                                 {{ $user->status === 'active' ? 'translate-x-full border-white' : '' }}">

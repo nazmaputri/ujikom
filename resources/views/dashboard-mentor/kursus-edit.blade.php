@@ -3,14 +3,14 @@
 @section('content')
 <div class="container mx-auto">
     <div class="bg-white rounded-lg shadow-md p-6">
-        <h2 class="text-3xl font-bold mb-6 border-b-2 border-gray-300 pb-2">Edit Kursus</h2>
+        <h2 class="text-xl font-semibold text-gray-700 text-center w-full border-b-2 border-gray-300 pb-2">Edit Kursus</h2>
 
         <!-- Form Edit Kursus -->
         <form action="{{ route('courses.update', $course->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
                 <!-- Kolom Kiri -->
                 <div>
                     <!-- Input untuk Judul -->
@@ -106,12 +106,12 @@
 
                     <div class="mt-6">
                         <label for="chat-toggle" class="flex items-center cursor-pointer">
-                            <span class="mr-3">Aktifkan Fitur Chat</span>
+                            <span class="mr-3 text-gray-700">Aktifkan Fitur Chat</span>
                             <!-- Toggle Switch -->
                             <div class="relative">
                                 <input type="checkbox" name="chat" id="chat-toggle" class="hidden peer" {{ old('chat', $course->chat ?? false) ? 'checked' : '' }} value="1"/>
-                                <div class="block bg-gray-300 w-14 h-8 rounded-full peer-checked:bg-green-500 peer-checked:justify-end"></div>
-                                <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition-transform peer-checked:translate-x-6"></div>
+                                <div class="block bg-gray-300 w-9 h-5 rounded-full peer-checked:bg-green-500 peer-checked:justify-end"></div>
+                                <div class="dot absolute top-0.5 start-[2px] bg-white h-4 w-4 rounded-full transition-transform peer-checked:translate-x-full"></div>
                             </div>
                         </label>
                     
@@ -159,12 +159,12 @@
             
             <!-- Tombol Submit -->
             <div class="mt-6 flex justify-end space-x-2">
-                <button type="submit" class="bg-sky-400 hover:bg-sky-600 text-white font-bold py-2 px-4 rounded">
-                    Update
-                </button>
-                <a href="{{ route('courses.index') }}" class="bg-red-400 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
-                    Cancel
+                <a href="{{ route('courses.index') }}" class="bg-red-400 hover:bg-red-300 text-white font-bold py-2 px-4 rounded">
+                    Batal
                 </a>
+                <button type="submit" class="bg-sky-400 hover:bg-sky-300 text-white font-bold py-2 px-4 rounded">
+                    Simpan
+                </button>
             </div>
         </form>
     </div>
