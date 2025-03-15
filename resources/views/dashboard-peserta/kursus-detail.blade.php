@@ -11,7 +11,7 @@
         @endif
         <!-- Card Informasi Kursus -->
         <div class="flex flex-col lg:flex-row mb-4">
-            <div class="w-full lg:w-1/3 mb-4 lg:mb-0">
+            <div class="w-full sm:w-1/4 md:w-1/5 mb-4 lg:mb-0">
                 @if($course && $course->image_path)
                     <img src="{{ asset('storage/' . $course->image_path) }}" alt="{{ $course->title }}" class="rounded-lg w-full h-auto">
                 @else
@@ -21,8 +21,8 @@
             <div class="ml-4 w-2/3 space-y-1">
                 <h2 class="text-lg font-semibold capitalize text-gray-700">{{ $course->title }}</h2>
                 <p class="text-gray-700 text-md">{{ $course->description }}</p>
-                <p class="text-gray-600 text-sm"><span class="">Mentor :</span> {{ $course->mentor->name }}</p>
-                <p class="text-gray-600 text-sm"><span class="">Biaya :</span> Rp {{ number_format($course->price, 0, ',', '.') }}</p>
+                <p class="text-gray-600 text-sm capitalize"><span class="">Mentor :</span> {{ $course->mentor->name }}</p>
+                <p class="text-gray-600 text-sm">Biaya : <span class="">Rp {{ number_format($course->price, 0, ',', '.') }}</span></p>
                 @if($course->start_date && $course->end_date)
                     <p class="text-gray-600 text-sm"><span class="">Tanggal Mulai :</span> {{ \Carbon\Carbon::parse($course->start_date)->format('d F Y') }} - {{ \Carbon\Carbon::parse($course->end_date)->format('d F Y') }}</p>
                 @endif
@@ -41,7 +41,7 @@
                 Beri Rating
             </button>
             @else
-            <button id="ratingdone" class="bg-yellow-400 hover:bg-yellow-300 text-white font-semibold py-2 px-3 rounded-lg mb-4 sm:mb-4 sm:absolute sm:bottom-0 sm:right-24 sm:mr-4 cursor-not-allowed">
+            <button id="ratingdone" class="bg-gray-400 hover:bg-gray-300 text-white font-semibold py-2 px-3 rounded-lg mb-4 sm:mb-4 sm:absolute sm:bottom-0 sm:right-24 sm:mr-4 cursor-not-allowed">
                 Beri Rating
             </button>
             @endif
@@ -53,8 +53,8 @@
         </div>
         <!-- Modal Pop-up -->
     <div id="ratingModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
-        <div class="bg-white p-6 rounded-lg shadow-lg md:w-1/3 w-full mx-2">
-            <h2 class="text-lg text-gray-700 font-semibold mb-4">Beri Rating untuk Kursus</h2>
+        <div class="bg-white p-6 rounded-lg shadow-lg md:w-1/3 w-full mx-4">
+            <h2 class="text-lg text-gray-700 text-center font-semibold mb-4">Beri Rating untuk Kursus</h2>
             <form id="ratingForm" method="POST" action="{{ route('ratings.store', ['course_id' => $course->id]) }}">
                 @csrf
                 <input type="hidden" name="course_id" value="{{ $course->id }}">
@@ -92,13 +92,13 @@
                 </script>                
                 <div class="mb-4">
                     <label for="comment" class="block text-sm text-gray-600 font-medium">Komentar</label>
-                    <textarea name="comment" id="comment" class="w-full border rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500" rows="4" placeholder="Tulis komentar Anda (opsional)"></textarea>
+                    <textarea name="comment" id="comment" class="w-full text-sm border rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500" rows="4" placeholder="Tulis komentar Anda (opsional)"></textarea>
                 </div>
                 <div class="flex justify-end">
                     <button type="button" id="closeRatingModal" class="bg-red-400 hover:bg-red-300 text-white font-semibold py-2 px-4 rounded-lg mr-2">
                         Batal
                     </button>
-                    <button type="submit" class="bg-blue-400 hover:bg-blue-300 text-white font-semibold py-2 px-4 rounded-lg">
+                    <button type="submit" class="bg-sky-400 hover:bg-sky-300 text-white font-semibold py-2 px-4 rounded-lg">
                         Kirim
                     </button>
                 </div>

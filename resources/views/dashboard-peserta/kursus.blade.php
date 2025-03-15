@@ -10,7 +10,7 @@
                         <img src="{{ asset('storage/' . $course->image_path) }}" alt="{{ $course->title }}" class="rounded-lg w-full h-40 object-cover">
                     </div>
                     <h2 class="text-lg text-gray-700 font-semibold capitalize">{{ $course->title }}</h2>
-                    <p class="text-gray-600 text-sm mt-2"><span class="">Mentor :</span>{{ $course->mentor->name }}</p>
+                    <p class="text-gray-600 text-sm mt-2 capitalize"><span class="">Mentor :</span> {{ $course->mentor->name }}</p>
                     <p class="text-gray-600 text-sm mb-5"><span class="">Masa Aktif :</span> {{ $course->duration }}</p>
 
                     <div class="flex justify-between items-center mt-auto gap-x-4 flex-nowrap overflow-x-auto">

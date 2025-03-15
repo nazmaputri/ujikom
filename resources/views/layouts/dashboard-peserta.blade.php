@@ -24,24 +24,22 @@
         <div 
             :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'" 
             class="fixed inset-y-0 left-0 w-64 bg-white shadow-lg transition-transform duration-300 ease-in-out transform lg:translate-x-0 lg:static z-50">
-            <div class="flex items-center justify-between p-4">
-            <div class="flex items-center">
-            <!-- logo -->
-            <div class="flex flex-col items-center justify-center h-32 bg-white">
-                <img id="logo" src="{{ asset('storage/eduflix-1.png') }}" class="h-32" alt="Eduflix Logo" />
-            </div>
-            </div>
+            <div class="flex items-center justify-between md:justify-center p-4">
+                <!-- Logo -->
+                <div class="flex flex-col items-center justify-center h-32 bg-white">
+                    <img id="logo" src="{{ asset('storage/eduflix-1.png') }}" class="h-32" alt="Eduflix Logo" />
+                </div>
 
-            <!-- button x menutup sidebar -->
+                <!-- Tombol X untuk menutup sidebar, hanya muncul di layar kecil -->
                 <button 
                     @click="sidebarOpen = false" 
                     class="lg:hidden p-2 rounded-md bg-sky-100 text-red-700">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                     </svg>
-
                 </button>
             </div>
+
             <nav class="">
                 <ul class="ml-4 mr-4 space-y-2 mt-2 text-gray-800">
                     

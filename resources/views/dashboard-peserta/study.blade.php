@@ -8,7 +8,7 @@
         <!-- Header Course -->
         <div class="bg-white text-gray-600 p-3 rounded-lg mt-2">
             <h2 class="text-xl text-gray-700 text-center font-semibold capitalize">{{ $course->title }}</h2>
-            <p class="text-sm mt-2 text-center text-gray-600">Mentor : {{ $course->mentor->name ?? 'Tidak ada mentor' }}</p>
+            <p class="text-sm mt-2 text-center text-gray-600 capitalize">Mentor : {{ $course->mentor->name ?? 'Tidak ada mentor' }}</p>
         </div>
 
         <!-- Silabus Materi -->
@@ -22,12 +22,14 @@
                     
                     <!-- Tombol atau Panel Materi -->
                     @if ($index === 0 || in_array($course->materi[$index - 1]->id, $completedMateriIds))
-                        <button class="toggle-button w-full text-left bg-gray-50 border hover:bg-gray-100 p-4 rounded-md focus:outline-none flex items-center justify-between" data-target="materi-{{ $materi->id }}">
+                        <button class="toggle-button w-full text-left bg-gray-50 border hover:bg-gray-100 p-3 rounded-md focus:outline-none flex items-center justify-between" data-target="materi-{{ $materi->id }}">
                             <div class="flex items-center space-x-2">
                                 <!-- Ikon File -->
-                                <i class="fas fa-file text-gray-600"></i>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-700" fill="currentColor" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path d="M13.172,2H6C4.9,2,4,2.9,4,4v16c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2V8.828c0-0.53-0.211-1.039-0.586-1.414l-4.828-4.828 C14.211,2.211,13.702,2,13.172,2z M15,18H9c-0.552,0-1-0.448-1-1v0c0-0.552,0.448-1,1-1h6c0.552,0,1,0.448,1,1v0 C16,17.552,15.552,18,15,18z M15,14H9c-0.552,0-1-0.448-1-1v0c0-0.552,0.448-1,1-1h6c0.552,0,1,0.448,1,1v0 C16,13.552,15.552,14,15,14z M13,9V3.5L18.5,9H13z"></path>
+                                </svg>
                                 <!-- Judul Materi -->
-                                <h4 class="font-semibold text-gray-700">{{ $materi->judul }}</h4>
+                                <h4 class="font-semibold text-gray-700 capitalize">{{ $materi->judul }}</h4>
                             </div>
                             <!-- Icon svg dropdown -->
                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 transition-transform duration-300 transform rotate-0 ml-auto dropdown-icon">
@@ -35,11 +37,13 @@
                             </svg>
                         </button>
                     @else
-                        <button class="w-full text-left bg-neutral-100 p-4 rounded-md focus:outline-none cursor-not-allowed">
+                        <button class="w-full text-left bg-neutral-100 p-3 rounded-md focus:outline-none cursor-not-allowed">
                             <div class="flex items-center">
                                 <!-- Gembok Ikon -->
-                                <i class="fas fa-lock text-yellow-500 mr-2"></i> <!-- Gembok -->
-                                <h4 class="font-semibold text-gray-500">{{ $materi->judul }}</h4>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2" viewBox="0,0,256,256">
+                                    <g fill="#eee12c" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(9.84615,9.84615)"><path d="M16,0c-2.21094,0 -4.12109,0.91797 -5.3125,2.40625c-1.19141,1.48828 -1.6875,3.41797 -1.6875,5.5v1.09375h3v-1.09375c0,-1.57812 0.39063,-2.82031 1.03125,-3.625c0.64063,-0.80469 1.51172,-1.28125 2.96875,-1.28125c1.46094,0 2.32813,0.44922 2.96875,1.25c0.64063,0.80078 1.03125,2.05859 1.03125,3.65625v1.09375h3v-1.09375c0,-2.09375 -0.52734,-4.04297 -1.71875,-5.53125c-1.19141,-1.48828 -3.07422,-2.375 -5.28125,-2.375zM9,10c-1.65625,0 -3,1.34375 -3,3v10c0,1.65625 1.34375,3 3,3h14c1.65625,0 3,-1.34375 3,-3v-10c0,-1.65625 -1.34375,-3 -3,-3zM16,15c1.10547,0 2,0.89453 2,2c0,0.73828 -0.40234,1.37109 -1,1.71875v2.28125c0,0.55078 -0.44922,1 -1,1c-0.55078,0 -1,-0.44922 -1,-1v-2.28125c-0.59766,-0.34766 -1,-0.98047 -1,-1.71875c0,-1.10547 0.89453,-2 2,-2z"></path></g></g>
+                                </svg>
+                                <h4 class="font-semibold text-gray-500 capitalize">{{ $materi->judul }}</h4>
                             </div>
                         </button>
                     @endif                
@@ -52,7 +56,7 @@
                             <div class="mt-4">
                                 <h5 class="text-md font-semibold text-gray-700 flex items-center space-x-2 mb-2">
                                     <!-- Icon -->
-                                    <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                    <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 512 512">
                                         <path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zM188.3 147.1c7.6-4.2 16.8-4.1 24.3 .5l144 88c7.1 4.4 11.5 12.1 11.5 20.5s-4.4 16.1-11.5 20.5l-144 88c-7.4 4.5-16.7 4.7-24.3 .5s-12.3-12.2-12.3-20.9l0-176c0-8.7 4.7-16.7 12.3-20.9z" />
                                     </svg>
                                     <span>Video</span>
@@ -76,10 +80,10 @@
                             <div class="mt-4">
                                 <h5 class="text-md font-semibold text-gray-700 flex items-center space-x-2 mb-2">
                                     <!-- Icon -->
-                                    <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                                    <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 384 512">
                                         <path d="M64 464c-8.8 0-16-7.2-16-16L48 64c0-8.8 7.2-16 16-16l160 0 0 80c0 17.7 14.3 32 32 32l80 0 0 288c0 8.8-7.2 16-16 16L64 464zM64 0C28.7 0 0 28.7 0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-293.5c0-17-6.7-33.3-18.7-45.3L274.7 18.7C262.7 6.7 246.5 0 229.5 0L64 0zm56 256c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0zm0 96c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"/>
                                     </svg>
-                                    <span>File Dokumen</span>
+                                    <span>PDF</span>
                                 </h5>
                                 @foreach ($materi->pdfs as $pdf)
                                     <div class="mb-4">
@@ -100,7 +104,7 @@
                             <div class="mt-4">
                                 <h5 class="text-md font-semibold text-gray-700 flex items-center space-x-2 mb-2">
                                     <!-- Icon -->
-                                    <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                                    <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 576 512">
                                         <path d="M0 64C0 28.7 28.7 0 64 0L224 0l0 128c0 17.7 14.3 32 32 32l128 0 0 125.7-86.8 86.8c-10.3 10.3-17.5 23.1-21 37.2l-18.7 74.9c-2.3 9.2-1.8 18.8 1.3 27.5L64 512c-35.3 0-64-28.7-64-64L0 64zm384 64l-128 0L256 0 384 128zM549.8 235.7l14.4 14.4c15.6 15.6 15.6 40.9 0 56.6l-29.4 29.4-71-71 29.4-29.4c15.6-15.6 40.9-15.6 56.6 0zM311.9 417L441.1 287.8l71 71L382.9 487.9c-4.1 4.1-9.2 7-14.9 8.4l-60.1 15c-5.5 1.4-11.2-.2-15.2-4.2s-5.6-9.7-4.2-15.2l15-60.1c1.4-5.6 4.3-10.8 8.4-14.9z"/>
                                     </svg>
                                     <span>Kuis</span>

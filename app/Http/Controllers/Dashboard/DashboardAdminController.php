@@ -217,6 +217,23 @@ class DashboardAdminController extends Controller
 
         return redirect()->back()->with('info', 'User is already active.');
     }
+
+    // update status mentor menjadi pending (+oleh intan)
+    public function updateStatusToPending($id)
+    {
+        $user = User::findOrFail($id);
+
+        // Periksa apakah status saat ini bukan 'pending'
+        if ($user->status !== 'pending') {
+            // Ubah status menjadi 'pending'
+            $user->status = 'pending';
+            $user->save();
+
+            return redirect()->back()->with('success', 'Status mentor berhasil diperbarui menjadi nonaktif!'); //sebenarnya pending
+        }
+
+        return redirect()->back()->with('info', 'User sudah dalam status pending.');
+    }
     
     public function laporan(Request $request)
     {
