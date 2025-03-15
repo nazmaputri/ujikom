@@ -70,7 +70,34 @@
         <div class="text-left mb-4 border-b-2 border-gray-300 pb-2">
             <h2 class="text-lg font-semibold text-gray-700">Kursus</h2>
         </div>
-        <div class="text-right">
+        <table class="min-w-full">
+            <thead>
+                <tr class="bg-sky-100 text-gray-700">
+                    <th class="px-2 py-2 text-center">No</th>
+                    <th class="px-4 py-2 text-center">Judul</th>
+                    <th class="px-4 py-2 text-center">Harga</th>
+                    <th class="px-4 py-2 text-center">Rating</th>
+                </tr>
+            </thead>
+        
+            <tbody class="text-gray-600 text-sm font-light">
+                @forelse ($courses as $index => $course) 
+                    <tr class="bg-white hover:bg-sky-50 border-b">
+                        <td class="px-2 py-2 text-center">{{ $index + 1 }}</td>
+                        <td class="px-4 py-2">{{ $course->title }}</td>
+                        <td class="px-4 py-2 text-center">Rp {{ number_format($course->price, 0, ',', '.') }}</td>
+                        <td class="px-4 py-2 text-center">
+                            {{ $course->rating ?? 'Belum ada rating' }}
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="5" class="text-center text-gray-500 py-4">Belum ada kursus yang diajarkan oleh mentor ini.</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+        <div class="text-right pt-10">
         <a href="{{ route('datamentor-admin') }}" class="bg-sky-400 hover:bg-sky-300 text-white font-semibold py-2 px-6 rounded-lg shadow-md hover:shadow-none">
             Kembali
         </a>

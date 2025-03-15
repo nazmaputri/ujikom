@@ -28,6 +28,29 @@ class DashboardAdminController extends Controller
         return redirect()->route('categories.show', $name)->with('success', 'Kursus disetujui!');
     }    
 
+    public function toggleActive(Request $request)
+    {
+        // Validasi input ID
+        $request->validate([
+            'id' => 'required|exists:users,id',
+            'status' => 'required|in:active,inactive',
+        ]);
+
+        // Ambil user berdasarkan ID
+        $user = User::findOrFail($request->id);
+
+        // Pastikan hanya mentor yang bisa diubah statusnya
+        if ($user->role !== 'mentor') {
+            return response()->json(['error' => 'User ini bukan mentor'], 403);
+        }
+
+        // Update status mentor
+        $user->status = $request->status;
+        $user->save();
+
+        return response()->json(['success' => 'Status mentor diperbarui', 'status' => $user->status]);
+    }
+
     public function publish($id, $name)
     {
         $course = Course::findOrFail($id);
@@ -62,8 +85,12 @@ class DashboardAdminController extends Controller
     public function detailmentor($id)
     {
         $user = User::findOrFail($id);
-        return view('dashboard-admin.detail-mentor', compact('user'));
-    }
+    
+        // Ambil kursus yang dimiliki oleh mentor berdasarkan ID user
+        $courses = Course::where('mentor_id', $id)->get();
+    
+        return view('dashboard-admin.detail-mentor', compact('user', 'courses'));
+    }    
 
     public function mentor(Request $request)
     {

@@ -44,7 +44,7 @@
                 $startNumber = ($categories->currentPage() - 1) * $categories->perPage() + 1;
             @endphp
                     @foreach($categories as $index => $category)
-                        <tr class="bg-white hover:bg-sky-50 user-row">
+                        <tr class="bg-white hover:bg-sky-50 user-row border-b">
                             <td class="px-2 py-3 text-center text-gray-600 text-sm">{{ $startNumber + $index }}</td>
                             <td class="py-3 px-2 text-gray-600 text-sm">{{ $category->name }}</td>
                             <td class="py-3 px-2 flex justify-center space-x-6">

@@ -61,24 +61,56 @@
                         <tr class="bg-white hover:bg-sky-50 user-row" data-role="{{ $user->role }}">
                             <td class="px-4 text-center text-gray-600 text-sm">{{ $startNumber + $index }}</td>
                             <td class="px-4 text-gray-600 text-sm">{{ $user->name }}</td>
-                            <td class="px-4 text-center">
-                                <form action="{{ route('admin.users.updateStatus', $user->id) }}" method="POST">
+                            <td id="status-{{ $user->id }}" class="px-4 text-center">
+                                <form class="update-status-form" data-id="{{ $user->id }}" method="POST">
                                     @csrf
                                     @method('PATCH')
-                                    @if($user->status === 'pending')
-                                        <button type="submit" class="text-green-500 hover:text-green-600 text-sm">Set Active</button>
+                                    @if($user->status === 'inactive' || $user->status === 'pending')
+                                        <button type="submit" class="set-active-btn text-green-500 hover:text-green-600 text-sm">
+                                            Set Active
+                                        </button>
                                     @else
                                         <span class="text-gray-700 text-sm">Active</span>
                                     @endif
                                 </form>
-                            </td>                                             
+                            </td>                                                                             
                             <td class="py-3 px-6 text-center">
                                 <div class="flex items-center justify-center space-x-8">
                                     <!-- aktif/nonaktifkan mentor -->
                                     <label class="inline-flex items-center cursor-pointer">
-                                        <input type="checkbox" value="" class="sr-only peer" checked>
+                                        <input type="checkbox" class="sr-only peer toggle-mentor"
+                                            data-id="{{ $user->id }}"
+                                            {{ $user->status === 'active' ? 'checked' : '' }}>
                                         <div class="relative w-9 h-5 bg-gray-300 rounded-full peer peer-focus:ring-1 peer-focus:ring-sky-300 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-sky-400"></div>
                                     </label>
+                                     
+                                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                                    <script>
+                                        $(document).ready(function () {
+                                            // Hapus event listener sebelumnya sebelum menambahkan yang baru
+                                            $(document).off("change", ".toggle-mentor").on("change", ".toggle-mentor", function () {
+                                                let mentorId = $(this).data("id");
+                                                let newStatus = $(this).prop("checked") ? "active" : "inactive";
+                                    
+                                                $.ajax({
+                                                    url: "{{ route('mentors.toggle') }}",
+                                                    type: "POST",
+                                                    data: {
+                                                        _token: "{{ csrf_token() }}",
+                                                        id: mentorId,
+                                                        status: newStatus
+                                                    },
+                                                    success: function (response) {
+                                                        alert(response.success);
+                                                    },
+                                                    error: function (xhr) {
+                                                        alert("Terjadi kesalahan!");
+                                                        console.error(xhr.responseText);
+                                                    }
+                                                });
+                                            });
+                                        });
+                                    </script>
 
                                     <!-- Tombol Lihat Detail -->
                                     <a href="{{ route('detaildata-mentor', ['id' => $user->id]) }}" class="text-white bg-sky-300 p-1 rounded-md hover:bg-sky-200">
