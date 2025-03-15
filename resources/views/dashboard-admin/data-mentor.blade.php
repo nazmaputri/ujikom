@@ -61,24 +61,38 @@
                         <tr class="bg-white hover:bg-sky-50 user-row" data-role="{{ $user->role }}">
                             <td class="px-4 text-center text-gray-600 text-sm">{{ $startNumber + $index }}</td>
                             <td class="px-4 text-gray-600 text-sm">{{ $user->name }}</td>
-                            <td class="px-4 text-center">
+                            <td class="px-4 text-gray-600 text-sm">
+                                @if($user->status === 'pending')
+                                    nonaktif
+                                @else
+                                    {{ $user->status }}
+                                @endif
+                            </td>
+                            <!-- <td class="px-4 text-center"> sebelum diedit oleh intan
                                 <form action="{{ route('admin.users.updateStatus', $user->id) }}" method="POST">
                                     @csrf
-                                    @method('PATCH')
+                                    @method('POST')
                                     @if($user->status === 'pending')
                                         <button type="submit" class="text-green-500 hover:text-green-600 text-sm">Set Active</button>
                                     @else
                                         <span class="text-gray-700 text-sm">Active</span>
                                     @endif
                                 </form>
-                            </td>                                             
+                            </td> -->
                             <td class="py-3 px-6 text-center">
                                 <div class="flex items-center justify-center space-x-8">
-                                    <!-- aktif/nonaktifkan mentor -->
-                                    <label class="inline-flex items-center cursor-pointer">
-                                        <input type="checkbox" value="" class="sr-only peer" checked>
-                                        <div class="relative w-9 h-5 bg-gray-300 rounded-full peer peer-focus:ring-1 peer-focus:ring-sky-300 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-sky-400"></div>
-                                    </label>
+                                    <!-- Toggle Aktif/Nonaktifkan Mentor -->
+                                    <form action="{{ $user->status === 'active' ? route('updateStatusToPending', $user->id) : route('admin.users.updateStatus', $user->id) }}" 
+                                        method="POST" class="toggle-form">
+                                        @csrf
+                                        <button type="submit" class="relative w-9 h-5 rounded-full transition-colors duration-300 ease-in-out 
+                                            {{ $user->status === 'active' ? 'bg-sky-400' : 'bg-gray-300' }}">
+                                            <div class="absolute top-0.5 start-[2px] bg-white border-gray-300 border rounded-full h-4 w-4 
+                                                transition-transform duration-300 ease-in-out 
+                                                {{ $user->status === 'active' ? 'translate-x-full border-white' : '' }}">
+                                            </div>
+                                        </button>
+                                    </form>
 
                                     <!-- Tombol Lihat Detail -->
                                     <a href="{{ route('detaildata-mentor', ['id' => $user->id]) }}" class="text-white bg-sky-300 p-1 rounded-md hover:bg-sky-200">
