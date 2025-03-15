@@ -8,7 +8,7 @@ use App\Models\Category;
 use App\Models\Materi;
 use App\Models\MateriVideo;
 use App\Models\MateriPdf;
-use App\Models\Payment;
+use App\Models\Purchase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -97,10 +97,10 @@ class CourseController extends Controller
         $materi = $course->materi()->paginate(5);
         
         // Ambil peserta yang pembayaran kursusnya lunas
-        $participants = Payment::where('course_id', $id)
-        ->where('transaction_status', 'success') 
-        ->with('user') 
-        ->paginate(5); 
+        $participants = Purchase::where('course_id', $id)
+        ->where('status', 'success')
+        ->with('user')
+        ->paginate(5);
     
         // Kembalikan data ke view
         return view('dashboard-mentor.kursus-detail', compact('course', 'materi', 'participants'));

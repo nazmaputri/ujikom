@@ -22,7 +22,7 @@
                         $startNumber = ($ratings->currentPage() - 1) * $ratings->perPage() + 1;
                     @endphp
                         @forelse ($ratings as $index => $rating)
-                        <tr class="bg-white hover:bg-sky-50 user-row text-sm">
+                        <tr class="bg-white border-b hover:bg-sky-50 user-row text-sm">
                             <td class="text-center px-4 py-2 text-sm">{{ $startNumber + $index }}</td>
                             <td class="px-4 py-2 text-sm capitalize">{{ $rating->nama }}</td>
                             <td class="px-4 py-2">
@@ -33,25 +33,24 @@
                             <td class="px-4 py-2">
                                 <span>{{ $rating->comment }}</span>
                             </td>
-                            <td class="px-4 py-2">                              
-                                <form action="{{ route('toggle.displaymentor', $rating->id) }}" method="POST">
+                            <td class="px-4 py-2 text-center">                              
+                                <form action="{{ route('toggle.displayadmin', $rating->id) }}" method="POST">
                                     @csrf
-                                    @method('POST') <!-- Menggunakan metode POST untuk keamanan -->
                                     <label for="rating-toggle-{{ $rating->id }}" class="flex items-center cursor-pointer">
                                         <!-- Toggle Switch -->
                                         <div class="relative">
                                             <input type="checkbox" name="display" id="rating-toggle-{{ $rating->id }}" class="hidden peer" 
-                                                {{ $rating->display ? 'checked' : '' }} value="1"/>
+                                                {{ $rating->display ? 'checked' : '' }} value="1" onchange="this.form.submit()" />
                                             <div class="block bg-gray-300 w-14 h-7 rounded-full peer-checked:bg-green-500 peer-checked:justify-end"></div>
                                             <div class="dot absolute left-1 top-1 bg-white w-5 h-5 rounded-full transition-transform peer-checked:translate-x-6"></div>
                                         </div>
-                                        <!-- Menambahkan kelas kondisi untuk warna teks -->
+                                        <!-- Teks status display admin -->
                                         <span class="ml-3 {{ $rating->display ? 'text-green-500' : 'text-red-500' }}">
                                             {{ $rating->display ? 'Rating ditampilkan' : 'Rating disembunyikan' }}
                                         </span>
                                     </label>
                                 </form>
-                            </td>                        
+                            </td>                                               
                             <script>
                                 // Menambahkan event listener untuk toggle
                                 document.querySelectorAll('[id^="rating-toggle-"]').forEach(function(toggle) {

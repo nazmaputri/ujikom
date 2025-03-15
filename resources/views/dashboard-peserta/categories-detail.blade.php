@@ -17,19 +17,19 @@
         @else
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 @foreach($courses as $course)
-                    @php
-                        // Cek apakah user sudah membeli kursus ini
-                        $isPurchased = $course->payments()
-                            ->where('user_id', auth()->id())
-                            ->where('transaction_status', 'success') // Atau 'success' sesuai dengan Midtrans
-                            ->exists();
-                    @endphp
+                @php
+                    // Cek apakah user sudah membeli kursus ini melalui tabel purchases
+                    $isPurchased = $course->purchases()
+                        ->where('user_id', auth()->id())
+                        ->where('status', 'success') // pastikan status pembelian sesuai
+                        ->exists();
+                @endphp            
 
                     <div class="bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden">
                         <img class="w-full h-48 object-cover" src="{{ asset('storage/' . $course->image_path) }}" alt="{{ $course->title }}">
                         <div class="">
                             <h3 class="text-md font-semibold text-gray-800 capitalize mx-3 mt-1">{{ $course->title }}</h3>
-                            <p class="text-sm text-gray-600 mx-3">Mentor : {{ $course->mentor->name }}</p>
+                            <p class="text-sm text-gray-600 mx-3 capitalize">Mentor : {{ $course->mentor->name }}</p>
                             <p class="text-red-500 inline-flex items-center text-sm rounded-xl font-semibold mx-3" id="course-price-{{ $course->id }}">
                                 Rp. {{ number_format($course->price, 0, ',', '.') }}
                             </p>
@@ -52,7 +52,7 @@
                                 
                                 <div class="flex w-full h-[25px] my-2">
                                     <!-- Bagian Kiri (Merah) -->
-                                    <div class="w-1/2 bg-red-500 hover:bg-red-400 flex justify-center items-center p-4">
+                                    <div class="w-1/2 {{ $isPurchased ? 'bg-green-500 hover:bg-green-400' : 'bg-red-500 hover:bg-red-400' }} flex justify-center items-center p-4">
                                         @if (!$isPurchased)
                                             <!-- Tombol Keranjang -->
                                             <form action="{{ route('cart.add', ['id' => $course->id]) }}" method="POST" class="">
@@ -66,7 +66,7 @@
                                             </form>
                                         @else
                                             <!-- Label Kursus Sudah Dibeli -->
-                                            <span class="text-sm text-white px-3 py-1 rounded">
+                                            <span class="text-sm text-white px-3 py-1 rounded cursor-not-allowed">
                                                 Sudah dibeli
                                             </span>
                                         @endif

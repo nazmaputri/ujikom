@@ -3,7 +3,7 @@
 @section('content')
 <div class="container mx-auto">
     <div class="bg-white rounded-lg shadow-md p-6">
-        <h2 class="text-xl font-semibold text-gray-700 mb-6 border-b-2 border-gray-300 pb-2">Tambah Kursus</h2>
+        <h2 class="text-xl font-semibold text-gray-700 text-center w-full border-b-2 border-gray-300 pb-2">Tambah Kursus</h2>
 
          <!-- Tampilkan pesan error umum (opsional) -->
          @if($errors->any())
@@ -25,7 +25,7 @@
                 <div>
                     <!-- Input untuk Judul -->
                     <div class="mb-4">
-                        <label for="title" class="block text-gray-700 font-bold mb-2">Judul Kursus</label>
+                        <label for="title" class="block font-medium text-gray-700 pb-2">Judul Kursus</label>
                         <input type="text" name="title" id="title" class="w-full p-2 border rounded focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 @error('title') border-red-500 @enderror" placeholder="Masukkan judul kursus" value="{{ old('title') }}" required>
                         @error('title')
                             <span class="text-red-500 text-sm">{{ $message }}</span>
@@ -34,7 +34,7 @@
 
                     <!-- Input untuk Deskripsi -->
                     <div class="mb-4">
-                        <label for="description" class="block text-gray-700 font-bold mb-2">Deskripsi</label>
+                        <label for="description" class="block font-medium text-gray-700 pb-2">Deskripsi</label>
                         <textarea name="description" id="description" rows="4" class="w-full p-2 border rounded focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 @error('description') border-red-500 @enderror" placeholder="Masukkan deskripsi kursus" required>{{ old('description') }}</textarea>
                         @error('description')
                             <span class="text-red-500 text-sm">{{ $message }}</span>
@@ -43,7 +43,7 @@
 
                     <!-- Input untuk Start_date -->
                     <div class="mb-4">
-                        <label for="start_date" class="block text-gray-700 font-bold mb-2">Waktu Mulai</label>
+                        <label for="start_date" class="block font-medium text-gray-700 pb-2">Waktu Mulai</label>
                         <input type="date" name="start_date" id="start_date" class="w-full p-2 border rounded focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 @error('start_date') border-red-500 @enderror" placeholder="Masukkan Waktu Mulai" min="{{ \Carbon\Carbon::today()->toDateString() }}">
                         <small class="text-gray-600">Jika tidak di isi maka akan ditampilkan "Akses seumur hidup"</small>
                         @error('start_date')
@@ -53,7 +53,7 @@
 
                     <!-- Input untuk End_date -->
                     <div class="mb-4">
-                        <label for="end_date" class="block text-gray-700 font-bold mb-2">Waktu Selesai</label>
+                        <label for="end_date" class="block font-medium text-gray-700 pb-2">Waktu Selesai</label>
                         <input type="date" name="end_date" id="end_date" class="w-full p-2 border rounded focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 @error('end_date') border-red-500 @enderror" placeholder="Masukkan Waktu Selesai" min="{{ \Carbon\Carbon::today()->toDateString() }}">
                         <small class="text-gray-600">Jika tidak di isi maka akan ditampilkan "Akses seumur hidup"</small>
                         @error('end_date')
@@ -66,14 +66,14 @@
                 <div>
                     <!-- Input untuk Foto -->
                     <div class="mb-4">
-                        <label for="image" class="block text-gray-700 font-bold mb-2">Foto Kursus</label>
+                        <label for="image" class="block font-medium text-gray-700 pb-2">Foto Kursus</label>
                         <input type="file" name="image" id="image" class="w-full p-2 border rounded">
                         <small class="text-gray-600">Format gambar yang diperbolehkan: jpg, png, jpeg</small>
                     </div>
 
                     <!-- Input untuk Harga -->
                     <div class="mb-4">
-                        <label for="price" class="block text-gray-700 font-bold mb-2">Harga</label>
+                        <label for="price" class="block font-medium text-gray-700 pb-2">Harga</label>
                         <input type="text" name="price" id="price" class="w-full p-2 border rounded focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 @error('price') border-red-500 @enderror" placeholder="Masukkan harga kursus" value="{{ old('price') }}" required>
                         @error('price')
                             <span class="text-red-500 text-sm">{{ $message }}</span>
@@ -82,7 +82,7 @@
 
                     <!-- Input untuk Kategori -->
                     <div class="mb-4">
-                        <label for="category_id" class="block text-gray-700 font-bold mb-2">Kategori</label>
+                        <label for="category_id" class="block font-medium text-gray-700 pb-2">Kategori</label>
                         <select name="category" id="category" class="w-full p-2 border rounded focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500">
                             <option value="">Pilih Kategori</option>
                             @foreach($categories as $category)
@@ -98,7 +98,7 @@
 
                     <!-- Input untuk Kapasitas -->
                     <div class="mb-4">
-                        <label for="capacity" class="block text-gray-700 font-bold mb-2">Kapasitas</label>
+                        <label for="capacity" class="block font-medium text-gray-700 pb-2">Kapasitas</label>
                         <input type="number" name="capacity" id="capacity" class="w-full p-2 border rounded focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 @error('capacity') border-red-500 @enderror" placeholder="Masukkan kapasitas kursus" value="{{ old('capacity') }}">
                         <small class="text-gray-600">Jika tidak di isi maka kapasitasnya tidak terbatas</small>
                         @error('capacity')

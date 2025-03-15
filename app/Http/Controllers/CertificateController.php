@@ -14,16 +14,6 @@ class CertificateController extends Controller
 {
     $userId = auth()->id();
 
-    // Cek apakah user telah membayar kursus
-    $payment = Payment::where('user_id', $userId)
-        ->where('course_id', $courseId)
-        ->where('transaction_status', 'success') // Pastikan pembayaran sukses
-        ->exists(); // Lebih efisien dengan `exists()`
-
-    if (!$payment) {
-        return redirect()->back()->with('error', 'Anda harus menyelesaikan pembayaran sebelum mengakses sertifikat.');
-    }
-
     // Cek apakah user telah menyelesaikan semua materi (kuis)
     $unfinishedQuizzes = MateriUser::where('user_id', $userId)
         ->whereIn('materi_id', function ($query) use ($courseId) {

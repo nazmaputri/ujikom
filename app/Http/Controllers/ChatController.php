@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Chat;
 use App\Models\Message;
 use App\Models\Payment;
+use App\Models\Purchase;
 use App\Models\Course;
 use App\Models\User;
 
@@ -21,10 +22,10 @@ class ChatController extends Controller
             ->get();
     
         // Ambil daftar student yang telah membeli kursus dengan status pembayaran success
-        $students = Payment::where('transaction_status', 'success')
+        $students = Purchase::where('status', 'success')
             ->whereHas('course', function ($query) use ($user, $courseId) {
                 $query->where('mentor_id', $user->id)
-                      ->where('id', $courseId);
+                    ->where('id', $courseId);
             })
             ->with('user')
             ->get()
@@ -51,11 +52,11 @@ class ChatController extends Controller
         $user = auth()->user();
     
         // Ambil kursus yang terhubung dengan student
-        $course = Payment::where('user_id', $user->id)
-                         ->where('transaction_status', 'success')
-                         ->where('course_id', $courseId)  // Filter berdasarkan courseId
-                         ->first()?->course;
-    
+        $course = Purchase::where('user_id', $user->id)
+                            ->where('status', 'success')
+                            ->where('course_id', $courseId)
+                            ->first()?->course;
+
         if (!$course) {
             return redirect()->route('courses.index')->with('error', 'You have not enrolled in this course.');
         }

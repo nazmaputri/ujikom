@@ -6,7 +6,7 @@
         <h2 class="text-xl font-semibold mb-8 border-b-2 pb-2 text-gray-700 text-center">Data Peserta</h2>
 
         <!-- Search Bar -->
-        <form action="{{ route('datapeserta-admin') }}" method="GET" class="max-w-sm mx-auto mb-4">
+        <form action="{{ route('datapeserta-admin') }}" method="GET" class="w-full max-w-xs mb-4">
             <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Cari</label>
             <div class="relative flex items-center">
                 <!-- Input Search -->
@@ -27,7 +27,7 @@
         <div class="overflow-x-auto">
             <table class="min-w-full" id="userTable">
                 <thead>
-                    <tr class="bg-sky-100 text-gray-700">
+                    <tr class="bg-sky-100 text-gray-700 text-sm">
                         <th class="py-2">No</th>
                         <th class="py-2">Nama</th>
                         <th class="py-2">Email</th>
@@ -53,7 +53,7 @@
                                         </svg>
                                     </a>
                                     <!-- Form hapus user -->
-                                    <form id="deleteForm" action="" method="POST" class="inline">
+                                    <form id="deleteForm" action="{{ route('datapeserta-admin.delete', $user->id) }}" method="POST" class="inline">
                                         @csrf
                                         @method('DELETE')
                                         <button type="button" class="text-white bg-red-400 p-1 rounded-md hover:bg-red-300" onclick="openDeleteModal()">
@@ -62,6 +62,7 @@
                                             </svg>
                                         </button>
                                     </form>
+
                                     <!-- Modal Konfirmasi -->
                                     <div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
                                         <div class="bg-white p-6 rounded-lg shadow-lg">
@@ -74,7 +75,6 @@
                                         </div>
                                     </div>
 
-                                    <!-- Script untuk membuka dan menutup modal -->
                                     <script>
                                         function openDeleteModal() {
                                             document.getElementById('deleteModal').classList.remove('hidden');
@@ -85,9 +85,10 @@
                                         }
 
                                         function confirmDelete() {
-                                            document.getElementById('deleteForm').submit(); // Kirim form untuk menghapus user
+                                            document.getElementById('deleteForm').submit();
                                         }
                                     </script>
+
                                 </div>
                             </td>                            
                         </tr>

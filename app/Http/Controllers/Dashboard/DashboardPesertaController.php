@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardMentor\CourseController;
 use App\Http\Controllers\DashboardAdmin\CategoryController;
 use App\Models\Category;
 use App\Models\Course;
+use App\Models\Purchase;
 use App\Models\Payment;
 use App\Models\RatingKursus;
 use Illuminate\Http\Request;
@@ -43,9 +44,11 @@ class DashboardPesertaController extends Controller
         $userId = auth()->id(); // Mendapatkan ID user yang sedang login
         
         // Mengambil kursus yang sudah dibeli oleh user
-        $courses = Course::whereHas('payments', function ($query) use ($userId) {
-            $query->where('user_id', $userId)
-                  ->where('transaction_status', 'success');
+        $courses = Course::whereIn('id', function ($query) use ($userId) {
+            $query->select('course_id')
+                  ->from('purchases')
+                  ->where('user_id', $userId)
+                  ->where('status', 'success');
         })->get();
     
         // Menghitung progress dan rating setiap kursus
@@ -64,25 +67,25 @@ class DashboardPesertaController extends Controller
                     $completedMateri++;
                 }
             }
-    
+        
             // Menghitung persentase progres
             $progress = $totalMateri > 0 ? round(($completedMateri / $totalMateri) * 100, 2) : 0;
-    
+        
             // Menyimpan progress ke dalam kursus
             $course->progress = $progress;
-    
+        
             // Menentukan apakah user sudah menyelesaikan materi untuk tombol sertifikat
             $isCompletedForCertificate = $completedMateri === $totalMateri; // Jika semua materi diselesaikan
-    
+        
             // Menambahkan flag untuk sertifikat
             $course->isCompletedForCertificate = $isCompletedForCertificate;
-    
+        
             // Menghitung rata-rata rating untuk kursus ini
             $averageRating = RatingKursus::where('course_id', $course->id)->avg('stars');
             
             // Membatasi rating maksimal 5
             $averageRating = min($averageRating, 5);
-    
+        
             // Menyimpan rata-rata rating untuk kursus
             $course->average_rating = $averageRating;
             
@@ -90,18 +93,17 @@ class DashboardPesertaController extends Controller
             $fullStars = floor($averageRating); // Bintang penuh
             $halfStar = $averageRating - $fullStars >= 0.5; // Bintang setengah
             $emptyStars = 5 - $fullStars - ($halfStar ? 1 : 0); // Bintang kosong
-    
-            // Menyimpan jumlah bintang penuh, setengah, dan kosong untuk ditampilkan di view
+        
+            // Menyimpan jumlah bintang untuk ditampilkan di view
             $course->rating_full_stars = $fullStars;
             $course->rating_half_star = $halfStar;
             $course->rating_empty_stars = $emptyStars;
         }
-    
+        
         // Kirim data kursus dengan progress, rating, dan status penyelesaian ke view
         return view('dashboard-peserta.welcome', compact('courses'));
     }
     
-
     public function chat() {
         return view('dashboard-peserta.chat');
     }
@@ -114,28 +116,29 @@ class DashboardPesertaController extends Controller
         // Ambil kategori yang terkait dengan kursus ini
         $category = Category::findOrFail($categoryId);
     
-        // Cek apakah user sudah membeli kursus ini
-        $hasPurchased = Payment::where('course_id', $course->id)
+        // Cek apakah user sudah membeli kursus ini melalui tabel purchases
+        $hasPurchased = Purchase::where('course_id', $course->id)
                                 ->where('user_id', auth('student')->id())
-                                ->where('transaction_status', 'success')
+                                ->where('status', 'success')
                                 ->exists();
     
-        // Ambil status pembayaran berdasarkan user yang login dan kursus yang dibeli
+        // Ambil status pembelian dari tabel purchases
         $paymentStatus = null;
         if ($hasPurchased) {
             $course->is_purchased = true;
         } else {
-            $payment = Payment::where('course_id', $course->id)
-                              ->where('user_id', auth('student')->id())
-                              ->first();
-            if ($payment) {
-                $paymentStatus = $payment->transaction_status;
+            $purchase = Purchase::where('course_id', $course->id)
+                                ->where('user_id', auth('student')->id())
+                                ->first();
+            if ($purchase) {
+                $paymentStatus = $purchase->status;
             }
         }
     
         // Kirim data kursus dan kategori ke view
         return view('dashboard-peserta.detail', compact('course', 'paymentStatus', 'hasPurchased', 'category'));
-    }    
+    }
+    
     
     public function study($id)
     {
@@ -158,9 +161,11 @@ class DashboardPesertaController extends Controller
         $userId = auth()->id();
     
         // Mengambil kursus yang sudah dibeli oleh user dengan status pembayaran 'success'
-        $courses = Course::whereHas('payments', function ($query) use ($userId) {
-            $query->where('user_id', $userId)
-                  ->where('transaction_status', 'success');
+        $courses = Course::whereIn('id', function ($query) use ($userId) {
+            $query->select('course_id')
+                  ->from('purchases')
+                  ->where('user_id', $userId)
+                  ->where('status', 'success');
         })->get();
     
         // Mengecek apakah chat aktif pada setiap kursus

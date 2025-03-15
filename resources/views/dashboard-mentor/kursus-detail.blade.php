@@ -201,7 +201,7 @@
                         <td class="py-2 px-4 text-center">{{ $index + 1 }}</td>
                         <td class="py-2 px-4">{{ $participant->user->name }}</td>
                         <td class="py-2 px-4">{{ $participant->user->email }}</td>
-                        <td class="py-2 text-center text-green-500">{{ $participant->transaction_status }}</td>
+                        <td class="py-2 text-center text-green-500">{{ $participant->status }}</td>
                     </tr>
                     @empty
                     <tr>

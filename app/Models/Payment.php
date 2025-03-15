@@ -11,12 +11,12 @@ class Payment extends Model
 
     protected $fillable = [
         'user_id', 
-        'course_id',  
         'payment_type', 
         'transaction_status', 
         'transaction_id', 
         'amount',
-        'payment_url'
+        'payment_url',
+        'purchase_id'
     ];
 
     // Relasi ke User

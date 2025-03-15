@@ -33,7 +33,7 @@
     <div id="categoriesTable" class="overflow-hidden overflow-x-auto w-full">
         <table class="min-w-full">
             <thead>
-                <tr class="bg-sky-100 text-gray-700">
+                <tr class="bg-sky-100 text-gray-700 text-sm">
                     <th class="py-2 px-2 text-center text-gray-700">No</th>
                     <th class="py-2 px-2 text-center text-gray-700">Nama Kategori</th>
                     <th class="py-2 px-2 text-center text-gray-700">Aksi</th>

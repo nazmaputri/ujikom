@@ -24,6 +24,56 @@ class DiscountController extends Controller
         return view('dashboard-admin.discount-tambah', compact('courses'));
     }    
     
+    // Menampilkan form edit diskon
+    public function edit($id)
+    {
+        $discount = Discount::findOrFail($id);
+        $courses = Course::all();
+        return view('dashboard-admin.discount-edit', compact('discount', 'courses'));
+    }
+
+    // Memperbarui data diskon
+    public function update(Request $request, $id)
+    {
+        // Validasi data
+        $request->validate([
+            'coupon_code' => 'required|string',
+            'discount_percentage' => 'required|numeric|min:1|max:100',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+            'start_time' => 'required',
+            'end_time' => 'required',
+        ]);
+
+        $discount = Discount::findOrFail($id);
+        $discount->coupon_code = $request->coupon_code;
+        $discount->discount_percentage = $request->discount_percentage;
+        $discount->start_date = $request->start_date;
+        $discount->end_date = $request->end_date;
+        $discount->start_time = $request->start_time;
+        $discount->end_time = $request->end_time;
+        $discount->apply_to_all = $request->has('apply_to_all') && $request->apply_to_all == 1 ? 1 : 0;
+        $discount->save();
+
+        // Jika diskon tidak berlaku untuk semua kursus, perbarui relasi kursus
+        // if (!$discount->apply_to_all) {
+        //     $discount->courses()->sync($request->input('courses', []));
+        // } else {
+        //     $discount->courses()->detach();
+        // }
+
+        return redirect()->route('discount')->with('success', 'Data diskon berhasil diperbarui.');
+    }
+
+    // Metode untuk menghapus discount
+    public function destroy($id)
+    {
+        $discount = Discount::findOrFail($id);
+        $discount->delete();
+
+        return redirect()->route('discount')->with('success', 'Diskon berhasil dihapus.');
+    }
+
     public function applyDiscount(Request $request)
     {
         $couponCode = $request->coupon_code;
@@ -78,7 +128,7 @@ class DiscountController extends Controller
             'end_date' => 'required|date|after_or_equal:start_date',
             'start_time' => 'required',
             'end_time' => 'required',
-            'apply_to_all' => 'nullable|boolean',
+            'apply_to_all' => 'nullable|boolean', 
             'courses' => 'nullable|array',
         ]);
     

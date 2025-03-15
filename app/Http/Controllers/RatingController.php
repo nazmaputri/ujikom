@@ -7,13 +7,17 @@ use App\Models\Rating;
 
 class RatingController extends Controller
 {
-    public function toggleDisplay($id)
+
+    public function toggleDisplayAdmin(Request $request, $id)
     {
+        // Ambil data rating dari tabel rating
         $rating = Rating::findOrFail($id);
-        $rating->display = !$rating->display; // Toggle antara true dan false
+
+        // Jika checkbox ada pada request, set display ke 1; jika tidak, set ke 0
+        $rating->display = $request->has('display') ? 1 : 0;
         $rating->save();
 
-        return redirect()->back(); // Kembali ke halaman sebelumnya
+        return redirect()->back()->with('success', 'Status display admin berhasil diperbarui.');
     }
 
     public function store(Request $request)
