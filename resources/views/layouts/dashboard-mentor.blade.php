@@ -24,7 +24,7 @@
         <div 
             :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'" 
             class="fixed inset-y-0 left-0 w-64 bg-white shadow-lg transition-transform transform duration-300 ease-in-out lg:translate-x-0 lg:static z-50">
-            <div class="flex items-center justify-between p-4">
+            <div class="flex items-center justify-between md:justify-center p-4">
             <div class="flex items-center">
             <!-- logo -->
             <div class="flex flex-col items-center justify-center h-32 bg-white">

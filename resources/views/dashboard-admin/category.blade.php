@@ -121,20 +121,20 @@
     <div id="coursesList" class="hidden mt-6">
         <!-- Wrapper responsif -->
         <div class="overflow-x-auto w-full">
-            <table class="min-w-full border-separate border-spacing-1">
+            <table class="min-w-full">
                 <thead>
-                    <tr class="bg-sky-200 text-gray-600 uppercase text-sm leading-normal">
-                        <th class="border border-gray-300 px-2 py-2 rounded-md">No</th>
-                        <th class="border border-gray-300 px-4 py-2 rounded-md">Kursus</th>
-                        <th class="border border-gray-300 px-4 py-2 rounded-md">Kategori</th>
+                    <tr class="bg-sky-100 text-gray-700 text-sm">
+                        <th class="py-2 px-2 text-center text-gray-700">No</th>
+                        <th class="py-2 px-2 text-center text-gray-700">Kursus</th>
+                        <th class="py-2 px-2 text-center text-gray-700">Kategori</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($courses as $index => $course)
-                    <tr>
-                        <td class="border border-gray-300 py-4 px-4 text-center rounded-md">{{ $index + 1 }}</td>
-                        <td class="border border-gray-300 px-4 py-2 rounded-md">{{ $course->title }}</td>
-                        <td class="border border-gray-300 px-4 py-2 rounded-md">{{ $course->category }}</td>
+                    <tr class="bg-white hover:bg-sky-50 user-row border-b">
+                        <td class="px-2 py-3 text-center text-gray-600 text-sm">{{ $index + 1 }}</td>
+                        <td class="py-3 px-2 text-gray-600 text-sm">{{ $course->title }}</td>
+                        <td class="py-3 px-2 text-gray-600 text-sm">{{ $course->category }}</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -163,7 +163,7 @@
             // Tampilkan kursus, sembunyikan kategori, sembunyikan tombol Tambah Kategori
             coursesList.classList.remove('hidden');
             categoriesTable.classList.add('hidden');
-            addCategoryButton.classList.add('hidden'); // Sembunyikan tombol
+            addCategoryButton.classList.remove('hidden'); // tetap tampilkan tombol tambah kkategori
             buttonText.innerText = 'Tampilkan Semua Kategori';
             toggleIcon.src = 'https://img.icons8.com/ios-glyphs/30/fine-print--v1.png'; // Ikon untuk kategori
         } else {

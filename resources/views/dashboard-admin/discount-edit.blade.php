@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container mx-auto bg-white rounded-lg p-5">
-    <h2 class="text-xl font-semibold mb-4 inline-block border-b-2 border-gray-300 pb-1 text-gray-700">Edit Diskon</h2>
+    <h2 class="text-xl font-semibold text-gray-700 text-center w-full border-b-2 border-gray-300 pb-2">Edit Diskon</h2>
 
     @if(session('success'))
         <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-2 rounded mb-4">
@@ -10,7 +10,7 @@
         </div>
     @endif
 
-    <form action="{{ route('discount.update', $discount->id) }}" method="POST">
+    <form action="{{ route('discount.update', $discount->id) }}" method="POST" class="mt-4 grid grid-col-1 md:grid-cols-2 space-x-3">
         @csrf
         @method('PUT')
 
@@ -88,7 +88,7 @@
         </div>
 
         <!-- Tombol -->
-        <div class="mt-6 flex justify-end space-x-2">
+        <div class="col-span-1 md:col-span-2 mt-6 flex justify-end space-x-2">
             <a href="{{ route('discount') }}" class="bg-red-400 hover:bg-red-300 text-white font-semibold py-2 px-4 rounded">
                 Batal
             </a>

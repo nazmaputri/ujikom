@@ -76,6 +76,7 @@
                     <th class="px-2 py-2 text-center">No</th>
                     <th class="px-4 py-2 text-center">Judul</th>
                     <th class="px-4 py-2 text-center">Harga</th>
+                    <th class="px-4 py-2 text-center">Tanggal dibuat</th>
                     <th class="px-4 py-2 text-center">Rating</th>
                 </tr>
             </thead>
@@ -85,7 +86,8 @@
                     <tr class="bg-white hover:bg-sky-50 border-b">
                         <td class="px-2 py-2 text-center">{{ $index + 1 }}</td>
                         <td class="px-4 py-2">{{ $course->title }}</td>
-                        <td class="px-4 py-2 text-center">Rp {{ number_format($course->price, 0, ',', '.') }}</td>
+                        <td class="px-4 py-2 text-center">Rp {{ number_format($course->price, 0, ',', '.') }}</td> 
+                        <td class="px-4 py-2">{{ $course->created_at->format('d-m-Y') }}</td>
                         <td class="px-4 py-2 text-center">
                             {{ $course->rating ?? 'Belum ada rating' }}
                         </td>
