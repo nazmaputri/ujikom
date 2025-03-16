@@ -124,6 +124,29 @@
             @endif
         </div>
     </div>
+</div>
+
+   <!-- Section Ulasan Pengguna -->
+<div class="bg-white p-8 rounded-lg shadow-md mt-10">
+    <h3 class="text-xl font-semibold text-gray-700 mb-6 border-b-2 border-gray-300 pb-2">Ulasan Pengguna</h3>
+    <div class="space-y-6">
+        <!-- Contoh Ulasan 1 -->
+        <div class="bg-neutral-50 p-4 rounded-lg shadow-md flex space-x-4">
+            <img src="https://via.placeholder.com/50" alt="User Profile" class="w-12 h-12 rounded-full object-cover">
+            <div>
+                <h4 class="text-md font-semibold text-gray-700">John Doe</h4>
+                <div class="flex items-center text-yellow-400 text-sm mb-2">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.26 3.902a1 1 0 00.95.69h4.1c.969 0 1.371 1.24.588 1.81l-3.32 2.41a1 1 0 00-.364 1.118l1.26 3.902c.3.921-.755 1.688-1.54 1.118L10 14.347l-3.774 2.732c-.785.57-1.84-.197-1.54-1.118l1.26-3.902a1 1 0 00-.364-1.118L2.263 8.33c-.783-.57-.38-1.81.588-1.81h4.1a1 1 0 00.95-.69l1.148-3.902z" />
+                    </svg>
+                    <span class="ml-1">4.5</span>
+                </div>
+                <p class="text-gray-600">Kursus ini sangat membantu saya memahami dasar-dasar pemrograman.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
     <div class="mt-6 flex justify-end">
         <a href="{{ route('categories-detail', ['id' => $category->id]) }}" class="bg-sky-400 text-white font-semibold py-1.5 px-5 rounded-lg hover:bg-sky-300">
             Kembali

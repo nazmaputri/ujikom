@@ -43,51 +43,60 @@ class CourseController extends Controller
     }
 
     public function store(Request $request)
-    {
-        // Validasi data yang dikirimkan
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'category' => 'required|integer',
-            'price' => 'required|numeric',
-            'capacity' => 'nullable|integer',
-            'chat' => 'nullable|boolean', // Validasi chat
-            'image' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
-            'start_date' => 'nullable|date|before_or_equal:end_date',
-            'end_date' => 'nullable|date|after_or_equal:start_date',
-        ]);
+{
+    // Validasi data yang dikirimkan dengan pesan custom
+    $request->validate([
+        'title' => 'required|string|max:255',
+        'description' => 'required|string',
+        'category' => 'required|integer',
+        'price' => 'required|numeric',
+        'capacity' => 'nullable|integer',
+        'chat' => 'nullable|boolean', // Validasi chat
+        'image' => 'required|image|mimes:jpg,png,jpeg|max:2048',
+        'start_date' => 'nullable|date|before_or_equal:end_date',
+        'end_date' => 'nullable|date|after_or_equal:start_date',
+    ], [
+        'title.required' => 'Judul kursus harus diisi.',
+        'description.required' => 'Deskripsi kursus harus diisi.',
+        'category.required' => 'Kategori kursus harus dipilih.',
+        'price.required' => 'Harga kursus harus diisi.',
+        'image.required' => 'Foto kursus harus diunggah.',
+        'start_date.required' => 'Tanggal mulai kursus harus diisi.',
+        'end_date.required' => 'Tanggal selesai kursus harus diisi.',
+        'start_date.before_or_equal' => 'Tanggal mulai harus sebelum atau sama dengan tanggal selesai.',
+        'end_date.after_or_equal' => 'Tanggal selesai harus setelah atau sama dengan tanggal mulai.',
+    ]);
     
-        // Cari kategori berdasarkan ID
-        $category = Category::find($request->category);
+    // Cari kategori berdasarkan ID
+    $category = Category::find($request->category);
     
-        if (!$category) {
-            return redirect()->back()->withErrors(['category' => 'Selected category does not exist.']);
-        }
+    if (!$category) {
+        return redirect()->back()->withErrors(['category' => 'Kategori yang dipilih tidak ditemukan.']);
+    }
+
+    // Buat instance baru untuk kursus
+    $course = new Course($request->only('title', 'description', 'price', 'capacity', 'start_date', 'end_date'));
     
-        // Buat instance baru untuk kursus
-        $course = new Course($request->only('title', 'description', 'price', 'capacity', 'start_date', 'end_date'));
+    // Menyimpan kategori dan mentor
+    $course->category = $category->name;
+    $course->mentor_id = auth()->user()->id;
     
-        // Menyimpan kategori dan mentor
-        $course->category = $category->name;
-        $course->mentor_id = auth()->user()->id;
+    // Simpan status chat (gunakan boolean untuk memastikan nilainya benar)
+    $course->chat = $request->boolean('chat');
     
-        // Simpan status chat (gunakan boolean untuk memastikan nilainya benar)
-        $course->chat = $request->boolean('chat');
-    
-        // Simpan gambar jika diunggah
-        if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('images/kursus', 'public');
-            $course->image_path = $path; // Simpan path gambar ke database
-        }
-    
-        // Simpan data ke database
-        $course->save();
-    
-        // Redirect ke halaman kursus dengan pesan sukses
-        return redirect()->route('courses.index')->with('success', 'Kursus berhasil ditambahkan!');
+    // Simpan gambar jika diunggah
+    if ($request->hasFile('image')) {
+        $path = $request->file('image')->store('images/kursus', 'public');
+        $course->image_path = $path; // Simpan path gambar ke database
     }
     
+    // Simpan data ke database
+    $course->save();
     
+    // Redirect ke halaman kursus dengan pesan sukses
+    return redirect()->route('courses.index')->with('success', 'Kursus berhasil ditambahkan!');
+}
+
     public function show($id)
     {
         // Ambil data course beserta relasi materi yang terkait
@@ -115,18 +124,28 @@ class CourseController extends Controller
 
     public function update(Request $request, Course $course)
     {
-        // Validasi input
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'price' => 'required|numeric',
-            'category' => 'required|string|exists:categories,name', // Pastikan nama kategori valid
+            'category' => 'required|string|exists:categories,name', 
             'capacity' => 'nullable|integer',
-            'image' => 'nullable|image|mimes:jpg,png,jpeg|max:2048', // Validasi gambar
-            'start_date' => 'nullable|date|after_or_equal:today', // Validasi start_date tidak boleh di masa lalu
-            'end_date' => 'nullable|date|after_or_equal:start_date', // Validasi end_date harus setelah start_date
-            'chat' => 'nullable|boolean', // Validasi status chat, bisa null atau boolean
+            'image' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
+            'start_date' => 'nullable|date|before_or_equal:end_date',
+            'end_date' => 'nullable|date|after_or_equal:start_date', 
+            'chat' => 'nullable|boolean',
+        ], [
+            'title.required' => 'Judul kursus wajib diisi.',
+            'description.required' => 'Deskripsi kursus wajib diisi.',
+            'price.required' => 'Harga kursus wajib diisi.',
+            'category.required' => 'Kategori kursus wajib dipilih.',
+            'image.required' => 'Gambar kursus wajib diupload.',
+            'start_date.required' => 'Tanggal mulai kursus wajib diisi.',
+            'end_date.required' => 'Tanggal selesai kursus wajib diisi.',
+            'start_date.after_or_equal' => 'Tanggal mulai harus sebelum atau sama dengan tanggal selesai.',
+            'end_date.after_or_equal' => 'Tanggal selesai harus setelah atau sama dengan tanggal mulai.',
         ]);
+        
     
         // Update data kursus
         $course->title = $validated['title'];

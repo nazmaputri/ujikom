@@ -34,13 +34,13 @@
                     <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor">
                         <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344l0-64-64 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l64 0 0-64c0-13.3 10.7-24 24-24s24 10.7 24 24l0 64 64 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-64 0 0 64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"/>
                     </svg>
-                    <span>Tambah</span>
+                    <span>Tambah Kursus</span>
                 </a>
             </div>  
         </div>      
 
         @if (session('success'))
-            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
+            <div id="flash-message" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
                 {{ session('success') }}
             </div>
         @endif
@@ -48,23 +48,23 @@
         <!-- Tabel Kursus -->
         <div class="overflow-hidden overflow-x-auto w-full">
             <div class="min-w-full w-64">
-            <table class="min-w-full mt-4">
+            <table class="min-w-full mt-4 border-collapse">
                 <thead>
                     <tr class="bg-sky-200 text-gray-600 text-sm">
-                        <th class="px-4 py-2">No</th>
-                        <th class="px-4 py-2">Judul</th>
-                        <th class="px-4 py-2">Harga</th>
-                        <th class="px-4 py-2">Aksi</th>
+                        <th class="px-4 py-2 border-b border-l border-gray-200">No</th>
+                        <th class="px-4 py-2 border-b border-gray-200">Judul</th>
+                        <th class="px-4 py-2 border-b border-gray-200">Harga</th>
+                        <th class="px-4 py-2 border-b border-r border-gray-200">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="text-gray-600 text-sm font-light">
                     @foreach ($courses as $index => $course)
                     <tr class="bg-white hover:bg-sky-50 user-row">
                         <!-- Kolom No -->
-                        <td class="px-4 py-2 text-center">{{ $index + 1 + ($courses->currentPage() - 1) * $courses->perPage() }}</td>
-                        <td class="px-4 py-2">{{ $course->title }}</td>
-                        <td class="px-4 py-2">{{ $course->price ? 'Rp. ' . number_format($course->price, 0, ',', '.') : 'Gratis' }}</td>
-                        <td class="py-2 px-4 text-center">
+                        <td class="px-4 py-2 text-center border-b border-l  border-gray-200">{{ $index + 1 + ($courses->currentPage() - 1) * $courses->perPage() }}</td>
+                        <td class="px-4 py-2 border-b border-gray-200">{{ $course->title }}</td>
+                        <td class="px-4 py-2 text-center border-b border-gray-200">{{ $course->price ? 'Rp. ' . number_format($course->price, 0, ',', '.') : 'Gratis' }}</td>
+                        <td class="py-2 px-4 text-center border-b  border-r border-gray-200">
                             <div class="flex items-center justify-center space-x-6">
                                 <!-- Tombol Chat -->
                                 <a href="{{ $course->chat ? route('chat.mentor', ['courseId' => $course->id]) : '#' }}" class="text-white bg-green-300 p-1 rounded-md hover:bg-green-200 {{ !$course->chat ? 'cursor-not-allowed opacity-50' : '' }}" id="chatButton" {{ !$course->chat ? 'disabled' : '' }} title="{{ !$course->chat ? 'Fitur Chat Tidak Aktif' : 'Fitur Chat Aktif' }}">
@@ -123,6 +123,9 @@
                                 </div>
 
                                 <script>
+                                setTimeout(() => {
+                                document.getElementById('flash-message').style.display = 'none';
+                                }, 3000);
                                     let deleteUrl = '';  // Variabel untuk menyimpan URL hapus
 
                                     // Fungsi untuk membuka modal dan mengatur URL hapus

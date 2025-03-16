@@ -14,7 +14,7 @@
                     <p class="text-gray-600 text-sm">Mentor :{{ $course->mentor->name }}</p>
                     <p class="text-gray-600 text-sm">Harga :<span class="text-red-400">Rp {{ number_format($course->price, 0, ',', '.') }}</span></p>
                     @if($course->start_date && $course->end_date)
-                        <p class="text-gray-600 text-sm">Tanggal Mulai :{{ \Carbon\Carbon::parse($course->start_date)->format('d F Y') }} - {{ \Carbon\Carbon::parse($course->end_date)->format('d F Y') }}</p>
+                        <p class="text-gray-600 text-sm">Tanggal Mulai: {{ \Carbon\Carbon::parse($course->start_date)->translatedformat('d F Y') }} - {{ \Carbon\Carbon::parse($course->end_date)->translatedformat('d F Y') }}</p>
                     @endif
                     @if($course->duration)
                         <p class="text-gray-600 text-sm">Masa Aktif :{{ $course->duration }}</p>
@@ -83,7 +83,7 @@
                 </div>
         
                 @if (session('success'))
-                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
+                    <div id="flash-message" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
                         {{ session('success') }}
                     </div>
                 @endif
@@ -91,13 +91,13 @@
                 <!-- Tabel Materi -->
                 <div class="overflow-hidden overflow-x-auto w-full">
                     <div class="min-w-full w-64">
-                    <table class="min-w-full">
+                    <table class="min-w-full mt-4 border-collapse">
                         <thead>
                             <tr class="bg-sky-200 text-gray-600 text-sm">
-                                <th class="px-4 py-2">No</th>
-                                <th class="px-4 py-2">Judul</th>
-                                <th class="px-4 py-2">Kursus</th>
-                                <th class="px-4 py-2">Aksi</th>
+                                <th class="px-4 py-2 border-b border-l border-gray-200">No</th>
+                                <th class="px-4 py-2  border-b border-gray-200">Judul</th>
+                                <th class="px-4 py-2  border-b border-gray-200">Kursus</th>
+                                <th class="px-4 py-2  border-b border-r border-gray-200">Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="text-gray-600 text-sm font-light">
@@ -106,13 +106,13 @@
                             @endphp
                             @foreach ($materi as $index => $materiItem) 
                                 @if ($materiItem->courses_id == $course->id) 
-                                <tr class="bg-white hover:bg-sky-50 user-row">
-                                    <td class="px-4 py-2 text-center">{{ $startNumber + $index }}</td>
-                                    <td class="px-4 py-2">{{ $materiItem->judul }}</td>
-                                    <td class="px-4 py-2">
+                                <tr class="bg-white hover:bg-sky-50 user-row text-sm text-gray-600">
+                                    <td class="px-4 py-2 text-center border-b border-l  border-gray-200">{{ $startNumber + $index }}</td>
+                                    <td class="px-4 py-2 text-center border-b border-gray-200">{{ $materiItem->judul }}</td>
+                                    <td class="px-4 py-2 text-center border-b border-gray-200">
                                         {{ $materiItem->course->title ?? 'Kursus tidak ditemukan' }}
                                     </td>
-                                    <td class="py-2 px-4 text-center">
+                                    <td class="py-2 px-4 text-center border-b  border-r border-gray-200">
                                         <div class="flex items-center justify-center space-x-6">
                                             <a href="{{ route('materi.show', ['courseId' => $course->id, $materiItem->id]) }}" class="text-white bg-sky-300 p-1 rounded-md hover:bg-sky-200">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
@@ -150,6 +150,9 @@
                                             </div>
 
                                             <script>
+                                            setTimeout(() => {
+                                            document.getElementById('flash-message').style.display = 'none';
+                                            }, 3000);
                                                 let deleteUrl = '';  // Variabel untuk menyimpan URL hapus
 
                                                 // Fungsi untuk membuka modal dan mengatur URL hapus
@@ -189,26 +192,26 @@
         <h3 class="text-xl font-semibold mb-2 text-left pb-2 text-gray-700">Peserta Terdaftar</h3>
         <div class="overflow-x-auto">
             <div class="min-w-full w-64">
-            <table class="min-w-full" id="courseTable">
+            <table class="min-w-full mt-4 border-collapse" id="courseTable">
                 <thead>
                     <tr class="bg-sky-200 text-gray-600 text-sm">
-                        <th class="py-2 px-2">No</th>
-                        <th class="py-2 px-4">Nama Peserta</th>
-                        <th class="py-2 px-4">Email</th>
-                        <th class="py-2">Status Pembayaran</th>
+                        <th class="py-2 px-2 border-b border-l border-gray-200">No</th>
+                        <th class="py-2 px-4 border-b border-gray-200">Nama Peserta</th>
+                        <th class="py-2 px-4 border-b border-gray-200">Email</th>
+                        <th class="py-2 border-b border-r border-gray-200">Status Pembayaran</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse ($participants as $index => $participant)
                     <tr class="bg-white hover:bg-sky-50 user-row text-sm text-gray-600">
-                        <td class="py-2 px-4 text-center">{{ $index + 1 }}</td>
-                        <td class="py-2 px-4">{{ $participant->user->name }}</td>
-                        <td class="py-2 px-4">{{ $participant->user->email }}</td>
-                        <td class="py-2 text-center text-green-500">{{ $participant->status }}</td>
+                        <td class="py-2 px-4 text-center border-b border-l border-gray-200">{{ $index + 1 }}</td>
+                        <td class="py-2 px-4 text-center border-b border-gray-200">{{ $participant->user->name }}</td>
+                        <td class="py-2 px-4 text-center border-b border-gray-200">{{ $participant->user->email }}</td>
+                        <td class="py-2 text-center border-b  border-r border-gray-200 text-green-500">{{ $participant->status }}</td>
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="4" class="py-4 text-center text-gray-500">Belum ada peserta terdaftar.</td>
+                        <td colspan="4" class="py-4 text-center border-b  border-r border-gray-200 text-gray-500">Belum ada peserta terdaftar.</td>
                     </tr>
                     @endforelse
                 </tbody>

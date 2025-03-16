@@ -1,21 +1,9 @@
 @extends('layouts.dashboard-mentor')
 
 @section('content')
-<div class="container mx-auto">
+<div class="container mx-auto"> 
     <div class="bg-white rounded-lg shadow-md p-6">
         <h2 class="text-xl font-semibold text-gray-700 text-center w-full border-b-2 border-gray-300 pb-2">Tambah Kursus</h2>
-
-         <!-- Tampilkan pesan error umum (opsional) -->
-         @if($errors->any())
-         <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-             <strong>Oops! Terjadi kesalahan:</strong>
-             <ul class="mt-2">
-                 @foreach ($errors->all() as $error)
-                     <li>{{ $error }}</li>
-                 @endforeach
-             </ul>
-         </div>
-     @endif
 
         <!-- Form Tambah Kursus -->
         <form action="{{ route('courses.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
@@ -26,7 +14,7 @@
                     <!-- Input untuk Judul -->
                     <div class="mb-4">
                         <label for="title" class="block font-medium text-gray-700 pb-2">Judul Kursus</label>
-                        <input type="text" name="title" id="title" class="w-full p-2 border rounded focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 @error('title') border-red-500 @enderror" placeholder="Masukkan judul kursus" value="{{ old('title') }}" required>
+                        <input type="text" name="title" id="title" class="w-full p-2 border rounded focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 @error('title') border-red-500 @enderror" placeholder="Masukkan judul kursus" value="{{ old('title') }}">
                         @error('title')
                             <span class="text-red-500 text-sm">{{ $message }}</span>
                         @enderror
@@ -35,7 +23,7 @@
                     <!-- Input untuk Deskripsi -->
                     <div class="mb-4">
                         <label for="description" class="block font-medium text-gray-700 pb-2">Deskripsi</label>
-                        <textarea name="description" id="description" rows="4" class="w-full p-2 border rounded focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 @error('description') border-red-500 @enderror" placeholder="Masukkan deskripsi kursus" required>{{ old('description') }}</textarea>
+                        <textarea name="description" id="description" rows="4" class="w-full p-2 border rounded focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 @error('description') border-red-500 @enderror" placeholder="Masukkan deskripsi kursus">{{ old('description') }}</textarea>
                         @error('description')
                             <span class="text-red-500 text-sm">{{ $message }}</span>
                         @enderror
@@ -43,7 +31,7 @@
 
                     <!-- Input untuk Start_date -->
                     <div class="mb-4">
-                        <label for="start_date" class="block font-medium text-gray-700 pb-2">Waktu Mulai</label>
+                        <label for="start_date" class="block font-medium text-gray-700 pb-2">Tanggal Mulai</label>
                         <input type="date" name="start_date" id="start_date" class="w-full p-2 border rounded focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 @error('start_date') border-red-500 @enderror" placeholder="Masukkan Waktu Mulai" min="{{ \Carbon\Carbon::today()->toDateString() }}">
                         <small class="text-gray-600">Jika tidak di isi maka akan ditampilkan "Akses seumur hidup"</small>
                         @error('start_date')
@@ -53,7 +41,7 @@
 
                     <!-- Input untuk End_date -->
                     <div class="mb-4">
-                        <label for="end_date" class="block font-medium text-gray-700 pb-2">Waktu Selesai</label>
+                        <label for="end_date" class="block font-medium text-gray-700 pb-2">Tanggal Selesai</label>
                         <input type="date" name="end_date" id="end_date" class="w-full p-2 border rounded focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 @error('end_date') border-red-500 @enderror" placeholder="Masukkan Waktu Selesai" min="{{ \Carbon\Carbon::today()->toDateString() }}">
                         <small class="text-gray-600">Jika tidak di isi maka akan ditampilkan "Akses seumur hidup"</small>
                         @error('end_date')
@@ -74,7 +62,7 @@
                     <!-- Input untuk Harga -->
                     <div class="mb-4">
                         <label for="price" class="block font-medium text-gray-700 pb-2">Harga</label>
-                        <input type="text" name="price" id="price" class="w-full p-2 border rounded focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 @error('price') border-red-500 @enderror" placeholder="Masukkan harga kursus" value="{{ old('price') }}" required>
+                        <input type="text" name="price" id="price" class="w-full p-2 border rounded focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 @error('price') border-red-500 @enderror" placeholder="Masukkan harga kursus.contoh:3000 " value="{{ old('price') }}">
                         @error('price')
                             <span class="text-red-500 text-sm">{{ $message }}</span>
                         @enderror
@@ -82,7 +70,7 @@
 
                     <!-- Input untuk Kategori -->
                     <div class="mb-4">
-                        <label for="category_id" class="block font-medium text-gray-700 pb-2">Kategori</label>
+                        <label for="category_id" class="block font-medium text-gray-700 pb-2">Kategori Kursus</label>
                         <select name="category" id="category" class="w-full p-2 border rounded focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500">
                             <option value="">Pilih Kategori</option>
                             @foreach($categories as $category)
@@ -98,7 +86,7 @@
 
                     <!-- Input untuk Kapasitas -->
                     <div class="mb-4">
-                        <label for="capacity" class="block font-medium text-gray-700 pb-2">Kapasitas</label>
+                        <label for="capacity" class="block font-medium text-gray-700 pb-2">Kapasitas Peserta</label>
                         <input type="number" name="capacity" id="capacity" class="w-full p-2 border rounded focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 @error('capacity') border-red-500 @enderror" placeholder="Masukkan kapasitas kursus" value="{{ old('capacity') }}">
                         <small class="text-gray-600">Jika tidak di isi maka kapasitasnya tidak terbatas</small>
                         @error('capacity')
@@ -127,10 +115,24 @@
                             <p class="text-red-500 font-bold">Fitur Chat Dinonaktifkan!</p>
                         </div>
                     </div>
-                    
-                    <!-- Skrip untuk menangani pengaturan status -->
-                    <script>
-                        // Menambahkan event listener untuk toggle
+                </div>
+            </div>
+
+            <!-- Tombol Submit -->
+            <div class="mt-6 flex justify-end space-x-2">
+                <a href="{{ route('courses.index') }}" class="bg-red-400 hover:bg-red-300 text-white font-bold py-2 px-4 rounded">
+                    Batal
+                </a>
+                <button type="submit" class="bg-sky-400 hover:bg-sky-300 text-white font-bold py-2 px-4 rounded">
+                    Tambah 
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+ // Menambahkan event listener untuk toggle
                         document.getElementById('chat-toggle').addEventListener('change', function() {
                             var chatStatus = document.getElementById('chat-status');
                             var chatStatusInactive = document.getElementById('chat-status-inactive');
@@ -144,20 +146,23 @@
                                 chatStatusInactive.classList.remove('hidden');
                             }
                         });
-                    </script>
-                </div>
-            </div>
+    // Menambahkan event listener untuk setiap input yang ada
+    const inputs = document.querySelectorAll('input, textarea, select');
 
-        <!-- Tombol Submit -->
-        <div class="mt-6 flex justify-end space-x-2">
-            <a href="{{ route('courses.index') }}" class="bg-red-400 hover:bg-red-300 text-white font-bold py-2 px-4 rounded">
-                Batal
-            </a>
-            <button type="submit" class="bg-sky-400 hover:bg-sky-300 text-white font-bold py-2 px-4 rounded">
-                Tambah 
-            </button>
-        </div>
-        </form>
-    </div>
-</div>
+    inputs.forEach(input => {
+        input.addEventListener('input', function() {
+            // Menghapus kelas border merah saat input mulai diubah
+            if (this.classList.contains('border-red-500')) {
+                this.classList.remove('border-red-500');
+            }
+
+            // Menghapus pesan error jika ada
+            const errorMessage = this.nextElementSibling;
+            if (errorMessage && errorMessage.classList.contains('text-red-500')) {
+                errorMessage.style.display = 'none';
+            }
+        });
+    });
+</script>
+
 @endsection
