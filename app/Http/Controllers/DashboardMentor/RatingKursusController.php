@@ -22,6 +22,18 @@ class RatingKursusController extends Controller
         return redirect()->back()->with('success', 'Status tampilan komentar berhasil diperbarui.');
     }
 
+    public function destroy($id)
+    {
+        // Cari rating berdasarkan ID
+        $rating = RatingKursus::findOrFail($id);
+        
+        // Hapus rating
+        $rating->delete();
+
+        // Redirect kembali dengan pesan sukses
+        return redirect()->back()->with('success', 'Rating berhasil dihapus.');
+    }
+
     public function store(Request $request, $course_id)
     {
         // Validasi input

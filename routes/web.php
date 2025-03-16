@@ -41,8 +41,8 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::get('/kursus/{id}/{name}', [DashboardAdminController::class, 'detailkursus'])->name('detail-kursusadmin');
     Route::get('dashboard-admin/laporan', [DashboardAdminController::class, 'laporan'])->name('laporan-admin');
     Route::get('dashboard-admin/rating', [DashboardAdminController::class, 'rating'])->name('rating-admin');
-    Route::post('/admin/users/{id}/status', [DashboardAdminController::class, 'updateStatus'])->name('admin.users.updateStatus'); //method nya patch, sblm diganti intan
-    Route::post('/admin/users/{id}/status/pending', [DashboardAdminController::class, 'updateStatusToPending'])->name('updateStatusToPending'); //ditambah oleh intan (untuk menonaktifkan mentor, sebenarnya statusnya pending sih)
+    Route::post('/admin/users/{id}/status', [DashboardAdminController::class, 'updateStatus'])->name('admin.users.updateStatus'); //this method is patch before edited
+    Route::post('/admin/users/{id}/status/pending', [DashboardAdminController::class, 'updateStatusToPending'])->name('updateStatusToPending'); // (untuk menonaktifkan mentor, sebenarnya statusnya pending sih)
     Route::delete('/admin/users/{id}', [DashboardAdminController::class, 'deleteUser'])->name('admin.delete');
     Route::get('/mentor/user/{id}', [DashboardAdminController::class, 'detailmentor'])->name('detaildata-mentor');
     Route::post('/mentor/toggle/status', [DashboardAdminController::class, 'toggleActive'])->name('mentors.toggle');
@@ -114,6 +114,7 @@ Route::middleware(['auth:mentor'])->group(function () {
     Route::get('dashboard-mentor/rating', [DashboardMentorController::class, 'rating'])->name('rating-kursus');
     Route::get('dashboard-mentor/rating/{id}', [DashboardMentorController::class, 'ratingDetail'])->name('rating-detail');
     Route::post('/rating/{id}/toggle-display', [RatingKursusController::class, 'toggleDisplay'])->name('toggle.displaymentor');
+    Route::delete('/rating/{id}', [RatingKursusController::class, 'destroy'])->name('ratingmentor.destroy');
     Route::get('/settings-mentor', [SettingController::class, 'mentor'])->name('settings.mentor');
 
     //Kursus
