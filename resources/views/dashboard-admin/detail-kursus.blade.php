@@ -32,19 +32,18 @@
             <div class="bg-neutral-50 p-4 rounded-lg shadow-md">
                 <div x-data="{ open: false }">
                     <!-- Judul Materi dengan Toggle Dropdown -->
-                    <div class="flex justify-between items-center">
-                    <!-- Menambahkan nomor urut di sebelah kiri judul -->
+                    <div @click="open = !open" class="flex justify-between items-center cursor-pointer">
+                        <!-- Menambahkan nomor urut di sebelah kiri judul -->
                         <span class="text-gray-700 font-semibold mr-2">
                             {{ sprintf('%02d', $loop->iteration) }}.
                         </span>
-                        <h4 class="text-lg font-semibold text-gray-700 flex-1 capitalize">{{ $materi->judul }}</h4>
-                                
+                        
+                        <h4 class="text-md font-semibold text-gray-700 flex-1 capitalize">{{ $materi->judul }}</h4>
+                                                
                         <!-- Tombol Toggle -->
-                        <button @click="open = ! open" class="text-gray-600 hover:text-gray-800">
-                            <svg :class="open ? 'transform rotate-180' : ''" class="w-5 h-5 transition-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                            </svg>
-                        </button>
+                        <svg :class="open ? 'transform rotate-180' : ''" class="w-5 h-5 transition-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
                     </div>
 
                     <!-- Deskripsi Materi -->
@@ -136,18 +135,19 @@
     <div class="bg-white mt-6 p-6 rounded-lg shadow-md">
         <h3 class="text-xl font-semibold mb-4 inline-block pb-1 text-gray-700">Peserta Terdaftar</h3>
             <div class="overflow-x-auto">
+                <div class="min-w-full w-64">
                 <table class="min-w-full" id="courseTable">
                     <thead>
-                        <tr class="bg-sky-100 text-gray-700">
+                        <tr class="bg-sky-100 text-gray-700 text-sm">
                             <th class="py-2 px-2">No</th>
-                            <th class="py-2 px-4">Nama Peserta</th>
+                            <th class="py-2 px-4">Nama</th>
                             <th class="py-2 px-4">Email</th>
                             <th class="py-2">Status Pembayaran</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse ($participants as $index => $participant)
-                        <tr class="bg-white hover:bg-sky-50 user-row">
+                        <tr class="bg-white hover:bg-sky-50 user-row text-sm">
                             <td class="py-2 px-4 text-center text-gray-600 text-sm">{{ $index + 1 }}</td>
                             <td class="py-2 px-4 text-gray-600 text-sm">{{ $participant->user->name }}</td>
                             <td class="py-2 px-4 text-gray-600 text-sm">{{ $participant->user->email }}</td>
@@ -155,11 +155,12 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="4" class="py-4 text-center text-gray-500">Belum ada peserta terdaftar.</td>
+                            <td colspan="4" class="py-4 text-center text-sm text-gray-500">Belum ada peserta terdaftar.</td>
                         </tr>
                         @endforelse
                     </tbody>
                 </table>
+                </div>
                 <div class="mt-4">
                     {{ $participants->links() }}
                 </div>

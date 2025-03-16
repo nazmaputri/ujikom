@@ -7,14 +7,14 @@
         <h2 class="text-xl font-semibold text-gray-700 text-center w-full border-b-2 border-gray-300 pb-2">Data Mentor</h2>
     </div> 
         <div class="flex flex-col md:flex-row items-center justify-between space-y-4 mb-4">
-            <form action="{{ route('datamentor-admin') }}" method="GET" class="w-full max-w-xs">
+            <form action="{{ route('datamentor-admin') }}" method="GET" class="w-full md:max-w-xs">
                 <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Cari</label>
                 <div class="relative flex items-center">
                     <input type="search" name="search" id="search" 
-                        class="block w-full pl-4 pr-14 py-3 text-sm text-gray-900 border-2 border-sky-300 rounded-full focus:outline-none bg-gray-50 focus:ring-sky-400 focus:border-sky-400" 
+                        class="block w-full pl-4 pr-14 py-3 text-sm text-gray-900 border-2 border-sky-300 rounded-full focus:outline-none bg-gray-50" 
                         placeholder="Cari Mentor (Nama, Status)" value="{{ request('search') }}" />
                     <button type="submit" 
-                        class="absolute right-2.5 bottom-2 bg-sky-300 text-white hover:bg-sky-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-full text-sm px-4 py-2 flex items-center justify-center">
+                        class="absolute right-2.5 bottom-2 bg-sky-300 text-white hover:bg-sky-200 focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-full text-sm px-4 py-2 flex items-center justify-center">
                         <svg class="w-4 h-4 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                         </svg>
@@ -44,7 +44,8 @@
 
         <!-- Tabel data user -->
         <div class="overflow-x-auto">
-            <table class="min-w-full" id="userTable">
+           <div class="min-w-full w-64">
+           <table class="min-w-full" id="userTable">
                 <thead>
                     <tr class="bg-sky-100 text-gray-700 text-sm">
                         <th class="py-2">No</th>
@@ -54,6 +55,11 @@
                     </tr>
                 </thead>
                 <tbody>
+                @if ($users->isEmpty())
+                    <tr>
+                        <td colspan="4" class="text-center py-4 text-sm text-gray-600">Data tidak tersedia</td>
+                    </tr>
+                @else
                 @php
                     $startNumber = ($users->currentPage() - 1) * $users->perPage() + 1;
                 @endphp
@@ -113,13 +119,13 @@
                                     </form>
 
                                     <!-- Modal Konfirmasi -->
-                                    <div id="deleteModal" class="fixed inset-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center p-4 hidden z-50">
+                                    <div id="deleteModal" class="fixed inset-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center p-4 hidden z-100">
                                         <div class="bg-white p-6 rounded-lg shadow-lg">
                                             <h2 class="text-lg font-semibold">Konfirmasi Penghapusan</h2>
                                             <p>Apakah Anda yakin ingin menghapus pengguna ini?</p>
                                             <div class="mt-4 flex justify-center space-x-4">
-                                                <button onclick="closeDeleteModal()" class="px-4 py-2 bg-gray-500 text-white rounded-md">Batal</button>
-                                                <button onclick="confirmDelete()" class="ml-2 px-4 py-2 bg-red-500 text-white rounded-md">Hapus</button>
+                                                <button onclick="closeDeleteModal()" class="px-4 py-2 bg-sky-400 hover:bg-sky-300 text-white rounded-md">Batal</button>
+                                                <button onclick="confirmDelete()" class="ml-2 px-4 py-2 bg-red-400 hover:bg-red-300 text-white rounded-md">Hapus</button>
                                             </div>
                                         </div>
                                     </div>
@@ -142,8 +148,10 @@
                             </td>                                                                        
                         </tr>
                     @endforeach
+                    @endif
                 </tbody>
             </table>
+           </div>
             <div class="pagination mt-4">
                 {{ $users->links('pagination::tailwind') }}
             </div>

@@ -47,6 +47,7 @@
 
         <!-- Tabel Kursus -->
         <div class="overflow-hidden overflow-x-auto w-full">
+            <div class="min-w-full w-64">
             <table class="min-w-full mt-4">
                 <thead>
                     <tr class="bg-sky-200 text-gray-600 text-sm">
@@ -142,6 +143,7 @@
                     @endforeach
                 </tbody>
             </table>
+            </div>
             @if($courses->isEmpty())
                 <div class="mt-4 text-gray-400 text-center">Belum ada kursus yang ditambahkan.</div>
             @endif

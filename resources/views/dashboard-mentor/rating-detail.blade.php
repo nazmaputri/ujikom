@@ -7,6 +7,7 @@
         
         <!-- Wrapper for responsiveness -->
         <div class="overflow-x-auto">
+            <div class="min-w-full w-64">
             <table class="min-w-full text-sm mt-2">
                 <thead>
                     <tr class="bg-sky-200 text-gray-700">
@@ -37,7 +38,8 @@
                                     {{ $rating->display ? 'Rating ditampilkan' : 'Rating disembunyikan' }}
                                 </span>
                             </td>
-                        <td class="px-4 py-2  text-center flex items-center justify-center space-x-4 rounded-md">                              
+                        <td class="px-4 py-2  text-center rounded-md">                              
+                            <div class="flex items-center justify-center space-x-4 ">
                             <form action="{{ route('toggle.displaymentor', $rating->id) }}" method="POST">
                                 @csrf
                                 @method('POST') <!-- Menggunakan metode POST untuk keamanan -->
@@ -62,6 +64,7 @@
                                     </svg>
                                 </button>
                             </form>
+                            </div>
                         </td>                        
                         <script>
                             // Menambahkan event listener untuk toggle
@@ -83,6 +86,7 @@
                     @endforelse
                 </tbody>
             </table>
+            </div>
         </div>
         <div class="mt-6 flex justify-end space-x-2">
             <a href="{{ route('rating-kursus') }}" class="bg-sky-400 hover:bg-sky-300 text-white font-semibold py-2 px-4 rounded">

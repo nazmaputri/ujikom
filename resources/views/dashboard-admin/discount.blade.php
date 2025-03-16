@@ -14,6 +14,7 @@
 
         <!-- Tabel dengan responsivitas -->
         <div class="overflow-x-auto mt-6">
+            <div class="min-w-full w-64">
             <table class="min-w-full">
                 <thead>
                     <tr class="bg-sky-100 text-gray-700 text-smd">
@@ -29,8 +30,9 @@
                             <td class="py-3 px-2 text-center text-gray-600 text-sm">{{ $discount->coupon_code }}</td>
                             <td class="py-3 px-2 text-center text-gray-600 text-sm">{{ $discount->discount_percentage }}%</td>
                             <td class="py-3 px-2 text-center text-gray-600 text-sm">{{ $discount->start_date }} - {{ $discount->end_date }}</td>
-                            <td class="py-3 px-2 flex justify-center space-x-6">
-                                <!-- Tombol Lihat Detail -->
+                            <td class="py-3 px-2 text-center">
+                                <div class="flex justify-center space-x-6">
+                                    <!-- Tombol Lihat Detail -->
                                 <a href="#"
                                 class="text-white bg-sky-300 p-1 rounded-md hover:bg-sky-200"
                                 onclick="openDiscountModal(
@@ -50,7 +52,7 @@
                                 </a>
 
                                 <!-- Modal Detail Discount -->
-                                <div id="discountModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden z-50">
+                                <div id="discountModal" class="fixed inset-0 flex items-center text-left justify-center bg-black bg-opacity-50 hidden z-50">
                                 <div class="bg-white p-6 rounded-md w-96">
                                     <h2 class="text-xl font-bold mb-4">Detail Discount</h2>
                                     <p><strong>Coupon Code:</strong> <span id="modalCouponCode"></span></p>
@@ -61,7 +63,7 @@
                                     <p><strong>End Time:</strong> <span id="modalEndTime"></span></p>
                                     <p><strong>Apply To All:</strong> <span id="modalApplyToAll"></span></p>
                                     <div class="mt-4 text-right">
-                                        <button class="bg-red-500 text-white px-4 py-2 rounded-md" onclick="closeDiscountModal()">Close</button>
+                                        <button class="bg-red-400 hover:bg-red-300 text-white px-4 py-2 rounded-md" onclick="closeDiscountModal()">Tutup</button>
                                     </div>
                                 </div>
                                 </div>
@@ -103,13 +105,13 @@
                                     <div class="bg-white p-6 rounded-lg shadow-lg w-96">
                                         <h3 class="text-md font-medium text-center">Apakah Anda yakin ingin menghapus diskon ini?</h3>
                                         <div class="mt-4 flex justify-center space-x-3">
-                                            <button onclick="closeDeleteModal()" class="bg-red-400 hover:bg-red-300 text-white font-semibold py-2 px-4 rounded">
+                                            <button onclick="closeDeleteModal()" class="bg-sky-400 hover:bg-sky-300 text-white font-semibold py-2 px-4 rounded">
                                                 Batal
                                             </button>
                                             <form id="deleteForm" method="POST" action="" class="inline">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="bg-sky-400 hover:bg-sky-300 text-white font-semibold py-2 px-4 rounded">
+                                                <button type="submit" class="bg-red-400 hover:bg-red-300 text-white font-semibold py-2 px-4 rounded">
                                                     Hapus
                                                 </button>
                                             </form>
@@ -131,11 +133,13 @@
                                         document.getElementById('deleteModal').classList.add('hidden');
                                     }
                                 </script>
+                                </div>
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
+            </div>
         </div>
     </div>
 </div>

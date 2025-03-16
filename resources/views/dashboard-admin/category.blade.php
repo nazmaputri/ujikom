@@ -31,6 +31,7 @@
 
     <!-- Tabel Kategori -->
     <div id="categoriesTable" class="overflow-hidden overflow-x-auto w-full">
+        <div class="min-w-full w-64">
         <table class="min-w-full">
             <thead>
                 <tr class="bg-sky-100 text-gray-700 text-sm">
@@ -107,6 +108,7 @@
                     @endforeach
             </tbody>
         </table>
+        </div>
         <!-- Pagination untuk kursus -->
         <div class="mt-4">
             {{ $categories->links() }} 

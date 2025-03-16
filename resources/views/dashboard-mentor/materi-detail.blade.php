@@ -18,8 +18,8 @@
         <!-- Video Materi -->
         @if($materi->videos->isNotEmpty())
         <div class="mt-6">
-            <details class="mb-4">
-                <summary class="cursor-pointer text-sky-400 mb-1 text-md">Lihat Video Materi</summary>
+            <details class="mb-2">
+                <summary class="cursor-pointer text-sky-400 mb-1 text-sm">Lihat Video Materi</summary>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6"> <!-- Layout untuk dua video per baris -->
                     @foreach($materi->videos as $video)
                         <div class="border p-4 rounded-md shadow-md">
@@ -34,14 +34,14 @@
             </details>
         </div>
         @else
-        <p class="mt-4 text-gray-500">Tidak ada video materi yang tersedia.</p>
+        <p class="mt-4 text-gray-500 text-sm">Tidak ada video materi yang tersedia.</p>
         @endif
 
         <!-- File Materi -->
         @if($materi->pdfs->isNotEmpty())
-        <div class="mt-6">
-            <details class="mb-4">
-                <summary class="cursor-pointer text-sky-400 mb-1 text-md">Lihat File Materi</summary>
+        <div class="mt-2">
+            <details class="mb-2">
+                <summary class="cursor-pointer text-sky-400 mb-1 text-sm">Lihat File Materi</summary>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6"> <!-- Layout untuk dua file PDF per baris -->
                     @foreach($materi->pdfs as $file)
                         <div class="border p-4 rounded-md shadow-md">
@@ -83,7 +83,7 @@
             </details>
         </div>
         @else
-        <p class="mt-4 text-gray-500">Tidak ada video YouTube yang tersedia.</p>
+        <p class="mt-4 text-gray-500 text-sm">Tidak ada video YouTube yang tersedia.</p>
         @endif
     </div>
 
@@ -99,7 +99,7 @@
             
             <a href="{{ $quizCount < 1 ? route('quiz.create', ['courseId' => $courseId, 'materiId' => $materiId]) : '#' }}" 
             class="inline-flex items-center space-x-2 text-white 
-            {{ $quizCount >= 1 ? 'bg-sky-300 cursor-not-allowed shadow-none' : 'bg-sky-300 shadow-md shadow-sky-100 hover:shadow-none hover:bg-sky-600' }} 
+            {{ $quizCount >= 1 ? 'bg-gray-300 cursor-not-allowed shadow-none' : 'bg-sky-400 shadow-md shadow-sky-100 hover:shadow-none hover:bg-sky-300' }} 
             font-bold py-2 px-4 rounded-md"
             @if($quizCount >= 1) onclick="return false;" @endif>
                 <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor">
@@ -116,7 +116,8 @@
         @endif
 
         <div class="overflow-hidden overflow-x-auto w-full">
-            <table class="min-w-full mt-4">
+           <div class="min-w-full w-64">
+           <table class="min-w-full mt-4">
                 <thead>
                     <tr class="bg-sky-200 text-gray-600 text-sm">
                         <th class="px-2 py-2">No</th>
@@ -186,11 +187,12 @@
                     @endforeach
                     @if ($quizzes->isEmpty())
                         <tr>
-                            <td colspan="4" class="text-center text-gray-500 py-4">Belum ada Kuis untuk Materi ini.</td>
+                            <td colspan="4" class="text-center text-gray-500 py-4 text-sm">Belum ada kuis untuk materi ini.</td>
                         </tr>
                     @endif
                 </tbody>
             </table>
+           </div>
         </div>
         <div class="mt-4">
             {{ $quizzes->links() }}

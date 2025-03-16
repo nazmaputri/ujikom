@@ -222,12 +222,12 @@
             </header>
 
             <!-- Konten utama -->
-            <main class="flex-1 p-6 overflow-auto">
+            <main class="flex-1 p-6 overflow-auto"> 
                 @yield('content')
             </main>
 
             <!-- Footer -->
-            <footer class="bg-white text-left text-gray-600 text-sm p-3 shadow-lg">
+            <footer class="bg-white text-left text-gray-600 text-sm p-3 shadow-lg"> 
                 © 2024 Eduflix. All Rights Reserved.
             </footer>
 

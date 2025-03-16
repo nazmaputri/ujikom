@@ -90,6 +90,7 @@
         
                 <!-- Tabel Materi -->
                 <div class="overflow-hidden overflow-x-auto w-full">
+                    <div class="min-w-full w-64">
                     <table class="min-w-full">
                         <thead>
                             <tr class="bg-sky-200 text-gray-600 text-sm">
@@ -176,6 +177,7 @@
                             @endif
                         </tbody>
                     </table>
+                    </div>
                 </div>
                 <div class="mt-4">
                     {{ $materi->links() }}
@@ -186,6 +188,7 @@
     <div class="mt-6 bg-white p-6 rounded-lg shadow-md">
         <h3 class="text-xl font-semibold mb-2 text-left pb-2 text-gray-700">Peserta Terdaftar</h3>
         <div class="overflow-x-auto">
+            <div class="min-w-full w-64">
             <table class="min-w-full" id="courseTable">
                 <thead>
                     <tr class="bg-sky-200 text-gray-600 text-sm">
@@ -210,9 +213,10 @@
                     @endforelse
                 </tbody>
             </table>
+            </div>
             <div class="mt-4">
                 {{ $participants->links() }}
-            </div>
+            </div> 
         </div>
           <div class="mt-6 flex justify-end">
         <a href="{{ route('courses.index') }}" class="bg-sky-400 hover:bg-sky-300 text-white font-semibold py-2 px-4 rounded">

@@ -14,21 +14,21 @@
             <!-- Judul Quiz -->
             <div class="mb-4">
                 <label for="title" class="block text-gray-700 font-semibold text-md">Judul Kuis</label>
-                <input type="text" name="title" id="title" value="{{ $quiz->title }}" class="w-full text-gray-700 border-gray-300 rounded-lg border focus:outline-none focus:ring-1 focus:ring-sky-300 focus:border-sky-300 p-2">
+                <input type="text" name="title" id="title" value="{{ $quiz->title }}" class="w-full text-gray-600 border-gray-300 rounded-lg border focus:outline-none focus:ring-1 focus:ring-sky-300 focus:border-sky-300 p-2">
                 @error('title') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
             </div>
 
             <!-- Deskripsi Quiz -->
             <div class="mb-4">
                 <label for="description" class="block text-gray-700 font-semibold text-md">Deskripsi</label>
-                <textarea name="description" id="description" rows="3" class="w-full text-gray-700 border-gray-300 rounded-lg border focus:outline-none focus:ring-1 focus:ring-sky-300 focus:border-sky-300 p-2">{{ $quiz->description }}</textarea>
+                <textarea name="description" id="description" rows="3" class="w-full text-gray-600 border-gray-300 rounded-lg border focus:outline-none focus:ring-1 focus:ring-sky-300 focus:border-sky-300 p-2">{{ $quiz->description }}</textarea>
                 @error('description') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
             </div>
 
             <!-- Durasi Quiz -->
             <div class="mb-4">
                 <label for="duration" class="block text-gray-700 font-semibold text-md">Durasi (Menit)</label>
-                <input type="number" name="duration" id="duration" value="{{ $quiz->duration }}" class="w-full text-gray-700 border-gray-300 border rounded-lg focus:outline-none focus:ring-1 focus:ring-sky-300 focus:border-sky-300 p-2">
+                <input type="number" name="duration" id="duration" value="{{ $quiz->duration }}" class="w-full text-gray-600 border-gray-300 border rounded-lg focus:outline-none focus:ring-1 focus:ring-sky-300 focus:border-sky-300 p-2">
                 @error('duration') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
             </div>
 
@@ -40,7 +40,7 @@
                     <!-- Soal -->
                     <div class="mb-4">
                         <label for="questions[{{ $index }}][question]" class="block text-gray-700 font-semibold">Soal {{ $index + 1 }}</label>
-                        <input type="text" name="questions[{{ $index }}][question]" id="questions[{{ $index }}][question]" value="{{ $question->question }}" class="w-full text-gray-700 border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-sky-300 focus:border-sky-300 p-2">
+                        <input type="text" name="questions[{{ $index }}][question]" id="questions[{{ $index }}][question]" value="{{ $question->question }}" class="w-full text-gray-600 border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-sky-300 focus:border-sky-300 p-2">
                         @error("questions.$index.question") <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                     </div>
 
@@ -108,7 +108,7 @@
                     Batal
                 </a>
                 <button type="submit" class="bg-sky-400 hover:bg-sky-300 text-white font-semibold py-2 px-4 rounded">
-                    Edit
+                    Simpan
                 </button>
             </div>
         </form>

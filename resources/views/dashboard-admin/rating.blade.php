@@ -7,7 +7,8 @@
             
             <!-- Wrapper for responsiveness -->
             <div class="overflow-x-auto">
-                <table class="min-w-full mt-3">
+               <div class="min-w-full w-64">
+               <table class="min-w-full mt-3">
                     <thead>
                         <tr class="bg-sky-100 text-gray-700 text-sm">
                             <th class="px-4 py-2 text-center text-gray-700">No</th>
@@ -86,6 +87,7 @@
                         @endforelse
                     </tbody>
                 </table>
+               </div>
                 <div class="mt-4">
                     {{ $ratings->links() }}
                 </div>
