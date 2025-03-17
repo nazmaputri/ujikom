@@ -44,7 +44,7 @@
             @endif --}}
             
             <!-- Form -->
-            <form action="{{ route('register') }}" method="POST" class="space-y-6">
+            <form action="{{ route('register') }}" method="POST" class="space-y-4" id="form">
                 @csrf
 
                 <!-- Name Field -->
@@ -54,7 +54,7 @@
                         class="w-full px-4 py-2 border rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 
                         @error('name') border-red-500 @enderror" placeholder="Masukkan nama lengkap">
                     @error('name')
-                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        <p class="text-red-500 text-sm mt-1" id="name-error">{{ $message }}</p>
                     @enderror
                 </div>
 
@@ -65,7 +65,7 @@
                         class="w-full px-4 py-2 border rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 
                         @error('email') border-red-500 @enderror" placeholder="Masukkan email">
                     @error('email')
-                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        <p class="text-red-500 text-sm mt-1" id="email-error">{{ $message }}</p>
                     @enderror
                 </div>
 
@@ -73,40 +73,40 @@
                 <div class="relative">
                     <label for="password" class="block text-sm font-medium text-sky-600 pb-2">Kata Sandi</label>
                     <input type="password" name="password" id="password" class="p-2 mt-1 block w-full border rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 @error('password') border-red-500 @enderror" placeholder="Masukkan kata sandi">
-                    <span class="absolute top-1/2 right-3 mt-4 transform -translate-y-1/2 cursor-pointer text-gray-500" id="togglePassword">
+                    <span class="absolute top-1/2 right-3 mt-2 cursor-pointer text-gray-500" id="togglePassword">
                         <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5">
                             <path d="M10 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
                             <path fill-rule="evenodd" d="M.664 10.59a1.651 1.651 0 0 1 0-1.186A10.004 10.004 0 0 1 10 3c4.257 0 7.893 2.66 9.336 6.41.147.381.146.804 0 1.186A10.004 10.004 0 0 1 10 17c-4.257 0-7.893-2.66-9.336-6.41ZM14 10a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z" clip-rule="evenodd" />
                         </svg>
                     </span>
                     @error('password')
-                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        <p class="text-red-500 text-sm mt-1" id="password-error">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <!-- Confirm Password Field -->
                 <div class="relative">
                     <label for="password_confirmation" class="block text-sm font-medium text-sky-600 pb-2">Konfirmasi Kata Sandi</label>
-                    <input type="password" name="password_confirmation" id="password_confirmation" class="w-full px-4 py-2 border rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 @error('password_confirmation') border-red-500 @enderror" placeholder="Masukkan ulang kata sandi">
-                    <span class="absolute top-1/2 right-1 mt-1 transform -translate-x-1/2 cursor-pointer text-gray-500" id="toggleConfirmPassword">
+                    <input type="password" name="password_confirmation" id="password_confirmation" class="w-full p-2 border rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 @error('password_confirmation') border-red-500 @enderror" placeholder="Masukkan ulang kata sandi">
+                    <span class="absolute mt-2 right-3 cursor-pointer text-gray-500" id="toggleConfirmPassword">
                         <svg id="eyeConfirmIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5">
                             <path d="M10 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
                             <path fill-rule="evenodd" d="M.664 10.59a1.651 1.651 0 0 1 0-1.186A10.004 10.004 0 0 1 10 3c4.257 0 7.893 2.66 9.336 6.41.147.381.146.804 0 1.186A10.004 10.004 0 0 1 10 17c-4.257 0-7.893-2.66-9.336-6.41ZM14 10a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z" clip-rule="evenodd" />
                         </svg>
                     </span>
                     @error('password_confirmation')
-                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        <p class="text-red-500 text-sm mt-1" id="password_confirmation-error">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <!-- Phone Number Field -->
                 <div>
                     <label for="phone_number" class="block text-sm font-medium text-sky-600 pb-2">Nomor Telepon</label>
-                    <input type="text" name="phone_number" id="phone_number" value="{{ old('phone_number') }}" 
+                    <input type="number" name="phone_number" id="phone_number" value="{{ old('phone_number') }}" 
                         class="w-full px-4 py-2 border rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 
                         @error('phone_number') border-red-500 @enderror" placeholder="Masukkan nomor telepon">
                     @error('phone_number')
-                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        <p class="text-red-500 text-sm mt-1" id="phone_number-error">{{ $message }}</p>
                     @enderror
                 </div>
 
@@ -115,7 +115,7 @@
 
                 <!-- Submit Button -->
                 <div>
-                    <button type="submit" class="w-full px-4 py-2 bg-sky-600 text-white font-bold rounded-md hover:bg-sky-700 focus:outline-none focus:ring-1 focus:ring-sky-500 focus:ring-offset-2">
+                    <button type="submit" id="btn-submit" class="inline-flex justify-center items-center w-full px-4 py-2 bg-sky-600 text-white font-semibold rounded-md hover:bg-sky-500 focus:outline-none">
                         Daftar
                     </button>
                 </div>
@@ -129,7 +129,45 @@
     </div>
 
 <script>
-    // Pengaturan Icon PAssword
+    // untuk mengatur button "daftar" saat sedang loading
+    const form = document.getElementById('form');
+    form.addEventListener('submit', function (e) {
+        const buttonSubmit = document.getElementById('btn-submit');
+        
+        // Ubah teks tombol ke loading state
+        buttonSubmit.innerHTML =
+            '<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Loading...';
+        
+        // Tambahkan atribut disabled
+        buttonSubmit.setAttribute('disabled', true);
+        
+        // Tambahkan kelas untuk menonaktifkan hover dan pointer
+        buttonSubmit.classList.add('cursor-not-allowed', 'bg-sky-500');
+        buttonSubmit.classList.remove('hover:bg-sky-500');
+    });
+
+    // Fungsi untuk menghapus class error dan menyembunyikan pesan error validasi (form line 149 to 168)
+    document.addEventListener('DOMContentLoaded', function () {
+    const inputs = document.querySelectorAll('input');
+        inputs.forEach(input => {
+            input.addEventListener('input', function () {
+                removeErrorStyles(input.id);
+            });
+        });
+    });
+
+    function removeErrorStyles(inputId) {
+        const input = document.getElementById(inputId);
+        if (input) {
+            input.classList.remove('border-red-500', 'focus:ring-red-500', 'text-red-500');
+            const errorMessage = document.getElementById(inputId + '-error');
+            if (errorMessage) {
+                errorMessage.style.display = 'none';
+            }
+        }
+    }
+
+    // Pengaturan Icon Password
     const togglePassword = document.getElementById('togglePassword');
     const passwordField = document.getElementById('password');
     const eyeIcon = document.getElementById('eyeIcon');

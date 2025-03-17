@@ -2,7 +2,7 @@
 @section('content')
     <!-- Notifikasi -->
     @if (session('success'))
-        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
+        <div id="flash-message" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
             {{ session('success') }}
         </div>
     @endif
@@ -85,7 +85,17 @@
         </div>
     </div>
 
-    <script>
+<script>
+    //untuk mengatur flash message dari backend
+    document.addEventListener('DOMContentLoaded', function () {
+        const flashMessage = document.getElementById('flash-message');
+            if (flashMessage) {
+                setTimeout(() => {
+                    flashMessage.remove();
+            }, 3000); // Hapus pesan setelah 3 detik
+        }
+    });
+
         document.addEventListener('DOMContentLoaded', function () {
             const ctx = document.getElementById('userGrowthChart').getContext('2d');
         
@@ -130,5 +140,5 @@
                 window.location.href = `?year=${selectedYear}`;
             });
         });
-    </script>    
+</script>    
 @endsection

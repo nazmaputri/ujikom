@@ -7,13 +7,13 @@
         <h2 class="text-xl text-gray-700 font-semibold mb-6 border-b-2 border-gray-300 pb-2 text-center">Keranjang Saya</h2>
 
         @if (session('success'))
-            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
+            <div id="flash-message" class="bg-green-100 border border-green-400 text-green-700 p-2 rounded mb-3">
                 {{ session('success') }}
             </div>
         @endif
 
         @if (session('warning'))
-            <div class="bg-yellow-500 text-white p-3 mb-4 rounded-lg shadow-md">
+            <div id="flash-message" class="bg-yellow-100 border border-yellow-400 text-yellow-700 p-2 mb-3 rounded" role="alert">
                 {{ session('warning') }}
             </div>
         @endif
@@ -115,6 +115,16 @@
     </div>
 
     <script>
+        //untuk mengatur flash message dari backend
+        document.addEventListener('DOMContentLoaded', function () {
+            const flashMessage = document.getElementById('flash-message');
+            if (flashMessage) {
+                setTimeout(() => {
+                    flashMessage.remove();
+                }, 3000); // Hapus pesan setelah 3 detik
+            }
+        });
+
         document.getElementById('pay-now').addEventListener('click', function(e) {
             e.preventDefault();
         

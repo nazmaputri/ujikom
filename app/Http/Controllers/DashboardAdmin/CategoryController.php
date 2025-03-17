@@ -36,6 +36,14 @@ class CategoryController extends Controller
             'name' => 'required|string|max:255',
             'image' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
             'description' => 'nullable|string',
+        ], [
+            'name.required' => 'Nama kategori wajib diisi.',
+            'name.string' => 'Nama kategori harus berupa teks.',
+            'name.max' => 'Nama kategori tidak boleh lebih dari 255 karakter.',
+            'image.image' => 'File yang diunggah harus berupa gambar.',
+            'image.mimes' => 'Format gambar harus berupa jpg, png, atau jpeg.',
+            'image.max' => 'Ukuran gambar tidak boleh lebih dari 2MB.',
+            'description.string' => 'Deskripsi harus berupa teks.',
         ]);
 
         $data = $request->only(['name', 'description']);
@@ -62,6 +70,14 @@ class CategoryController extends Controller
             'name' => 'required|string|max:255',
             'image' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
             'description' => 'nullable|string',
+        ], [
+            'name.required' => 'Nama wajib diisi.',
+            'name.string' => 'Nama harus berupa teks.',
+            'name.max' => 'Nama tidak boleh lebih dari 255 karakter.',
+            'image.image' => 'File harus berupa gambar.',
+            'image.mimes' => 'Format gambar harus jpg, png, atau jpeg.',
+            'image.max' => 'Ukuran gambar tidak boleh lebih dari 2MB.',
+            'description.string' => 'Deskripsi harus berupa teks.',
         ]);
 
         $category->name = $request->input('name');
