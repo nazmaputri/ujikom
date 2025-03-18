@@ -61,7 +61,6 @@
                         <tr class="bg-white hover:bg-sky-50 user-row" data-role="{{ $user->role }}">
                             <td class="px-4 text-center text-gray-600 text-sm">{{ $startNumber + $index }}</td>
                             <td class="px-4 text-gray-600 text-sm">{{ $user->name }}</td>
-<<<<<<< HEAD
                             <td id="status-{{ $user->id }}" class="px-4 text-center">
                                 <form class="update-status-form" data-id="{{ $user->id }}" method="POST">
                                     @csrf
@@ -70,26 +69,10 @@
                                         <button type="submit" class="set-active-btn text-green-500 hover:text-green-600 text-sm">
                                             Set Active
                                         </button>
-=======
-                            <td class="px-4 text-gray-600 text-sm">
-                                @if($user->status === 'pending')
-                                    nonaktif
-                                @else
-                                    {{ $user->status }}
-                                @endif
-                            </td>
-                            <!-- <td class="px-4 text-center"> sebelum diedit oleh intan
-                                <form action="{{ route('admin.users.updateStatus', $user->id) }}" method="POST">
-                                    @csrf
-                                    @method('POST')
-                                    @if($user->status === 'pending')
-                                        <button type="submit" class="text-green-500 hover:text-green-600 text-sm">Set Active</button>
->>>>>>> f279d52fbd9b59d59e34c33f58dc552b1f6671eb
                                     @else
                                         <span class="text-gray-700 text-sm">Active</span>
                                     @endif
                                 </form>
-<<<<<<< HEAD
                             </td>                                                                             
                             <td class="py-3 px-6 text-center">
                                 <div class="flex items-center justify-center space-x-8">
@@ -128,23 +111,6 @@
                                             });
                                         });
                                     </script>
-=======
-                            </td> -->
-                            <td class="py-3 px-6 text-center">
-                                <div class="flex items-center justify-center space-x-8">
-                                    <!-- Toggle Aktif/Nonaktifkan Mentor -->
-                                    <form action="{{ $user->status === 'active' ? route('updateStatusToPending', $user->id) : route('admin.users.updateStatus', $user->id) }}" 
-                                        method="POST" class="toggle-form">
-                                        @csrf
-                                        <button type="submit" class="relative w-9 h-5 rounded-full transition-colors duration-300 ease-in-out 
-                                            {{ $user->status === 'active' ? 'bg-sky-400' : 'bg-gray-300' }}">
-                                            <div class="absolute top-0.5 start-[2px] bg-white border-gray-300 border rounded-full h-4 w-4 
-                                                transition-transform duration-300 ease-in-out 
-                                                {{ $user->status === 'active' ? 'translate-x-full border-white' : '' }}">
-                                            </div>
-                                        </button>
-                                    </form>
->>>>>>> f279d52fbd9b59d59e34c33f58dc552b1f6671eb
 
                                     <!-- Tombol Lihat Detail -->
                                     <a href="{{ route('detaildata-mentor', ['id' => $user->id]) }}" class="text-white bg-sky-300 p-1 rounded-md hover:bg-sky-200">
