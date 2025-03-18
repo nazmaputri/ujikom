@@ -14,7 +14,7 @@
                 <label for="image" class="block text-gray-700 mb-2">Gambar Kategori</label>
                 <input type="file" name="image" id="image" class="w-full p-2 border rounded focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 @error('image') border-red-500 @enderror">
                 @error('image')
-                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                    <span class="text-red-500 text-sm"  id="image-error">{{ $message }}</span>
                 @enderror
             </div>
 
@@ -23,7 +23,7 @@
                 <label for="name" class="block text-gray-700 mb-2">Nama Kategori</label>
                 <input type="text" name="name" id="name" class="w-full p-2 border rounded focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 @error('name') border-red-500 @enderror" placeholder="Masukkan nama kategori" value="{{ old('name') }}">
                 @error('name')
-                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                    <span class="text-red-500 text-sm"  id="name-error">{{ $message }}</span>
                 @enderror
             </div>
 
@@ -32,7 +32,7 @@
                 <label for="description" class="block text-gray-700 mb-2">Deskripsi</label>
                 <textarea name="description" id="description" class="w-full p-2 border rounded focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 @error('description') border-red-500 @enderror" placeholder="Masukkan deskripsi kategori">{{ old('description') }}</textarea>
                 @error('description')
-                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                    <span class="text-red-500 text-sm"  id="description-error">{{ $message }}</span>
                 @enderror
             </div>
 
@@ -48,4 +48,27 @@
         </form>
     </div>
 </div>
+
+<script>
+    // Fungsi untuk menghapus class error dan menyembunyikan pesan error validasi (form line 149 to 168)
+    document.addEventListener('DOMContentLoaded', function () {
+    const inputs = document.querySelectorAll('input');
+        inputs.forEach(input => {
+            input.addEventListener('input', function () {
+                removeErrorStyles(input.id);
+            });
+        });
+    });
+
+    function removeErrorStyles(inputId) {
+        const input = document.getElementById(inputId);
+        if (input) {
+            input.classList.remove('border-red-500', 'focus:ring-red-500', 'text-red-500');
+            const errorMessage = document.getElementById(inputId + '-error');
+            if (errorMessage) {
+                errorMessage.style.display = 'none';
+            }
+        }
+    }
+</script>
 @endsection

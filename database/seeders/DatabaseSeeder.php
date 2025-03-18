@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\RatingKursus;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash; 
@@ -37,6 +38,13 @@ class DatabaseSeeder extends Seeder
             'password'  => Hash::make('intanosaurusss'), 
             'role'      => 'mentor',
             'status'    => 'inactive',
+        ]);
+
+        RatingKursus::create([
+            'user_id' => 2,
+            'course_id' => 1,
+            'stars' => 2,
+            'comment' => 'tes rating',
         ]);
     }
 }

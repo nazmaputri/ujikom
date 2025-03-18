@@ -43,6 +43,20 @@ class DiscountController extends Controller
             'end_date' => 'required|date|after_or_equal:start_date',
             'start_time' => 'required',
             'end_time' => 'required',
+        ], [
+            'coupon_code.required' => 'Kode kupon wajib diisi.',
+            'coupon_code.string' => 'Kode kupon harus berupa teks.',
+            'discount_percentage.required' => 'Persentase diskon wajib diisi.',
+            'discount_percentage.numeric' => 'Persentase diskon harus berupa angka.',
+            'discount_percentage.min' => 'Persentase diskon minimal 1%.',
+            'discount_percentage.max' => 'Persentase diskon maksimal 100%.',
+            'start_date.required' => 'Tanggal mulai wajib diisi.',
+            'start_date.date' => 'Format tanggal mulai tidak valid.',
+            'end_date.required' => 'Tanggal berakhir wajib diisi.',
+            'end_date.date' => 'Format tanggal berakhir tidak valid.',
+            'end_date.after_or_equal' => 'Tanggal berakhir harus setelah atau sama dengan tanggal mulai.',
+            'start_time.required' => 'Waktu mulai wajib diisi.',
+            'end_time.required' => 'Waktu berakhir wajib diisi.',
         ]);
 
         $discount = Discount::findOrFail($id);
@@ -93,19 +107,19 @@ class DiscountController extends Controller
         $endDateTime = Carbon::parse($discount->end_date . ' ' . $discount->end_time);
 
         if ($now->lt($startDateTime) || $now->gt($endDateTime)) {
-            return response()->json(['message' => 'Kupon sudah kadaluarsa atau belum aktif'], 400);
+            return response()->json(['warning' => 'Kupon sudah kadaluarsa atau belum aktif'], 400);
         }
 
         // Ambil kursus berdasarkan ID
         $course = Course::find($courseId);
         
         if (!$course) {
-            return response()->json(['message' => 'Kursus tidak ditemukan'], 400);
+            return response()->json(['warning' => 'Kursus tidak ditemukan'], 400);
         }
 
         // Cek apakah kupon berlaku untuk semua kursus atau hanya kursus tertentu
         if (!$discount->apply_to_all && !$discount->courses->contains($courseId)) {
-            return response()->json(['message' => 'Kupon tidak berlaku untuk kursus ini'], 400);
+            return response()->json(['warning' => 'Kupon tidak berlaku untuk kursus ini'], 400);
         }
 
         // Hitung harga setelah diskon
@@ -116,7 +130,7 @@ class DiscountController extends Controller
             'original_price' => $course->price,
             'discount_percentage' => $discount->discount_percentage,
             'discounted_price' => $discountedPrice,
-            'message' => 'Diskon berhasil diterapkan'
+            'success' => 'Diskon berhasil diterapkan'
         ]);
     }
 
@@ -130,6 +144,22 @@ class DiscountController extends Controller
             'end_time' => 'required',
             'apply_to_all' => 'nullable|boolean', 
             'courses' => 'nullable|array',
+        ], [
+            'coupon_code.required' => 'Kode kupon wajib diisi.',
+            'coupon_code.unique' => 'Kode kupon sudah digunakan, silakan gunakan kode lain.',
+            'discount_percentage.required' => 'Persentase diskon wajib diisi.',
+            'discount_percentage.integer' => 'Persentase diskon harus berupa angka.',
+            'discount_percentage.min' => 'Persentase diskon minimal 1%.',
+            'discount_percentage.max' => 'Persentase diskon maksimal 100%.',
+            'start_date.required' => 'Tanggal mulai wajib diisi.',
+            'start_date.date' => 'Format tanggal mulai tidak valid.',
+            'end_date.required' => 'Tanggal berakhir wajib diisi.',
+            'end_date.date' => 'Format tanggal berakhir tidak valid.',
+            'end_date.after_or_equal' => 'Tanggal berakhir harus setelah atau sama dengan tanggal mulai.',
+            'start_time.required' => 'Waktu mulai wajib diisi.',
+            'end_time.required' => 'Waktu berakhir wajib diisi.',
+            'apply_to_all.boolean' => 'Nilai apply to all harus berupa benar atau salah.',
+            'courses.array' => 'Kursus harus berupa array.',
         ]);
     
         $applyToAll = $request->has('apply_to_all');

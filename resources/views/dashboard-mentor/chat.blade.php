@@ -3,9 +3,9 @@
 @section('content')
 <div class="h-screen flex flex-col lg:flex-row">
     <!-- Sidebar -->
-    <aside class="lg:w-1/3 bg-white border-r border-gray-300 lg:h-screen overflow-y-auto">
+    <aside class="lg:w-1/3 bg-white rounded rounded-md border-r border-gray-300 lg:h-screen overflow-y-auto">
         <div class="p-4 space-y-4">
-            <h2 class="text-xl font-semibold mb-4">Chats</h2>
+            <h2 class="text-xl font-semibold mb-4 text-gray-700">Chats</h2>
             
             <!-- List Chat -->
             @foreach ($chats as $chat)
@@ -24,7 +24,7 @@
 
             <!-- Start New Chat Section (Only visible if no chat exists) -->
             <div class="lg:block hidden">
-                <h2 class="text-lg font-semibold mt-6">Start New Chat</h2>
+                <h2 class="text-md font-semibold mt-6 text-gray-700">Start New Chat</h2>
                 @if ($students->isNotEmpty())
                     @foreach ($students as $student)
                         <!-- Only show "Start New Chat" if no existing chat with the student -->

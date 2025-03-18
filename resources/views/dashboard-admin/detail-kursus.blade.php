@@ -7,17 +7,17 @@
 <div class="bg-white p-6 rounded-lg shadow-md">
     <h2 class="text-xl font-semibold mb-8 border-b-2 pb-2 text-gray-700 text-center">Detail Kursus</h2>
     <!-- Card Informasi Kursus -->
-    <div class="flex mb-4">
+    <div class="flex flex-col md:flex-row mb-4 items-start">
         <!-- Thumbnail Kursus -->
-        <div class="w-1/3">
+        <div class="w-full sm:w-1/4 md:w-1/5">
             <img src="{{ asset('storage/' . $course->image_path) }}" alt="{{ $course->title }}" class="rounded-lg w-full h-auto">
         </div>
         <!-- Informasi Kursus -->
-        <div class="ml-4 w-2/3 space-y-1">
+        <div class="ml-4 w-2/3 md:ml-4 mt-1 space-y-1">
             <h2 class="text-md font-semibold text-gray-700 mb-2 capitalize">{{ $course->title }}</h2>
             <p class="text-gray-700 mb-2 text-md">{{ $course->description }}</p>
-            <p class="text-gray-600 text-sm">Mentor : {{ $course->mentor->name }}</p>
-            <p class="text-gray-600 text-sm">Biaya : Rp {{ number_format($course->price, 0, ',', '.') }}</p>
+            <p class="text-gray-600 text-sm">Mentor : <span class="capitalize">{{ $course->mentor->name }}<span></p>
+            <p class="text-gray-600 text-sm">Harga : <span class="text-red-500">Rp {{ number_format($course->price, 0, ',', '.') }}</span></p>
             <p class="text-gray-600 text-sm">Kapasitas : {{ $course->capacity }} peserta</p> 
             <p class="text-gray-600 text-sm">Tanggal Mulai : {{ $course->start_date }}</p>
             <p class="text-gray-600 text-sm">Masa Aktif : {{ $course->duration }}</p>
@@ -26,25 +26,27 @@
 
     <!-- Silabus -->
     <div class="mt-10">
-        <h3 class="text-xl font-semibold mb-4 inline-block pb-1 text-gray-700">Materi Kursus</h3>
+        <h3 class="text-xl font-semibold text-gray-700 mb-6 border-b-2 border-gray-300 pb-2">Materi Kursus</h3>
         <div class="space-y-6">
+            @if($course->materi->isEmpty())
+                <p class="text-gray-600 text-center mt-1 text-sm">Kursus ini belum ada materi apapun.</p>
+            @else
             @foreach($course->materi as $materi)
             <div class="bg-neutral-50 p-4 rounded-lg shadow-md">
                 <div x-data="{ open: false }">
                     <!-- Judul Materi dengan Toggle Dropdown -->
-                    <div class="flex justify-between items-center">
-                    <!-- Menambahkan nomor urut di sebelah kiri judul -->
+                    <div @click="open = !open" class="flex justify-between items-center cursor-pointer">
+                        <!-- Menambahkan nomor urut di sebelah kiri judul -->
                         <span class="text-gray-700 font-semibold mr-2">
                             {{ sprintf('%02d', $loop->iteration) }}.
                         </span>
-                        <h4 class="text-lg font-semibold text-gray-700 flex-1 capitalize">{{ $materi->judul }}</h4>
-                                
+                        
+                        <h4 class="text-md font-semibold text-gray-700 flex-1 capitalize">{{ $materi->judul }}</h4>
+                                                
                         <!-- Tombol Toggle -->
-                        <button @click="open = ! open" class="text-gray-600 hover:text-gray-800">
-                            <svg :class="open ? 'transform rotate-180' : ''" class="w-5 h-5 transition-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                            </svg>
-                        </button>
+                        <svg :class="open ? 'transform rotate-180' : ''" class="w-5 h-5 transition-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
                     </div>
 
                     <!-- Deskripsi Materi -->
@@ -128,6 +130,7 @@
                 </div>
             </div>
             @endforeach
+            @endif
         </div>
     </div>
 </div>
@@ -136,30 +139,32 @@
     <div class="bg-white mt-6 p-6 rounded-lg shadow-md">
         <h3 class="text-xl font-semibold mb-4 inline-block pb-1 text-gray-700">Peserta Terdaftar</h3>
             <div class="overflow-x-auto">
-                <table class="min-w-full" id="courseTable">
+                <div class="min-w-full w-64">
+                <table class="min-w-full border-collapse" id="courseTable">
                     <thead>
-                        <tr class="bg-sky-100 text-gray-700">
-                            <th class="py-2 px-2">No</th>
-                            <th class="py-2 px-4">Nama Peserta</th>
-                            <th class="py-2 px-4">Email</th>
-                            <th class="py-2">Status Pembayaran</th>
+                        <tr class="bg-sky-100 text-gray-700 text-sm">
+                            <th class="py-2 px-2 border-b border-l border-gray-200">No</th>
+                            <th class="py-2 px-4 border-b border-gray-200">Nama</th>
+                            <th class="py-2 px-4 border-b border-gray-200">Email</th>
+                            <th class="py-2 border-b border-r border-gray-200">Status Pembayaran</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse ($participants as $index => $participant)
-                        <tr class="bg-white hover:bg-sky-50 user-row">
-                            <td class="py-2 px-4 text-center text-gray-600 text-sm">{{ $index + 1 }}</td>
-                            <td class="py-2 px-4 text-gray-600 text-sm">{{ $participant->user->name }}</td>
-                            <td class="py-2 px-4 text-gray-600 text-sm">{{ $participant->user->email }}</td>
-                            <td class="py-2 text-center text-green-500 text-sm">{{ $participant->transaction_status }}</td>
+                        <tr class="bg-white hover:bg-sky-50 user-row text-sm">
+                            <td class="py-2 px-4 text-center text-gray-600 text-sm border-b border-l border-gray-200">{{ $index + 1 }}</td>
+                            <td class="py-2 px-4 text-gray-600 text-sm border-b border-gray-200">{{ $participant->user->name }}</td>
+                            <td class="py-2 px-4 text-gray-600 text-sm border-b border-gray-200">{{ $participant->user->email }}</td>
+                            <td class="py-2 text-center text-green-500 text-sm border-b border-r border-gray-200">{{ $participant->transaction_status }}</td>
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="4" class="py-4 text-center text-gray-500">Belum ada peserta terdaftar.</td>
+                            <td colspan="4" class="py-4 text-center text-sm text-gray-600 border-l border-b border-r border-gray-200">Belum ada peserta terdaftar.</td>
                         </tr>
                         @endforelse
                     </tbody>
                 </table>
+                </div>
                 <div class="mt-4">
                     {{ $participants->links() }}
                 </div>

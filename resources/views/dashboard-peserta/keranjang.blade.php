@@ -7,13 +7,13 @@
         <h2 class="text-xl text-gray-700 font-semibold mb-6 border-b-2 border-gray-300 pb-2 text-center">Keranjang Saya</h2>
 
         @if (session('success'))
-            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
+            <div id="flash-message" class="bg-green-100 border border-green-400 text-green-700 p-2 rounded mb-3">
                 {{ session('success') }}
             </div>
         @endif
 
         @if (session('warning'))
-            <div class="bg-yellow-500 text-white p-3 mb-4 rounded-lg shadow-md">
+            <div id="flash-message" class="bg-yellow-100 border border-yellow-400 text-yellow-700 p-2 mb-3 rounded" role="alert">
                 {{ session('warning') }}
             </div>
         @endif
@@ -115,6 +115,16 @@
     </div>
 
     <script>
+        //untuk mengatur flash message dari backend
+        document.addEventListener('DOMContentLoaded', function () {
+            const flashMessage = document.getElementById('flash-message');
+            if (flashMessage) {
+                setTimeout(() => {
+                    flashMessage.remove();
+                }, 3000); // Hapus pesan setelah 3 detik
+            }
+        });
+
         document.getElementById('pay-now').addEventListener('click', function(e) {
             e.preventDefault();
         
@@ -144,23 +154,25 @@
             })
             .then(response => response.json())
             .then(data => {
-                console.log(data); // Periksa data yang diterima
+                console.log(data); // Cek data dari backend
                 if (data.snapToken) {
                     snap.pay(data.snapToken, {
                         onSuccess: function(result) {
                             alert('Pembayaran berhasil');
-                            // Pastikan order_id tersedia, jika tidak, gunakan alternatif field (misal transaction_id)
-                            let orderId = result.order_id || result.transaction_id;
+
+                            // Pastikan ambil order_id dari result Midtrans
+                            const orderId = result.order_id || result.transaction_id;
                             if (!orderId) {
                                 alert('Order ID tidak ditemukan dari response pembayaran.');
                                 return;
                             }
-                            // Update status pembayaran melalui endpoint update-payment-status
+
+                            // Panggil endpoint update-payment-status untuk update ke database
                             fetch('/update-payment-status', {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json',
-                                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}', // pastikan ini di dalam blade
                                 },
                                 body: JSON.stringify({
                                     order_id: orderId,
@@ -169,15 +181,22 @@
                             })
                             .then(res => res.json())
                             .then(response => {
+                                console.log(response);
                                 alert(response.message);
-                                location.reload();
+                                location.reload(); // reload halaman setelah sukses
                             })
-                            .catch(error => console.error('Error updating payment status:', error));
+                            .catch(error => {
+                                console.error('Error updating payment status:', error);
+                                alert('Gagal mengupdate status pembayaran.');
+                            });
                         },
+
                         onPending: function(result) {
                             alert('Pembayaran sedang diproses');
                         },
+
                         onError: function(result) {
+                            console.error('Payment error:', result);
                             alert('Pembayaran gagal');
                         }
                     });

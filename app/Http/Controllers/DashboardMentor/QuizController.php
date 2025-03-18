@@ -144,15 +144,23 @@ class QuizController extends Controller
 
     public function store(Request $request, $courseId, $materiId)
     {
-        // Validasi input
         $request->validate([
             'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
+            'description' => 'required|string',
             'duration' => 'required|integer',
             'questions' => 'required|array|min:1',
             'questions.*.question' => 'required|string',
             'questions.*.answers' => 'required|array|min:4|max:4', // Harus tepat 4 jawaban
             'questions.*.correct_answer' => 'required|integer|min:0|max:3',
+        ], [
+            'title.required' => 'Judul kuis harus diisi.',
+            'description.required' => 'Deskripsi kuis harus diisi.',
+            'duration.required' => 'Durasi harus diisi.',
+            'questions.required' => 'Anda harus menambahkan soal.',
+            'questions.*.question.required' => 'Soal tidak boleh kosong.',
+            'questions.*.answers.required' => 'Jawaban tidak boleh kosong.',
+            'questions.*.answers.min' => 'Harus ada 4 jawaban untuk setiap soal.',
+            'questions.*.correct_answer.required' => 'Jawaban yang benar harus dipilih.',
         ]);
     
         try {
@@ -201,68 +209,80 @@ class QuizController extends Controller
     }
 
     public function update(Request $request, $courseId, $materiId, $id)
-    {
-        // Validasi input
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'duration' => 'required|integer',
-            'questions' => 'required|array|min:1',
-            'questions.*.id' => 'nullable|integer|exists:questions,id',
-            'questions.*.question' => 'required|string',
-            'questions.*.answers' => 'required|array|min:4|max:4', // Harus tepat 4 jawaban
-            'questions.*.correct_answer' => 'required|integer|min:0|max:3',
+{
+    // Validasi input dengan pesan kustom
+    $request->validate([
+        'title' => 'required|string|max:255',
+        'description' => 'required|string',
+        'duration' => 'required|integer',
+        'questions' => 'required|array|min:1',
+        'questions.*.question' => 'required|string',
+        'questions.*.answers' => 'required|array|min:4|max:4', // Harus tepat 4 jawaban
+        'questions.*.correct_answer' => 'required|integer|min:0|max:3',
+    ], [
+        'title.required' => 'Judul kuis wajib diisi.',
+        'description.required' => 'Deskripsi kuis wajib diisi.',
+        'duration.required' => 'Durasi kuis wajib diisi.',
+        'questions.required' => 'Harus ada soal yang ditambahkan.',
+        'questions.*.question.required' => 'Setiap soal harus diisi.',
+        'questions.*.answers.required' => 'Setiap soal harus memiliki 4 jawaban.',
+        'questions.*.answers.min' => 'Setiap soal harus memiliki tepat 4 jawaban.',
+        'questions.*.answers.max' => 'Setiap soal hanya boleh memiliki 4 jawaban.',
+        'questions.*.correct_answer.required' => 'Harus memilih jawaban yang benar.',
+        'questions.*.correct_answer.min' => 'Jawaban yang benar harus dipilih dari 4 pilihan.',
+        'questions.*.correct_answer.max' => 'Jawaban yang benar harus dipilih dari 4 pilihan.',
+    ]);
+
+    try {
+        // Validasi course_id dan materi_id
+        $course = Course::findOrFail($courseId);
+        $materi = Materi::findOrFail($materiId);
+
+        // Temukan kuis yang ingin diperbarui
+        $quiz = Quiz::findOrFail($id);
+
+        // Perbarui data kuis
+        $quiz->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'duration' => $request->duration,
         ]);
-    
-        try {
-            // Validasi course_id dan materi_id
-            $course = Course::findOrFail($courseId);
-            $materi = Materi::findOrFail($materiId);
-    
-            // Temukan kuis yang ingin diperbarui
-            $quiz = Quiz::findOrFail($id);
-    
-            // Perbarui data kuis
-            $quiz->update([
-                'title' => $request->title,
-                'description' => $request->description,
-                'duration' => $request->duration,
-            ]);
-    
-            // Ambil ID soal yang disertakan dalam permintaan
-            $questionIds = collect($request->questions)->pluck('id')->filter()->toArray();
-    
-            // Hapus soal yang tidak ada di permintaan
-            $quiz->questions()->whereNotIn('id', $questionIds)->delete();
-    
-            // Perbarui soal dan jawaban
-            foreach ($request->questions as $index => $questionData) {
-                // Jika `id` soal ada, perbarui; jika tidak, buat baru
-                $question = isset($questionData['id'])
-                    ? $quiz->questions()->findOrFail($questionData['id'])
-                    : $quiz->questions()->create(['question' => $questionData['question']]);
-    
-                // Perbarui teks soal
-                $question->update(['question' => $questionData['question']]);
-    
-                // Perbarui jawaban
-                foreach ($questionData['answers'] as $answerIndex => $answerText) {
-                    // Cari jawaban berdasarkan indeks
-                    $answer = $question->answers()->firstOrNew(['index' => $answerIndex]);
-    
-                    $answer->fill([
-                        'answer' => $answerText,
-                        'is_correct' => $answerIndex == $questionData['correct_answer'],
-                    ])->save();
-                }
+
+        // Ambil ID soal yang disertakan dalam permintaan
+        $questionIds = collect($request->questions)->pluck('id')->filter()->toArray();
+
+        // Hapus soal yang tidak ada di permintaan
+        $quiz->questions()->whereNotIn('id', $questionIds)->delete();
+
+        // Perbarui soal dan jawaban
+        foreach ($request->questions as $index => $questionData) {
+            // Jika `id` soal ada, perbarui; jika tidak, buat baru
+            $question = isset($questionData['id'])
+                ? $quiz->questions()->findOrFail($questionData['id'])
+                : $quiz->questions()->create(['question' => $questionData['question']]);
+
+            // Perbarui teks soal
+            $question->update(['question' => $questionData['question']]);
+
+            // Perbarui jawaban
+            foreach ($questionData['answers'] as $answerIndex => $answerText) {
+                // Cari jawaban berdasarkan indeks
+                $answer = $question->answers()->firstOrNew(['index' => $answerIndex]);
+
+                $answer->fill([
+                    'answer' => $answerText,
+                    'is_correct' => $answerIndex == $questionData['correct_answer'],
+                ])->save();
             }
-    
-            return redirect()->route('materi.show', ['courseId' => $courseId, 'materiId' => $materiId])
-                             ->with('success', 'Kuis berhasil diperbarui');
-        } catch (\Exception $e) {
-            return redirect()->back()->withErrors('Terjadi kesalahan: ' . $e->getMessage());
         }
-    }    
+
+        return redirect()->route('materi.show', ['courseId' => $courseId, 'materiId' => $materiId])
+                         ->with('success', 'Kuis berhasil diperbarui');
+    } catch (\Exception $e) {
+        return redirect()->back()->withErrors('Terjadi kesalahan: ' . $e->getMessage());
+    }
+}
+ 
 
     public function destroy($courseId, $materiId, $id)
     {

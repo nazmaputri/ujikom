@@ -57,12 +57,12 @@
                                 <h1 class="md:text-xl text-md font-semibold text-gray-800 mb-2">{{ $course->title }}</h1>
                                 
                                 <!-- Nama Mentor -->
-                                <p class="text-sm text-gray-600 mb-2">
-                                    👨‍🏫 Mentor : {{ $course->mentor ? $course->mentor->name : 'Mentor tidak ditemukan' }}
+                                <p class="text-sm text-gray-600 mb-2 capitalize">
+                                    Mentor : {{ $course->mentor ? $course->mentor->name : 'Mentor tidak ditemukan' }}
                                 </p>                        
                                 
                                 <!-- Rating -->
-                                <div class="flex items-center mb-2">
+                                <div class="flex items-center">
                                     <div class="flex">
                                         @for ($i = 0; $i < 5; $i++)
                                             @if ($i < floor($course->average_rating)) <!-- Rating Penuh -->
@@ -86,12 +86,12 @@
                                             @endif
                                         @endfor
                                           <!-- Jumlah Rating -->
-                                          <span class="ml-2 text-gray-600 text-sm">({{ number_format($course->average_rating, 1) }} / 5)</span>
+                                          <span class="text-yellow-500 font-bold text-sm ml-2">{{ number_format($course->average_rating, 1) }} / 5</span>
                                     </div>
                                 </div>
                                 <!-- Harga Kursus -->
-                                <p class="inline-flex items-center text-md mt-2 rounded-2xl font-bold">
-                                    <span class="text-green-600 bg-green-200 inline-flex items-center text-md p-1.5 rounded-xl font-semibold">Rp. {{ number_format($course->price, 0, ',', '.') }}</span>
+                                <p class="inline-flex items-center text-md">
+                                    <span class="text-red-500 inline-flex items-center text-md p-1.5 rounded-xl font-semibold">Rp. {{ number_format($course->price, 0, ',', '.') }}</span>
                                 </p>
                             </div>
                         </div>

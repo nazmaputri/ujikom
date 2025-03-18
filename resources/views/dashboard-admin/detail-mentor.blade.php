@@ -70,35 +70,41 @@
         <div class="text-left mb-4 border-b-2 border-gray-300 pb-2">
             <h2 class="text-lg font-semibold text-gray-700">Kursus</h2>
         </div>
-        <table class="min-w-full">
-            <thead>
-                <tr class="bg-sky-100 text-gray-700">
-                    <th class="px-2 py-2 text-center">No</th>
-                    <th class="px-4 py-2 text-center">Judul</th>
-                    <th class="px-4 py-2 text-center">Harga</th>
-                    <th class="px-4 py-2 text-center">Rating</th>
-                </tr>
-            </thead>
-        
-            <tbody class="text-gray-600 text-sm font-light">
-                @forelse ($courses as $index => $course) 
-                    <tr class="bg-white hover:bg-sky-50 border-b">
-                        <td class="px-2 py-2 text-center">{{ $index + 1 }}</td>
-                        <td class="px-4 py-2">{{ $course->title }}</td>
-                        <td class="px-4 py-2 text-center">Rp {{ number_format($course->price, 0, ',', '.') }}</td>
-                        <td class="px-4 py-2 text-center">
-                            {{ $course->rating ?? 'Belum ada rating' }}
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="5" class="text-center text-gray-500 py-4">Belum ada kursus yang diajarkan oleh mentor ini.</td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
+        <div class="overflow-x-auto">
+            <div class="min-w-full w-64">
+                <table class="min-w-full text-sm border-collapse">
+                    <thead>
+                        <tr class="bg-sky-100 text-gray-700 text-sm">
+                            <th class="px-2 py-2 text-center border-b border-l border-gray-200">No</th>
+                            <th class="px-4 py-2 text-center border-b border-gray-200">Judul</th>
+                            <th class="px-4 py-2 text-center border-b border-gray-200">Harga</th>
+                            <th class="px-4 py-2 text-center border-b border-gray-200">Tanggal dibuat</th>
+                            <th class="px-4 py-2 text-center border-b border-r border-gray-200">Rating</th>
+                        </tr>
+                    </thead>
+                
+                    <tbody class="text-gray-600 text-sm">
+                        @forelse ($courses as $index => $course) 
+                            <tr class="bg-white hover:bg-sky-50 border-b text-sm">
+                                <td class="px-2 py-2 text-center border-b border-l border-gray-200">{{ $index + 1 }}</td>
+                                <td class="px-4 py-2 border-b border-gray-200">{{ $course->title }}</td>
+                                <td class="px-4 py-2 border-b border-gray-200 text-center">Rp {{ number_format($course->price, 0, ',', '.') }}</td> 
+                                <td class="px-4 py-2 border-b border-gray-200">{{ $course->created_at->format('d-m-Y') }}</td>
+                                <td class="px-4 py-2 border-b border-r border-gray-200 text-center">
+                                    {{ $course->rating ?? 'Belum ada rating' }}
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="5" class="text-center text-gray-500 py-4 border-b border-l border-r border-gray-200">Belum ada kursus yang diajarkan oleh mentor ini.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
         <div class="text-right pt-10">
-        <a href="{{ route('datamentor-admin') }}" class="bg-sky-400 hover:bg-sky-300 text-white font-semibold py-2 px-6 rounded-lg shadow-md hover:shadow-none">
+        <a href="{{ route('datamentor-admin') }}" class="bg-sky-400 hover:bg-sky-300 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:shadow-none">
             Kembali
         </a>
         </div>
