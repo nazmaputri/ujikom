@@ -103,7 +103,7 @@ Route::middleware(['auth:student'])->group(function () {
     Route::get('/certificate-detail/{courseId}', [CertificateController::class, 'certificate'])->name('certificate-detail');
     Route::get('/certificate/download/{courseId}', [CertificateController::class, 'downloadCertificate'])->name('certificate.download');
     Route::post('/create-payment', [PaymentController::class, 'createPayment']);
-    Route::post('/payment-success', [PaymentController::class, 'updatePaymentStatus']);
+    Route::post('/update-payment-status', [PaymentController::class, 'updatePaymentStatus']);
 });
 
 Route::middleware(['auth:mentor'])->group(function () {
