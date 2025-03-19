@@ -58,11 +58,10 @@
 </div>
 
 <script>
-    // Fungsi untuk menghapus class error dan menyembunyikan pesan error validasi (form line 149 to 168)
     document.addEventListener('DOMContentLoaded', function () {
-    const inputs = document.querySelectorAll('input');
+        const inputs = document.querySelectorAll('input, textarea'); // Memilih input dan textarea
         inputs.forEach(input => {
-            input.addEventListener('input', function () {
+            input.addEventListener('input', function () { // Memperbaiki event listener
                 removeErrorStyles(input.id);
             });
         });
@@ -71,12 +70,13 @@
     function removeErrorStyles(inputId) {
         const input = document.getElementById(inputId);
         if (input) {
-            input.classList.remove('border-red-500', 'focus:ring-red-500', 'text-red-500');
+            input.classList.remove('border-red-500'); // Menghapus border merah
             const errorMessage = document.getElementById(inputId + '-error');
             if (errorMessage) {
-                errorMessage.style.display = 'none';
+                errorMessage.style.display = 'none'; // Menyembunyikan pesan error
             }
         }
     }
 </script>
+
 @endsection

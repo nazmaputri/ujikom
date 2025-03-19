@@ -169,8 +169,8 @@
             </main>
 
             <!-- Footer -->
-            <footer class="bg-white text-left text-gray-600 text-sm p-3 shadow-lg">
-                © 2024 Eduflix. All Rights Reserved.
+            <footer class="bg-white text-left text-gray-600 text-sm p-3 shadow-lg"> 
+               Copyright © 2024 <span class="text-sky-600">Eduflix</span> All Rights Reserved.
             </footer>
 
         </div>

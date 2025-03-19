@@ -68,12 +68,8 @@
                         <tr class="bg-white hover:bg-sky-50 user-row" data-role="{{ $user->role }}">
                             <td class="px-4 text-center text-gray-600 text-sm border-b border-l border-gray-200">{{ $startNumber + $index }}</td>
                             <td class="px-4 text-gray-600 text-sm border-b border-gray-200">{{ $user->name }}</td>
-                            <td class="px-4 text-gray-600 text-sm border-b border-gray-200">
-                                @if($user->status === 'pending')
-                                    nonaktif
-                                @else
+                            <td class="px-4 text-center text-gray-600 text-sm border-b border-gray-200">
                                     {{ $user->status }}
-                                @endif
                             </td>
                             <!-- <td class="px-4 text-center"> sebelum diedit oleh intan
                                 <form action="{{ route('admin.users.updateStatus', $user->id) }}" method="POST">
@@ -93,7 +89,7 @@
                                         method="POST" class="toggle-form">
                                         @csrf
                                         <button type="submit" class="relative w-9 h-5 rounded-full transition-colors duration-300 ease-in-out 
-                                            {{ $user->status === 'active' ? 'bg-green-400' : 'bg-gray-300' }}" title="{{ $user->status === 'active' ? 'Nonaktifkan' : 'Aktifkan' }}">
+                                            {{ $user->status === 'active' ? 'bg-green-400' : 'bg-gray-300' }} mt-1" title="{{ $user->status === 'active' ? 'Nonaktifkan' : 'Aktifkan' }}">
                                             <div class="absolute top-0.5 start-[2px] bg-white border-gray-300 border rounded-full h-4 w-4 
                                                 transition-transform duration-300 ease-in-out 
                                                 {{ $user->status === 'active' ? 'translate-x-full border-white' : '' }}">

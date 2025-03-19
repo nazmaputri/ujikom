@@ -34,15 +34,17 @@ class CategoryController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
-            'description' => 'nullable|string',
+            'image' => 'required|image|mimes:jpg,png,jpeg|max:2048',
+            'description' => 'required|string',
         ], [
             'name.required' => 'Nama kategori wajib diisi.',
             'name.string' => 'Nama kategori harus berupa teks.',
             'name.max' => 'Nama kategori tidak boleh lebih dari 255 karakter.',
+            'image.required' => 'foto wajib diisi.',
             'image.image' => 'File yang diunggah harus berupa gambar.',
             'image.mimes' => 'Format gambar harus berupa jpg, png, atau jpeg.',
             'image.max' => 'Ukuran gambar tidak boleh lebih dari 2MB.',
+            'description.required' => 'deskripsi wajib diisi.',
             'description.string' => 'Deskripsi harus berupa teks.',
         ]);
 

@@ -40,10 +40,10 @@
         </div>      
 
         @if (session('success'))
-            <div id="flash-message" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
-                {{ session('success') }}
-            </div>
-        @endif
+        <div id="flash-message" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-3 mt-4">
+            {{ session('success') }}
+        </div>
+    @endif
 
         <!-- Tabel Kursus -->
         <div class="overflow-hidden overflow-x-auto w-full">
