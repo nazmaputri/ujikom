@@ -39,7 +39,7 @@
                         <tr class="bg-white border-b hover:bg-sky-50 user-row text-sm text-gray-600">
                             <td class="text-center px-4 py-2 text-sm  border-b border-l  border-gray-200">{{ $startNumber + $index }}</td>
                             <td class="px-4 py-2 text-sm capitalize">{{ $rating->nama }}</td>
-                            <td class="px-4 py-2">
+                            <td class="px-4 py-2 text-center">
                                 @for ($i = 1; $i <= 5; $i++)
                                     <span class="{{ $i <= $rating->rating ? 'text-yellow-400' : 'text-gray-300' }}">★</span>
                                 @endfor
@@ -47,10 +47,16 @@
                             <td class="px-4 py-2">
                                 <span>{{ $rating->comment }}</span>
                             </td>
-                            <td class="px-4 py-2">
+                            <td class="px-4 py-2 text-center">
                                 <!-- Teks status display admin -->
-                                <span class="ml-3 {{ $rating->display ? 'text-green-500' : 'text-red-500' }}">
-                                    {{ $rating->display ? 'Rating ditampilkan' : 'Rating disembunyikan' }}
+                                @php
+                                    $displayStatus = $rating->display
+                                        ? ['label' => 'ditampilkan', 'bg' => 'bg-green-400', 'border' => 'border-green-500']
+                                        : ['label' => 'disembunyikan', 'bg' => 'bg-red-400', 'border' => 'border-red-500'];
+                                @endphp
+                                <span class="inline-block min-w-[120px] px-2 py-0.5 text-white rounded-xl border-2 text-center 
+                                    {{ $displayStatus['bg'] }} {{ $displayStatus['border'] }}">
+                                    {{ $displayStatus['label'] }}
                                 </span>
                             </td>
                             <td class="px-4 py-2 text-center flex items-center justify-center space-x-8 border-r border-gray-200">                              

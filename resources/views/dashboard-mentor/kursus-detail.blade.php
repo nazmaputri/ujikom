@@ -111,8 +111,8 @@
                                 @if ($materiItem->courses_id == $course->id) 
                                 <tr class="bg-white hover:bg-sky-50 user-row text-sm text-gray-600">
                                     <td class="px-4 py-2 text-center border-b border-l  border-gray-200">{{ $startNumber + $index }}</td>
-                                    <td class="px-4 py-2 text-center border-b border-gray-200">{{ $materiItem->judul }}</td>
-                                    <td class="px-4 py-2 text-center border-b border-gray-200">
+                                    <td class="px-4 py-2 border-b border-gray-200">{{ $materiItem->judul }}</td>
+                                    <td class="px-4 py-2 border-b border-gray-200">
                                         {{ $materiItem->course->title ?? 'Kursus tidak ditemukan' }}
                                     </td>
                                     <td class="py-2 px-4 text-center border-b  border-r border-gray-200">
@@ -208,8 +208,8 @@
                     @forelse ($participants as $index => $participant)
                     <tr class="bg-white hover:bg-sky-50 user-row text-sm text-gray-600">
                         <td class="py-2 px-4 text-center border-b border-l border-gray-200">{{ $index + 1 }}</td>
-                        <td class="py-2 px-4 text-center border-b border-gray-200">{{ $participant->user->name }}</td>
-                        <td class="py-2 px-4 text-center border-b border-gray-200">{{ $participant->user->email }}</td>
+                        <td class="py-2 px-4 border-b border-gray-200">{{ $participant->user->name }}</td>
+                        <td class="py-2 px-4 border-b border-gray-200">{{ $participant->user->email }}</td>
                         <td class="py-2 text-center border-b  border-r border-gray-200 text-green-500">{{ $participant->status }}</td>
                     </tr>
                     @empty
@@ -256,12 +256,17 @@
                         <td class="px-4 py-2 rounded-md border-b border-gray-200">
                             <span>{{ $rating->comment }}</span>
                         </td>
-                        <td class="px-4 py-2 border-b border-gray-200">
-                                <!-- Teks status display admin -->
-                                <span class="ml-3 {{ $rating->display ? 'text-green-500' : 'text-red-500' }}">
-                                    {{ $rating->display ? 'Rating ditampilkan' : 'Rating disembunyikan' }}
-                                </span>
-                            </td>
+                        <td class="px-4 py-2 text-center border-b border-gray-200">
+                            @php
+                                $displayStatus = $rating->display
+                                    ? ['label' => 'Ditampilkan', 'bg' => 'bg-green-400', 'border' => 'border-green-500']
+                                    : ['label' => 'Disembunyikan', 'bg' => 'bg-red-400', 'border' => 'border-red-500'];
+                            @endphp
+                            <span class="inline-block min-w-[120px] px-2 py-0.5 text-white rounded-xl border-2 text-center 
+                                {{ $displayStatus['bg'] }} {{ $displayStatus['border'] }}">
+                                {{ $displayStatus['label'] }}
+                            </span>
+                        </td>
                         <td class="px-4 py-2  text-center rounded-md border-b border-r border-gray-200">                              
                             <div class="flex items-center justify-center space-x-4 ">
                             <form action="{{ route('toggle.displaymentor', $rating->id) }}" method="POST">

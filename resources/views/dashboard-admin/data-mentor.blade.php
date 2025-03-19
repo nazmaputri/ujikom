@@ -69,23 +69,21 @@
                             <td class="px-4 text-center text-gray-600 text-sm border-b border-l border-gray-200">{{ $startNumber + $index }}</td>
                             <td class="px-4 text-gray-600 text-sm border-b border-gray-200">{{ $user->name }}</td>
                             <td class="px-4 text-center text-gray-600 text-sm border-b border-gray-200">
-                                    {{ $user->status }}
+                            @php
+                                $statusText = [
+                                    'active' => ['label' => 'Aktif', 'bg' => 'bg-green-400', 'border' => 'border-green-500'],
+                                    'pending' => ['label' => 'Pending', 'bg' => 'bg-yellow-400', 'border' => 'border-yellow-500'],
+                                    'inactive' => ['label' => 'Nonaktif', 'bg' => 'bg-red-400', 'border' => 'border-red-500']
+                                ];
+                            @endphp
+                            <span class="inline-block w-20 px-2 py-0.5 text-white rounded-xl border-2 {{ $statusText[$user->status]['bg'] ?? 'bg-gray-500' }} {{ $statusText[$user->status]['border'] ?? 'border-gray-700' }}">
+                                {{ $statusText[$user->status]['label'] ?? $user->status }}
+                            </span>
                             </td>
-                            <!-- <td class="px-4 text-center"> sebelum diedit oleh intan
-                                <form action="{{ route('admin.users.updateStatus', $user->id) }}" method="POST">
-                                    @csrf
-                                    @method('POST')
-                                    @if($user->status === 'pending')
-                                        <button type="submit" class="text-green-500 hover:text-green-600 text-sm">Set Active</button>
-                                    @else
-                                        <span class="text-gray-700 text-sm">Active</span>
-                                    @endif
-                                </form>
-                            </td> -->
                             <td class="py-3 px-6 text-center border-b border-r border-gray-200">
                                 <div class="flex items-center justify-center space-x-8">
                                     <!-- Toggle Aktif/Nonaktifkan Mentor -->
-                                    <form action="{{ $user->status === 'active' ? route('updateStatusToPending', $user->id) : route('admin.users.updateStatus', $user->id) }}" 
+                                    <form action="{{ $user->status === 'active' ? route('updateStatusToInactive', $user->id) : route('admin.users.updateStatus', $user->id) }}" 
                                         method="POST" class="toggle-form">
                                         @csrf
                                         <button type="submit" class="relative w-9 h-5 rounded-full transition-colors duration-300 ease-in-out 

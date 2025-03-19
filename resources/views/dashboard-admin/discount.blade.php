@@ -60,7 +60,7 @@
                                 </a>
 
                                 <!-- Modal Detail Discount -->
-                                <div id="discountModal" class="fixed inset-0 flex items-center text-left justify-center bg-black bg-opacity-50 hidden z-50">
+                                <div id="discountModal" class="fixed inset-0 flex items-center text-left justify-center bg-black bg-opacity-50 hidden z-100">
                                 <div class="bg-white p-6 rounded-md w-96">
                                     <h2 class="text-xl font-bold mb-4">Detail Discount</h2>
                                     <p><strong>Coupon Code:</strong> <span id="modalCouponCode"></span></p>
@@ -109,7 +109,7 @@
                                 </button>
 
                                 <!-- Modal Konfirmasi -->
-                                <div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden z-50">
+                                <div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden z-100">
                                     <div class="bg-white p-6 rounded-lg shadow-lg w-96">
                                         <h3 class="text-md font-medium text-center">Apakah Anda yakin ingin menghapus diskon ini?</h3>
                                         <div class="mt-4 flex justify-center space-x-3">
