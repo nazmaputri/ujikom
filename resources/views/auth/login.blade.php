@@ -23,10 +23,12 @@
         <div class="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-lg">
             <!-- Logo and Website Name -->
             <div class="flex flex-col items-center justify-center space-y-2">
+                <a href="{{ route('landingpage') }}">
                 <div class="flex items-center space-x-3">
                     <img src="{{ asset('storage/eduflix-1.png') }}" alt="Logo" class="w-18 h-16">
                     <h1 class="text-xl font-semibold text-sky-600">Masuk</h1>
                 </div>
+                </a>
             </div>         
             
             @if (session('success'))

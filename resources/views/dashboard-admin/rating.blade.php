@@ -51,11 +51,11 @@
                                 <!-- Teks status display admin -->
                                 @php
                                     $displayStatus = $rating->display
-                                        ? ['label' => 'ditampilkan', 'bg' => 'bg-green-400', 'border' => 'border-green-500']
-                                        : ['label' => 'disembunyikan', 'bg' => 'bg-red-400', 'border' => 'border-red-500'];
+                                        ? ['label' => 'ditampilkan', 'bg' => 'bg-green-200/50', 'border' => 'border-green-300', 'text' => 'text-green-500']
+                                        : ['label' => 'disembunyikan', 'bg' => 'bg-red-200/50', 'border' => 'border-red-300', 'text' => 'text-red-500'];
                                 @endphp
-                                <span class="inline-block min-w-[120px] px-2 py-0.5 text-white rounded-xl border-2 text-center 
-                                    {{ $displayStatus['bg'] }} {{ $displayStatus['border'] }}">
+                                <span class="inline-block min-w-[120px] px-2 py-0.5 rounded-xl border-2 text-center 
+                                    {{ $displayStatus['bg'] }} {{ $displayStatus['border'] }} {{ $displayStatus['text'] }}">
                                     {{ $displayStatus['label'] }}
                                 </span>
                             </td>

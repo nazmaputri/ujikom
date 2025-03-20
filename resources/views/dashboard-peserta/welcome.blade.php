@@ -29,6 +29,8 @@
                         <div>
                             <h3 class="text-md text-gray-700 font-semibold capitalize">{{ $course->title }}</h3>
                             <div class="flex">
+                                <!-- Jumlah Rating -->
+                                <span class="text-yellow-500 text-sm font-semibold mr-3">{{ number_format($course->average_rating, 1) }}</span>
                                 @for ($i = 0; $i < 5; $i++)
                                     @if ($i < floor($course->average_rating)) <!-- Rating Penuh -->
                                         <svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
@@ -50,8 +52,6 @@
                                         </svg>
                                     @endif
                                 @endfor
-                                  <!-- Jumlah Rating -->
-                                  <span class="ml-2 text-gray-600 text-sm">({{ number_format($course->average_rating, 1) }} / 5)</span>
                             </div>                                                      
                         </div>
                     </div>

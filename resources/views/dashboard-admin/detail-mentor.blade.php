@@ -91,7 +91,7 @@
                                 <td class="px-4 py-2 border-b border-gray-200 text-center">Rp {{ number_format($course->price, 0, ',', '.') }}</td> 
                                 <td class="px-4 py-2 border-b border-gray-200">{{ $course->created_at->format('d-m-Y') }}</td>
                                 <td class="px-4 py-2 border-b border-r border-gray-200 text-center">
-                                    {{ $course->rating ?? 'Belum ada rating' }}
+                                {{ $course->average_rating ?? 'Belum ada rating' }}
                                 </td>
                             </tr>
                         @empty

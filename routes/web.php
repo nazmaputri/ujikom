@@ -24,7 +24,7 @@ use App\Mail\HelloMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [LandingPageController::class, 'lp']);
+Route::get('/', [LandingPageController::class, 'lp'])->name('landingpage');
 Route::get('/course/{id}', [LandingPageController::class, 'detail'])->name('kursus.detail');
 Route::get('/category/{name}', [LandingPageController::class, 'category'])->name('category.detail');
 Route::post('/ratings', [RatingController::class, 'store'])->name('rating.store');

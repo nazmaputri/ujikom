@@ -71,12 +71,12 @@
                             <td class="px-4 text-center text-gray-600 text-sm border-b border-gray-200">
                             @php
                                 $statusText = [
-                                    'active' => ['label' => 'Aktif', 'bg' => 'bg-green-400', 'border' => 'border-green-500'],
-                                    'pending' => ['label' => 'Pending', 'bg' => 'bg-yellow-400', 'border' => 'border-yellow-500'],
-                                    'inactive' => ['label' => 'Nonaktif', 'bg' => 'bg-red-400', 'border' => 'border-red-500']
+                                    'active' => ['label' => 'Aktif', 'bg' => 'bg-green-200/50', 'border' => 'border-green-300', 'text' => 'text-green-500'],
+                                    'pending' => ['label' => 'Pending', 'bg' => 'bg-yellow-200/50', 'border' => 'border-yellow-300', 'text' => 'text-yellow-500'],
+                                    'inactive' => ['label' => 'Nonaktif', 'bg' => 'bg-red-200/50', 'border' => 'border-red-300', 'text' => 'text-red-500']
                                 ];
                             @endphp
-                            <span class="inline-block w-20 px-2 py-0.5 text-white rounded-xl border-2 {{ $statusText[$user->status]['bg'] ?? 'bg-gray-500' }} {{ $statusText[$user->status]['border'] ?? 'border-gray-700' }}">
+                            <span class="inline-block w-20 px-2 py-0.5 rounded-xl border-2 {{ $statusText[$user->status]['bg'] ?? 'bg-gray-500' }} {{ $statusText[$user->status]['border'] ?? 'border-gray-700' }} {{ $statusText[$user->status]['text'] ?? 'text-gray-700' }}">
                                 {{ $statusText[$user->status]['label'] ?? $user->status }}
                             </span>
                             </td>

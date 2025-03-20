@@ -210,7 +210,9 @@
                         <td class="py-2 px-4 text-center border-b border-l border-gray-200">{{ $index + 1 }}</td>
                         <td class="py-2 px-4 border-b border-gray-200">{{ $participant->user->name }}</td>
                         <td class="py-2 px-4 border-b border-gray-200">{{ $participant->user->email }}</td>
-                        <td class="py-2 text-center border-b  border-r border-gray-200 text-green-500">{{ $participant->status }}</td>
+                        <td class="py-2 text-center border-b  border-r border-gray-200">
+                            <span class="bg-green-200/50 border border-2 border-green-300 text-green-500 px-2 py-0.5 rounded-xl">{{ $participant->status }}</span>
+                        </td>
                     </tr>
                     @empty
                     <tr>
@@ -248,7 +250,7 @@
                     <tr class="bg-white hover:bg-sky-50 user-row text-sm text-gray-600">
                         <td class="text-center px-4 py-2 border-b border-l border-gray-200">{{ $index + 1 }}</td>
                         <td class="px-4 py-2 border-b border-gray-200">{{ $rating->user->name }}</td>
-                        <td class="px-4 py-2 border-b border-gray-200">
+                        <td class="px-4 py-2 border-b border-gray-200 text-center">
                             @for ($i = 1; $i <= 5; $i++)
                                 <span class="{{ $i <= $rating->stars ? 'text-yellow-400' : 'text-gray-300' }}">★</span>
                             @endfor
@@ -259,11 +261,11 @@
                         <td class="px-4 py-2 text-center border-b border-gray-200">
                             @php
                                 $displayStatus = $rating->display
-                                    ? ['label' => 'Ditampilkan', 'bg' => 'bg-green-400', 'border' => 'border-green-500']
-                                    : ['label' => 'Disembunyikan', 'bg' => 'bg-red-400', 'border' => 'border-red-500'];
+                                    ? ['label' => 'Ditampilkan', 'bg' => 'bg-green-200/50', 'border' => 'border-green-300', 'text' => 'text-green-500']
+                                    : ['label' => 'Disembunyikan', 'bg' => 'bg-red-200/50', 'border' => 'border-red-300', 'text' => 'text-red-500'];
                             @endphp
-                            <span class="inline-block min-w-[120px] px-2 py-0.5 text-white rounded-xl border-2 text-center 
-                                {{ $displayStatus['bg'] }} {{ $displayStatus['border'] }}">
+                            <span class="inline-block min-w-[120px] px-2 py-0.5 rounded-xl border-2 text-center 
+                                {{ $displayStatus['bg'] }} {{ $displayStatus['border'] }} {{ $displayStatus['text'] }}">
                                 {{ $displayStatus['label'] }}
                             </span>
                         </td>

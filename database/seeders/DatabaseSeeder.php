@@ -54,11 +54,11 @@ class DatabaseSeeder extends Seeder
             'comment' => 'tes rating aja',
         ]);
 
-        Rating::create([
-            'nama' => 'intan',
-            'email' => 'intan@gmail.com',
-            'rating' => '3',
-            'comment' => 'tes rating'
-        ]);
+        // Rating::create([
+        //     'nama' => 'intan',
+        //     'email' => 'intan@gmail.com',
+        //     'rating' => '3',
+        //     'comment' => 'tes rating'
+        // ]);
     }
 }

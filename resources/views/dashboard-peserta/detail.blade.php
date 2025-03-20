@@ -140,24 +140,35 @@
     </div>
 </div>
 
-   <!-- Section Ulasan Pengguna -->
+<!-- Section Ulasan Pengguna -->
 <div class="bg-white p-8 rounded-lg shadow-md mt-10">
     <h3 class="text-xl font-semibold text-gray-700 mb-6 border-b-2 border-gray-300 pb-2">Ulasan Pengguna</h3>
     <div class="space-y-6">
-        <!-- Contoh Ulasan 1 -->
-        <div class="bg-neutral-50 p-4 rounded-lg shadow-md flex space-x-4">
-            <img src="https://via.placeholder.com/50" alt="User Profile" class="w-12 h-12 rounded-full object-cover">
-            <div>
-                <h4 class="text-md font-semibold text-gray-700">John Doe</h4>
-                <div class="flex items-center text-yellow-400 text-sm mb-2">
-                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.26 3.902a1 1 0 00.95.69h4.1c.969 0 1.371 1.24.588 1.81l-3.32 2.41a1 1 0 00-.364 1.118l1.26 3.902c.3.921-.755 1.688-1.54 1.118L10 14.347l-3.774 2.732c-.785.57-1.84-.197-1.54-1.118l1.26-3.902a1 1 0 00-.364-1.118L2.263 8.33c-.783-.57-.38-1.81.588-1.81h4.1a1 1 0 00.95-.69l1.148-3.902z" />
-                    </svg>
-                    <span class="ml-1">4.5</span>
+    <!-- Jika tidak ada ulasan -->
+    @if($rating->isEmpty())
+        <p class="text-gray-500 text-center">Belum ada ulasan</p>
+    @else
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            @foreach($rating as $rating)
+                <div class="bg-neutral-50 p-4 rounded-lg shadow-md">
+                    <div class="flex items-center space-x-4">
+                        <img src="{{ $rating->user->profile_photo ? asset('storage/' . $rating->user->profile_photo) : asset('storage/default-profile.jpg') }}" 
+                            alt="User Profile" class="w-12 h-12 rounded-full object-cover">
+                        <div>
+                            <h4 class="text-md font-semibold text-gray-700">{{ $rating->user->name }}</h4>
+                            <div class="flex items-center text-yellow-400 text-sm">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.26 3.902a1 1 0 00.95.69h4.1c.969 0 1.371 1.24.588 1.81l-3.32 2.41a1 1 0 00-.364 1.118l1.26 3.902c.3.921-.755 1.688-1.54 1.118L10 14.347l-3.774 2.732c-.785.57-1.84-.197-1.54-1.118l1.26-3.902a1 1 0 00-.364-1.118L2.263 8.33c-.783-.57-.38-1.81.588-1.81h4.1a1 1 0 00.95-.69l1.148-3.902z"/>
+                                </svg>
+                                <span class="ml-1 font-semibold">{{ $rating->stars }}.0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mt-2">{{ $rating->comment }}</p>
                 </div>
-                <p class="text-gray-600">Kursus ini sangat membantu saya memahami dasar-dasar pemrograman.</p>
-            </div>
+            @endforeach
         </div>
+    @endif
     </div>
 </div>
 

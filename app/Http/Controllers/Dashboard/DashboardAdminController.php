@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\Role;
 use App\Models\Payment;
 use App\Models\Rating;
+use App\Models\RatingKursus;
 use App\Models\Purchase;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -88,6 +89,15 @@ class DashboardAdminController extends Controller
     
         // Ambil kursus yang dimiliki oleh mentor berdasarkan ID user
         $courses = Course::where('mentor_id', $id)->get();
+
+        // Loop untuk menghitung rata-rata rating tiap kursus
+        foreach ($courses as $course) {
+            // Menghitung rata-rata rating untuk kursus ini
+            $averageRating = RatingKursus::where('course_id', $course->id)->avg('stars');
+
+            // Pastikan rating tidak lebih dari 5 dan dibulatkan ke 1 desimal
+            $course->average_rating = $averageRating ? round(min($averageRating, 5), 1) : 'Belum ada rating';
+        }
     
         return view('dashboard-admin.detail-mentor', compact('user', 'courses'));
     }    
