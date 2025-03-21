@@ -6,11 +6,11 @@
             <!-- Card Informasi Kursus -->
             <div class="flex flex-col lg:flex-row mb-4">
                 <div class="w-full lg:w-1/3 mb-4 lg:mb-0">
-                    <img src="{{ asset('storage/' . $course->image_path) }}" alt="{{ $course->title }}" class="rounded-lg w-full h-auto">
+                    <img src="{{ asset('storage/' . $course->image_path) }}" alt="{{ $course->title }}" class="rounded-lg w-80 h-35">
                 </div>
                 <div class="ml-4 w-2/3 space-y-3">
                     <h2 class="text-md font-semibold text-gray-700 mb-2 capitalize">{{ $course->title }}</h2>
-                    <p class="text-gray-700 mb-2 text-md">{{ $course->description }}</p>
+                    <p class="text-gray-700 mb-2 text-sm">{{ $course->description }}</p>
                     <p class="text-gray-600 text-sm">Mentor :{{ $course->mentor->name }}</p>
                     <p class="text-gray-600 text-sm">Harga :<span class="text-red-400">Rp {{ number_format($course->price, 0, ',', '.') }}</span></p>
                     @if($course->start_date && $course->end_date)
@@ -211,7 +211,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="4" class="py-4 text-center border-b  border-r border-gray-200 text-gray-500">Belum ada peserta terdaftar.</td>
+                        <td colspan="4" class="py-4 text-center border-b border-l border-r border-gray-200 text-gray-500">Belum ada peserta terdaftar.</td>
                     </tr>
                     @endforelse
                 </tbody>

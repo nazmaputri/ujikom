@@ -6,10 +6,10 @@
     <h2 class="text-xl font-semibold mb-8 border-b-2 pb-2 text-gray-700 text-center">Detail Kategori</h2>
 
     <!-- Detail Kategori -->
-    <div class="flex flex-col md:flex-row mb-4">
-        <div class="">
+    <div class="flex flex-col lg:flex-row mb-4">
+        <div class="w-full lg:w-1/3 mb-4 lg:mb-0">       
             @if ($category->image_path)
-                <img src="{{ Storage::url($category->image_path) }}" alt="{{ $category->name }}" class="rounded-lg  w-32 h-32">
+                <img src="{{ Storage::url($category->image_path) }}" alt="{{ $category->name }}" class="rounded-lg  w-80 h-35">
             @else
                 <div class="bg-gray-200 text-gray-500 flex items-center justify-center rounded-lg w-full h-48">
                     <span>Gambar tidak tersedia</span>
@@ -18,8 +18,8 @@
         </div>
         <div class="w-full md:w-2/3 space-y-2 mt-4 md:mt-0 md:ml-4">
             <h2 class="text-md text-gray-700 font-semibold mb-2 capitalize">{{ $category->name }}</h2>
-            <p class="text-gray-700 mb-2">{{ $category->description }}</p>
-            <p class="text-gray-600">Total Kursus : {{ $category->courses->count() }}</p>
+            <p class="text-sm text-gray-700 mb-2">{{ $category->description }}</p>
+            <p class="text-sm text-gray-600">Total Kursus : {{ $category->courses->count() }}</p>
         </div>
     </div>  
 </div>

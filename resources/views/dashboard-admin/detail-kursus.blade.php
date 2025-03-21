@@ -7,15 +7,14 @@
 <div class="bg-white p-6 rounded-lg shadow-md">
     <h2 class="text-xl font-semibold mb-8 border-b-2 pb-2 text-gray-700 text-center">Detail Kursus</h2>
     <!-- Card Informasi Kursus -->
-    <div class="flex flex-col md:flex-row mb-4 items-start">
-        <!-- Thumbnail Kursus -->
-        <div class="w-full sm:w-1/4 md:w-1/5">
-            <img src="{{ asset('storage/' . $course->image_path) }}" alt="{{ $course->title }}" class="rounded-lg w-full h-auto">
+    <div class="flex flex-col lg:flex-row mb-4">
+        <div class="w-full lg:w-1/3 mb-4 lg:mb-0">
+            <img src="{{ asset('storage/' . $course->image_path) }}" alt="{{ $course->title }}" class="rounded-lg w-80 h-35">
         </div>
         <!-- Informasi Kursus -->
         <div class="ml-4 w-2/3 md:ml-4 mt-1 space-y-1">
             <h2 class="text-md font-semibold text-gray-700 mb-2 capitalize">{{ $course->title }}</h2>
-            <p class="text-gray-700 mb-2 text-md">{{ $course->description }}</p>
+            <p class="text-gray-700 mb-2 text-sm">{{ $course->description }}</p>
             <p class="text-gray-600 text-sm">Mentor : <span class="capitalize">{{ $course->mentor->name }}<span></p>
             <p class="text-gray-600 text-sm">Biaya : Rp {{ number_format($course->price, 0, ',', '.') }}</p>
             <p class="text-gray-600 text-sm">Kapasitas : {{ $course->capacity }} peserta</p> 
