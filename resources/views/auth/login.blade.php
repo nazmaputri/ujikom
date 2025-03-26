@@ -23,14 +23,16 @@
         <div class="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-lg">
             <!-- Logo and Website Name -->
             <div class="flex flex-col items-center justify-center space-y-2">
+                <a href="{{ route('landingpage') }}">
                 <div class="flex items-center space-x-3">
                     <img src="{{ asset('storage/eduflix-1.png') }}" alt="Logo" class="w-18 h-16">
                     <h1 class="text-xl font-semibold text-sky-600">Masuk</h1>
                 </div>
+                </a>
             </div>         
             
             @if (session('success'))
-                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
+                <div id="flash-message" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-3">
                     {{ session('success') }}
                 </div>
             @endif
@@ -44,7 +46,7 @@
                     <label for="email" class="block text-sm font-medium text-sky-600 pb-2">Email</label>
                     <input type="email" name="email" id="email" class="w-full px-4 py-2 border text-sm rounded-md focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 @error('email') border-red-500 @enderror" placeholder="Masukkan email">
                     @error('email')
-                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        <p class="text-red-500 text-sm mt-1"  id="email-error">{{ $message }}</p>
                     @enderror
                 </div>
 
@@ -59,7 +61,7 @@
                         </svg>
                     </button>
                     @error('password')
-                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        <p class="text-red-500 text-sm mt-1" id="password-error">{{ $message }}</p>
                     @enderror
                 </div>
 
@@ -80,6 +82,16 @@
     </div>
 
 <script>
+    //untuk mengatur flash message dari backend
+    document.addEventListener('DOMContentLoaded', function () {
+        const flashMessage = document.getElementById('flash-message');
+            if (flashMessage) {
+                setTimeout(() => {
+                    flashMessage.remove();
+            }, 3000); // Hapus pesan setelah 3 detik
+        }
+    });
+    
     // Pengaturan untuk membuka/menutup input password
     function toggleVisibility() {
     const input = document.getElementById('password');
@@ -107,7 +119,7 @@
         
         // Ubah teks tombol ke loading state
         buttonSubmit.innerHTML =
-            '<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Loading';
+            '<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Loading...';
         
         // Tambahkan atribut disabled
         buttonSubmit.setAttribute('disabled', true);

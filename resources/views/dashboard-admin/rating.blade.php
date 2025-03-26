@@ -3,20 +3,32 @@
 @section('content')
     <div class="container mx-auto">
         <div class="bg-white rounded-lg shadow-md p-5">
-            <h1 class="text-xl font-semibold mb-8 border-b-2 pb-2 text-gray-700 text-center">Daftar Penilaian EduFlix</h1>
+            <h1 class="text-xl font-semibold mb-6 border-b-2 pb-2 text-gray-700 text-center">Daftar Penilaian EduFlix</h1>
             
+        @if (session('success'))
+            <div id="flash-message" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-3">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if(session('info'))
+            <div id="flash-message" class="bg-yellow-100 border-yellow-400 text-yellow-700 px-4 py-3 rounded mb-3">
+                {{ session('info') }}
+            </div>
+        @endif
+
             <!-- Wrapper for responsiveness -->
             <div class="overflow-x-auto">
                <div class="min-w-full w-64">
-               <table class="min-w-full mt-3">
+               <table class="min-w-full mt-1 border-collapse">
                     <thead>
                         <tr class="bg-sky-100 text-gray-700 text-sm">
-                            <th class="px-4 py-2 text-center text-gray-700">No</th>
-                            <th class="px-4 py-2 text-center text-gray-700">Nama</th>
-                            <th class="px-4 py-2 text-center text-gray-700">Rating</th>
-                            <th class="px-4 py-2 text-center text-gray-700">Komentar</th>
-                            <th class="px-4 py-2 text-center text-gray-700">Status</th>
-                            <th class="px-4 py-2 text-center text-gray-700">Aksi</th>
+                            <th class="px-4 py-2 text-center text-gray-700 border-b border-l border-gray-200">No</th>
+                            <th class="px-4 py-2 text-center text-gray-700 border-b border-gray-200">Nama</th>
+                            <th class="px-4 py-2 text-center text-gray-700 border-b border-gray-200">Rating</th>
+                            <th class="px-4 py-2 text-center text-gray-700 border-b border-gray-200">Komentar</th>
+                            <th class="px-4 py-2 text-center text-gray-700 border-b border-gray-200">Status</th>
+                            <th class="px-4 py-2 text-center text-gray-700 border-b border-r border-gray-200">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -25,9 +37,9 @@
                     @endphp
                         @forelse ($ratings as $index => $rating)
                         <tr class="bg-white border-b hover:bg-sky-50 user-row text-sm text-gray-600">
-                            <td class="text-center px-4 py-2 text-sm">{{ $startNumber + $index }}</td>
+                            <td class="text-center px-4 py-2 text-sm  border-b border-l  border-gray-200">{{ $startNumber + $index }}</td>
                             <td class="px-4 py-2 text-sm capitalize">{{ $rating->nama }}</td>
-                            <td class="px-4 py-2">
+                            <td class="px-4 py-2 text-center">
                                 @for ($i = 1; $i <= 5; $i++)
                                     <span class="{{ $i <= $rating->rating ? 'text-yellow-400' : 'text-gray-300' }}">★</span>
                                 @endfor
@@ -35,16 +47,22 @@
                             <td class="px-4 py-2">
                                 <span>{{ $rating->comment }}</span>
                             </td>
-                            <td class="px-4 py-2">
+                            <td class="px-4 py-2 text-center">
                                 <!-- Teks status display admin -->
-                                <span class="ml-3 {{ $rating->display ? 'text-green-500' : 'text-red-500' }}">
-                                    {{ $rating->display ? 'Rating ditampilkan' : 'Rating disembunyikan' }}
+                                @php
+                                    $displayStatus = $rating->display
+                                        ? ['label' => 'ditampilkan', 'bg' => 'bg-green-200/50', 'border' => 'border-green-300', 'text' => 'text-green-500']
+                                        : ['label' => 'disembunyikan', 'bg' => 'bg-red-200/50', 'border' => 'border-red-300', 'text' => 'text-red-500'];
+                                @endphp
+                                <span class="inline-block min-w-[120px] px-2 py-0.5 rounded-xl border-2 text-center 
+                                    {{ $displayStatus['bg'] }} {{ $displayStatus['border'] }} {{ $displayStatus['text'] }}">
+                                    {{ $displayStatus['label'] }}
                                 </span>
                             </td>
-                            <td class="px-4 py-2 text-center flex items-center justify-center space-x-8">                              
+                            <td class="px-4 py-2 text-center flex items-center justify-center space-x-8 border-r border-gray-200">                              
                                 <form action="{{ route('toggle.displayadmin', $rating->id) }}" method="POST">
                                     @csrf
-                                    <label for="rating-toggle-{{ $rating->id }}" class="flex items-center cursor-pointer">
+                                    <label for="rating-toggle-{{ $rating->id }}" class="flex items-center cursor-pointer" title="{{ $rating->display ? 'Sembunyikan' : 'Tampilkan' }}">
                                         <!-- Toggle Switch -->
                                         <div class="relative">
                                             <input type="checkbox" name="display" id="rating-toggle-{{ $rating->id }}" class="hidden peer" 
@@ -94,4 +112,16 @@
             </div> 
         </div>
     </div>
+
+<script>
+    //untuk mengatur flash message dari backend
+    document.addEventListener('DOMContentLoaded', function () {
+        const flashMessage = document.getElementById('flash-message');
+            if (flashMessage) {
+                setTimeout(() => {
+                    flashMessage.remove();
+            }, 3000); // Hapus pesan setelah 3 detik
+        }
+    });
+</script>
 @endsection

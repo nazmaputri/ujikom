@@ -3,12 +3,14 @@
 @section('content')
 <div class="container mx-auto">
     <div class="bg-white p-8 rounded-lg shadow-md relative">
-        <h2 class="text-xl font-semibold mb-8 border-b-2 border-gray-300 pb-2 text-gray-700">Detail Kursus</h2>
+        <h2 class="text-xl font-semibold mb-4 border-b-2 border-gray-300 pb-2 text-gray-700 text-center">Detail Kursus</h2>
+
         @if (session('success'))
-            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
+            <div id="flash-message" class="bg-green-100 border border-green-400 text-green-700 p-2 rounded relative mb-3">
                 {{ session('success') }}
             </div>
         @endif
+
         <!-- Card Informasi Kursus -->
         <div class="flex flex-col lg:flex-row mb-4">
             <div class="w-full sm:w-1/4 md:w-1/5 mb-4 lg:mb-0">
@@ -22,7 +24,7 @@
                 <h2 class="text-lg font-semibold capitalize text-gray-700">{{ $course->title }}</h2>
                 <p class="text-gray-700 text-md">{{ $course->description }}</p>
                 <p class="text-gray-600 text-sm capitalize"><span class="">Mentor :</span> {{ $course->mentor->name }}</p>
-                <p class="text-gray-600 text-sm">Biaya : <span class="">Rp {{ number_format($course->price, 0, ',', '.') }}</span></p>
+                <p class="text-gray-600 text-sm">Harga : <span class="">Rp {{ number_format($course->price, 0, ',', '.') }}</span></p>
                 @if($course->start_date && $course->end_date)
                     <p class="text-gray-600 text-sm"><span class="">Tanggal Mulai :</span> {{ \Carbon\Carbon::parse($course->start_date)->format('d F Y') }} - {{ \Carbon\Carbon::parse($course->end_date)->format('d F Y') }}</p>
                 @endif
@@ -95,10 +97,10 @@
                     <textarea name="comment" id="comment" class="w-full text-sm border rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500" rows="4" placeholder="Tulis komentar Anda (opsional)"></textarea>
                 </div>
                 <div class="flex justify-end">
-                    <button type="button" id="closeRatingModal" class="bg-red-400 hover:bg-red-300 text-white font-semibold py-2 px-4 rounded-lg mr-2">
+                    <button type="button" id="closeRatingModal" class="bg-red-400 hover:bg-red-300 text-white font-semibold py-2 px-4 rounded-lg mr-2 text-center">
                         Batal
                     </button>
-                    <button type="submit" class="bg-sky-400 hover:bg-sky-300 text-white font-semibold py-2 px-4 rounded-lg">
+                    <button type="submit" class="bg-sky-400 hover:bg-sky-300 text-white font-semibold py-2 px-4 rounded-lg text-center">
                         Kirim
                     </button>
                 </div>
@@ -106,17 +108,27 @@
         </div>
     </div>
 
-    <script>
-        // Menampilkan modal saat tombol "Beri Rating" diklik
-        document.getElementById('ratingButton').addEventListener('click', function () {
-            document.getElementById('ratingModal').classList.remove('hidden');
+<script>
+    //untuk mengatur flash message dari backend
+    document.addEventListener('DOMContentLoaded', function () {
+        const flashMessage = document.getElementById('flash-message');
+            if (flashMessage) {
+                setTimeout(() => {
+                    flashMessage.remove();
+            }, 3000); // Hapus pesan setelah 3 detik
+        }
+    });
+
+    // Menampilkan modal saat tombol "Beri Rating" diklik
+    document.getElementById('ratingButton').addEventListener('click', function () {
+        document.getElementById('ratingModal').classList.remove('hidden');
         });
 
-        // Menyembunyikan modal saat tombol "Batal" diklik
-        document.getElementById('closeRatingModal').addEventListener('click', function () {
-            document.getElementById('ratingModal').classList.add('hidden');
-        });
-    </script>
+    // Menyembunyikan modal saat tombol "Batal" diklik
+    document.getElementById('closeRatingModal').addEventListener('click', function () {
+        document.getElementById('ratingModal').classList.add('hidden');
+    });
+</script>
     </div>
 </div>
 @endsection

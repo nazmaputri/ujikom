@@ -54,7 +54,12 @@ class LoginController extends Controller
         if ($user->status !== 'active') {
             return back()->withErrors(['email' => 'Akun Anda tidak aktif.']);
         }
-    
+
+        // Cek apakah akun dalam status inactive
+        if ($user->status === 'inactive') {
+            return back()->withErrors(['email' => 'Akun Anda tidak aktif.']);
+        }
+
         // Login pengguna dan amankan sesi baru
         $request->session()->regenerate();
     

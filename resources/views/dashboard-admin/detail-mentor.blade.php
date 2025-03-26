@@ -70,37 +70,52 @@
         <div class="text-left mb-4 border-b-2 border-gray-300 pb-2">
             <h2 class="text-lg font-semibold text-gray-700">Kursus</h2>
         </div>
-        <table class="min-w-full">
-            <thead>
-                <tr class="bg-sky-100 text-gray-700">
-                    <th class="px-2 py-2 text-center">No</th>
-                    <th class="px-4 py-2 text-center">Judul</th>
-                    <th class="px-4 py-2 text-center">Harga</th>
-                    <th class="px-4 py-2 text-center">Tanggal dibuat</th>
-                    <th class="px-4 py-2 text-center">Rating</th>
-                </tr>
-            </thead>
-        
-            <tbody class="text-gray-600 text-sm font-light">
-                @forelse ($courses as $index => $course) 
-                    <tr class="bg-white hover:bg-sky-50 border-b">
-                        <td class="px-2 py-2 text-center">{{ $index + 1 }}</td>
-                        <td class="px-4 py-2">{{ $course->title }}</td>
-                        <td class="px-4 py-2 text-center">Rp {{ number_format($course->price, 0, ',', '.') }}</td> 
-                        <td class="px-4 py-2">{{ $course->created_at->format('d-m-Y') }}</td>
-                        <td class="px-4 py-2 text-center">
-                            {{ $course->rating ?? 'Belum ada rating' }}
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="5" class="text-center text-gray-500 py-4">Belum ada kursus yang diajarkan oleh mentor ini.</td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
+        <div class="overflow-x-auto">
+            <div class="min-w-full w-64">
+                <table class="min-w-full text-sm border-collapse">
+                    <thead>
+                        <tr class="bg-sky-100 text-gray-700 text-sm">
+                            <th class="px-2 py-2 text-center border-b border-l border-gray-200">No</th>
+                            <th class="px-4 py-2 text-center border-b border-gray-200">Judul</th>
+                            <th class="px-4 py-2 text-center border-b border-gray-200">Harga</th>
+                            <th class="px-4 py-2 text-center border-b border-gray-200">Tanggal dibuat</th>
+                            <th class="px-4 py-2 text-center border-b border-gray-200">Rating</th>
+                            <th class="px-4 py-2 text-center border-b border-r border-gray-200">Aksi</th>
+
+                        </tr>
+                    </thead>
+                
+                    <tbody class="text-gray-600 text-sm">
+                        @forelse ($courses as $index => $course) 
+                            <tr class="bg-white hover:bg-sky-50 border-b text-sm">
+                                <td class="px-2 py-2 text-center border-b border-l border-gray-200">{{ $index + 1 }}</td>
+                                <td class="px-4 py-2 border-b border-gray-200">{{ $course->title }}</td>
+                                <td class="px-4 py-2 border-b border-gray-200 text-center">Rp {{ number_format($course->price, 0, ',', '.') }}</td> 
+                                <td class="px-4 py-2 border-b border-gray-200 text-center">{{\Carbon\Carbon::parse( $course->created_at)->translatedFormat('d F Y') }}
+                                <td class="px-4 py-2 border-b border-gray-200 text-center">
+                                {{ $course->average_rating ?? 'Belum ada rating' }}
+                                </td>
+                                <td class="py-3 px-6 text-center border-b border-r border-gray-200">
+                                    <div class="flex items-center justify-center space-x-8">
+                                        <!-- Tombol Lihat Detail -->
+                                        <a href="#" class="text-white bg-sky-300 p-1 rounded-md hover:bg-sky-200" title="Lihat">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                            </svg>
+                                        </a>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="5" class="text-center text-gray-500 py-4 border-b border-l border-r border-gray-200">Belum ada kursus yang diajarkan oleh mentor ini.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
         <div class="text-right pt-10">
-        <a href="{{ route('datamentor-admin') }}" class="bg-sky-400 hover:bg-sky-300 text-white font-semibold py-2 px-6 rounded-lg shadow-md hover:shadow-none">
+        <a href="{{ route('datamentor-admin') }}" class="bg-sky-400 hover:bg-sky-300 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:shadow-none">
             Kembali
         </a>
         </div>

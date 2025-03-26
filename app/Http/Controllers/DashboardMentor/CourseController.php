@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Materi;
 use App\Models\MateriVideo;
 use App\Models\MateriPdf;
+use App\Models\RatingKursus;
 use App\Models\Purchase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -95,7 +96,7 @@ class CourseController extends Controller
     
     // Redirect ke halaman kursus dengan pesan sukses
     return redirect()->route('courses.index')->with('success', 'Kursus berhasil ditambahkan!');
-}
+    }
 
     public function show($id)
     {
@@ -104,6 +105,12 @@ class CourseController extends Controller
         
         // Menggunakan pagination untuk menampilkan 5 materi per halaman
         $materi = $course->materi()->paginate(5);
+
+        // Ambil ID mentor yang sedang login (untuk menampilkan rating kursus berdasarkan mentor nya)
+        $mentorId = Auth::id();
+
+        // Ambil rating berdasarkan course_id dan mentor_id (untuk menampilkan rating kursus berdasarkan kursus nya)
+        $ratings = RatingKursus::where('course_id', $id)->with('user')->paginate(5);
         
         // Ambil peserta yang pembayaran kursusnya lunas
         $participants = Purchase::where('course_id', $id)
@@ -112,9 +119,8 @@ class CourseController extends Controller
         ->paginate(5);
     
         // Kembalikan data ke view
-        return view('dashboard-mentor.kursus-detail', compact('course', 'materi', 'participants'));
+        return view('dashboard-mentor.kursus-detail', compact('course', 'materi', 'participants','ratings'));
     }
-    
 
     public function edit(Course $course)
     {

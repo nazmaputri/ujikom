@@ -24,7 +24,7 @@ use App\Mail\HelloMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [LandingPageController::class, 'lp']);
+Route::get('/', [LandingPageController::class, 'lp'])->name('landingpage');
 Route::get('/course/{id}', [LandingPageController::class, 'detail'])->name('kursus.detail');
 Route::get('/category/{name}', [LandingPageController::class, 'category'])->name('category.detail');
 Route::post('/ratings', [RatingController::class, 'store'])->name('rating.store');
@@ -42,7 +42,7 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::get('dashboard-admin/laporan', [DashboardAdminController::class, 'laporan'])->name('laporan-admin');
     Route::get('dashboard-admin/rating', [DashboardAdminController::class, 'rating'])->name('rating-admin');
     Route::post('/admin/users/{id}/status', [DashboardAdminController::class, 'updateStatus'])->name('admin.users.updateStatus'); //this method is patch before edited
-    Route::post('/admin/users/{id}/status/pending', [DashboardAdminController::class, 'updateStatusToPending'])->name('updateStatusToPending'); // (untuk menonaktifkan mentor, sebenarnya statusnya pending sih)
+    Route::post('/admin/users/{id}/status/inactive', [DashboardAdminController::class, 'updateStatusToInactive'])->name('updateStatusToInactive'); // (untuk menonaktifkan mentor, sebenarnya statusnya pending sih)
     Route::delete('/admin/users/{id}', [DashboardAdminController::class, 'deleteUser'])->name('admin.delete');
     Route::get('/mentor/user/{id}', [DashboardAdminController::class, 'detailmentor'])->name('detaildata-mentor');
     Route::post('/mentor/toggle/status', [DashboardAdminController::class, 'toggleActive'])->name('mentors.toggle');
@@ -103,7 +103,7 @@ Route::middleware(['auth:student'])->group(function () {
     Route::get('/certificate-detail/{courseId}', [CertificateController::class, 'certificate'])->name('certificate-detail');
     Route::get('/certificate/download/{courseId}', [CertificateController::class, 'downloadCertificate'])->name('certificate.download');
     Route::post('/create-payment', [PaymentController::class, 'createPayment']);
-    Route::post('/payment-success', [PaymentController::class, 'updatePaymentStatus']);
+    Route::post('/update-payment-status', [PaymentController::class, 'updatePaymentStatus']);
 });
 
 Route::middleware(['auth:mentor'])->group(function () {

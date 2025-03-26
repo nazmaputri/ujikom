@@ -25,19 +25,19 @@
 </div>
 
 <div class="mt-6 bg-white p-6 rounded-lg shadow-md">
-    <h3 class="text-xl font-semibold mb-4 inline-block pb-1 text-gray-700">Daftar Kursus</h3>
+    <h3 class="text-xl font-semibold mb-4 border-b-2 pb-2 text-gray-700">Daftar Kursus</h3>
 
     <!-- Membungkus tabel dengan div untuk pengguliran -->
     <div class="overflow-x-auto">
         <div class="min-w-full w-64">
-        <table class="min-w-full">
+        <table class="min-w-full border-collapse">
             <thead>
                 <tr class="bg-sky-100 text-gray-700">
-                    <th class="px-2 py-2">No</th>
-                    <th class="px-4 py-2">Judul</th>
-                    <th class="px-4 py-2">Mentor</th>
-                    <th class="px-4 py-2">Harga</th>
-                    <th class="px-4 py-2">Aksi</th>
+                    <th class="px-2 py-2 border-b border-l border-gray-200">No</th>
+                    <th class="px-4 py-2 border-b border-gray-200">Judul</th>
+                    <th class="px-4 py-2 border-b border-gray-200">Mentor</th>
+                    <th class="px-4 py-2 border-b border-gray-200">Harga</th>
+                    <th class="px-4 py-2 border-b border-r border-gray-200">Aksi</th>
                 </tr>
             </thead>
 
@@ -48,18 +48,18 @@
                 </div>
             @endif
 
-            <tbody class="text-gray-600 text-sm font-light">
+            <tbody class="text-gray-600 text-sm">
                 @forelse ($category->courses as $index => $course)
-                    <tr class="bg-white hover:bg-sky-50">
-                        <td class="px-2 py-2 text-center">{{ $index + 1 }}</td>
-                        <td class="px-4 py-2 capitalize">{{ $course->title }}</td>
-                        <td class="px-4 py-2 capitalize">{{ $course->mentor->name ?? 'Tidak Ada Mentor' }}</td>
-                        <td class="px-4 py-2">Rp {{ number_format($course->price, 0, ',', '.') }}</td>
-                        <td class="py-3 px-4 text-center">
+                    <tr class="bg-white hover:bg-sky-50 border-b border-gray-200">
+                        <td class="px-2 py-2 text-center border-b border-l border-gray-200">{{ $index + 1 }}</td>
+                        <td class="px-4 py-2 capitalize border-b border-gray-200">{{ $course->title }}</td>
+                        <td class="px-4 py-2 capitalize border-b border-gray-200">{{ $course->mentor->name ?? 'Tidak Ada Mentor' }}</td>
+                        <td class="px-4 py-2 border-b border-gray-200">Rp {{ number_format($course->price, 0, ',', '.') }}</td>
+                        <td class="py-3 px-4 text-center border-b border-r border-gray-200">
                             <div class="flex justify-center items-center space-x-4">
                                 <!-- Tombol Lihat Detail -->
                                 <a href="{{ route('detail-kursusadmin', [$course->id, $category->name]) }}" 
-                                    class="text-white bg-sky-300 p-1 rounded-md hover:bg-sky-200 flex items-center">
+                                    class="text-white bg-sky-300 p-1 rounded-md hover:bg-sky-200 flex items-center" title="Lihat">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" 
                                         stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                                         <path stroke-linecap="round" stroke-linejoin="round" 
@@ -70,7 +70,7 @@
                                 </a>
 
                                 <!-- Tombol Setujui Kursus -->
-                                <form action="{{ route('courses.approve', ['id' => $course->id, 'name' => $category->name]) }}" method="POST" class="flex items-center">
+                                <form action="{{ route('courses.approve', ['id' => $course->id, 'name' => $category->name]) }}" method="POST" class="flex items-center" title="Setujui Kursus">
                                     @csrf
                                     @method('PATCH')
                                     <button type="submit" 
@@ -89,7 +89,7 @@
 
                                 <!-- Tombol Publikasikan Kursus -->
                                 @if($course->status == 'approved')
-                                    <form action="{{ route('courses.publish', ['id' => $course->id, 'name' => $category->name]) }}" method="POST" class="flex items-center">
+                                    <form action="{{ route('courses.publish', ['id' => $course->id, 'name' => $category->name]) }}" method="POST" class="flex items-center" title="Publikasikan">
                                         @csrf
                                         @method('PATCH')
                                         <button type="submit" 
@@ -105,7 +105,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="4" class="text-center text-gray-500 py-4">Belum ada kursus dalam kategori ini.</td>
+                        <td colspan="5" class="text-center text-gray-500 py-4 border-l border-r border-b border-gray-200">Belum ada kursus dalam kategori ini.</td>
                     </tr>
                 @endforelse
             </tbody>

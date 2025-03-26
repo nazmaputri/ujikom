@@ -16,7 +16,7 @@
             <h2 class="text-md font-semibold text-gray-700 mb-2 capitalize">{{ $course->title }}</h2>
             <p class="text-gray-700 mb-2 text-sm">{{ $course->description }}</p>
             <p class="text-gray-600 text-sm">Mentor : <span class="capitalize">{{ $course->mentor->name }}<span></p>
-            <p class="text-gray-600 text-sm">Biaya : Rp {{ number_format($course->price, 0, ',', '.') }}</p>
+            <p class="text-gray-600 text-sm">Harga : <span class="text-red-500">Rp {{ number_format($course->price, 0, ',', '.') }}</span></p>
             <p class="text-gray-600 text-sm">Kapasitas : {{ $course->capacity }} peserta</p> 
             <p class="text-gray-600 text-sm">Tanggal Mulai : {{ $course->start_date }}</p>
             <p class="text-gray-600 text-sm">Masa Aktif : {{ $course->duration }}</p>
@@ -27,6 +27,9 @@
     <div class="mt-10">
         <h3 class="text-xl font-semibold text-gray-700 mb-6 border-b-2 border-gray-300 pb-2">Materi Kursus</h3>
         <div class="space-y-6">
+            @if($course->materi->isEmpty())
+                <p class="text-gray-600 text-center mt-1 text-sm">Kursus ini belum ada materi apapun.</p>
+            @else
             @foreach($course->materi as $materi)
             <div class="bg-neutral-50 p-4 rounded-lg shadow-md">
                 <div x-data="{ open: false }">
@@ -126,6 +129,7 @@
                 </div>
             </div>
             @endforeach
+            @endif
         </div>
     </div>
 </div>
@@ -135,26 +139,26 @@
         <h3 class="text-xl font-semibold mb-4 inline-block pb-1 text-gray-700">Peserta Terdaftar</h3>
             <div class="overflow-x-auto">
                 <div class="min-w-full w-64">
-                <table class="min-w-full" id="courseTable">
+                <table class="min-w-full border-collapse" id="courseTable">
                     <thead>
                         <tr class="bg-sky-100 text-gray-700 text-sm">
-                            <th class="py-2 px-2">No</th>
-                            <th class="py-2 px-4">Nama</th>
-                            <th class="py-2 px-4">Email</th>
-                            <th class="py-2">Status Pembayaran</th>
+                            <th class="py-2 px-2 border-b border-l border-gray-200">No</th>
+                            <th class="py-2 px-4 border-b border-gray-200">Nama</th>
+                            <th class="py-2 px-4 border-b border-gray-200">Email</th>
+                            <th class="py-2 border-b border-r border-gray-200">Status Pembayaran</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse ($participants as $index => $participant)
                         <tr class="bg-white hover:bg-sky-50 user-row text-sm">
-                            <td class="py-2 px-4 text-center text-gray-600 text-sm">{{ $index + 1 }}</td>
-                            <td class="py-2 px-4 text-gray-600 text-sm">{{ $participant->user->name }}</td>
-                            <td class="py-2 px-4 text-gray-600 text-sm">{{ $participant->user->email }}</td>
-                            <td class="py-2 text-center text-green-500 text-sm">{{ $participant->transaction_status }}</td>
+                            <td class="py-2 px-4 text-center text-gray-600 text-sm border-b border-l border-gray-200">{{ $index + 1 }}</td>
+                            <td class="py-2 px-4 text-gray-600 text-sm border-b border-gray-200">{{ $participant->user->name }}</td>
+                            <td class="py-2 px-4 text-gray-600 text-sm border-b border-gray-200">{{ $participant->user->email }}</td>
+                            <td class="py-2 text-center text-green-500 text-sm border-b border-r border-gray-200">{{ $participant->transaction_status }}</td>
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="4" class="py-4 text-center text-sm text-gray-500">Belum ada peserta terdaftar.</td>
+                            <td colspan="4" class="py-4 text-center text-sm text-gray-600 border-l border-b border-r border-gray-200">Belum ada peserta terdaftar.</td>
                         </tr>
                         @endforelse
                     </tbody>

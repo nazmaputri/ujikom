@@ -121,6 +121,9 @@ class DashboardPesertaController extends Controller
                                 ->where('user_id', auth('student')->id())
                                 ->where('status', 'success')
                                 ->exists();
+
+        // Ambil rating berdasarkan course_id dan mentor_id (untuk menampilkan rating kursus berdasarkan kursus nya)
+        $rating = RatingKursus::where('course_id', $id)->with('user')->get();
     
         // Ambil status pembelian dari tabel purchases
         $paymentStatus = null;
@@ -136,7 +139,7 @@ class DashboardPesertaController extends Controller
         }
     
         // Kirim data kursus dan kategori ke view
-        return view('dashboard-peserta.detail', compact('course', 'paymentStatus', 'hasPurchased', 'category'));
+        return view('dashboard-peserta.detail', compact('course', 'paymentStatus', 'hasPurchased', 'category', 'rating'));
     }
     
     

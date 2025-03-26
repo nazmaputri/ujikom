@@ -42,6 +42,7 @@ class RatingController extends Controller
         return redirect()->back()->with('success', 'Terima kasih atas penilaian Anda!');
     }
 
+    // hapus rating by id
     public function destroy($id)
     {
         $rating = Rating::findOrFail($id); // Cari rating berdasarkan ID

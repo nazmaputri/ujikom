@@ -2,7 +2,7 @@
 @section('content')
 <div class="bg-white p-6 rounded-lg shadow-md">
     <h2 class="text-xl font-semibold mb-8 border-b-2 border-gray-300 pb-2 text-gray-700 text-center">Daftar Kursus</h2>
-    
+
     <!-- Cek apakah ada kursus -->
     @if ($courses->isEmpty())
         <div class="text-center text-gray-500">
@@ -20,7 +20,7 @@
                 
                 <!-- Informasi Kursus -->
                 <div class="p-4">
-                    <a href="{{ route('rating-detail', $course->id) }}" class="text-lg capitalize font-semibold text-gray-800 hover:text-sky-300 block">
+                    <a href="{{ route('rating-detail', $course->id) }}" class="text-lg capitalize font-semibold text-gray-700 block">
                         {{ $course->title }}
                     </a>
                 </div>
