@@ -17,14 +17,14 @@
                     <h3 class="text-gray-700 font-medium">
                         {{ $chat->student->name }}
                     </h3>
-                    <p class="text-gray-500 text-sm truncate">Last message...</p>
+                    <p class="text-gray-500 text-sm truncate">Pesan terbaru...</p>
                 </div>
             </a>
             @endforeach
 
             <!-- Start New Chat Section (Only visible if no chat exists) -->
             <div class="lg:block hidden">
-                <h2 class="text-md font-semibold mt-6 text-gray-700">Start New Chat</h2>
+                <h2 class="text-md font-semibold mt-6 text-gray-700">Mulai chat baru</h2>
                 @if ($students->isNotEmpty())
                     @foreach ($students as $student)
                         <!-- Only show "Start New Chat" if no existing chat with the student -->
@@ -34,13 +34,13 @@
                            <img width="40" height="40" src="https://img.icons8.com/pastel-glyph/64/user-male-circle.png" alt="user-male-circle"/>
                             <div class="ml-4">
                                 <h3 class="text-gray-700 font-medium">{{ $student->name }}</h3>
-                                <p class="text-gray-500 text-sm">Start new chat</p>
+                                <p class="text-gray-500 text-sm">Mulai chat baru...</p>
                             </div>
                         </a>
                         @endif
                     @endforeach
                 @else
-                    <p class="text-gray-500 mt-4">No students have purchased your course yet.</p>
+                    <p class="text-gray-500 mt-4">Belum ada peserta yang membeli kursus ini.</p>
                 @endif
             </div>
         </div>
@@ -57,8 +57,8 @@
                 {{-- <p class="text-gray-500 text-sm">Online</p> --}}
             </div>
             <a href="{{ route('courses.index') }}" class="absolute right-4 top-1/2 transform -translate-y-1/2">
-                <button type="button" id="prev-btn" class="border hover:bg-neutral-100/50 font-semibold text-white px-4 py-2 rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="w-4 h-4">
+                <button type="button" id="prev-btn" class="border hover:bg-neutral-100/50 font-semibold text-white px-2 py-2 rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" fill="currentColor" class="w-4 h-4 text-gray-700">
                         <path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"/>
                     </svg>
                 </button>
@@ -78,7 +78,7 @@
                 @endforeach
             @else
                 <div class="flex items-center justify-center p-4">
-                    <p class="text-gray-500">No messages yet. Start the conversation!</p>
+                    <p class="text-gray-500">Belum ada pesan. Mari mulai chat!</p>
                 </div>
             @endif
         </div>        
@@ -91,14 +91,14 @@
                 <input type="hidden" name="course_id" value="{{ $activeChat->course_id }}"> <!-- Menambahkan course_id -->
                 <input type="text" name="message" placeholder="Type a message..." 
                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" required>
-                <button type="submit" class="ml-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
-                    Send
+                <button type="submit" class="ml-4 px-4 py-2 bg-blue-400 text-white rounded-lg hover:bg-blue-300">
+                    Kirim
                 </button>
             </form>
         </div>
         @else
         <div class="flex-1 flex items-center justify-center p-4">
-            <p class="text-gray-500">Select a user to start chatting.</p>
+            <p class="text-gray-500">Pilih peserta untuk memulai chat.</p>
         </div>
         @endif
     </main>

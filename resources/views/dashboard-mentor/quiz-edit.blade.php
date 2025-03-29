@@ -13,9 +13,9 @@
 
     <!-- Judul Quiz -->
     <div class="mb-4">
-        <label for="title" class="block text-gray-700 font-semibold text-md">Judul Kuis</label>
+        <label for="title" class="block text-gray-700 font-semibold">Judul Kuis</label>
         <input type="text" name="title" id="title" value="{{ old('title', $quiz->title) }}" 
-               class="w-full text-gray-600 border-gray-300 rounded-lg border focus:outline-none focus:ring-1 focus:ring-sky-300 focus:border-sky-300 p-2
+               class="w-full text-gray-700 text-sm  border-gray-300 rounded-lg border focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 p-2
                @error('title') border-red-500 @enderror">
         @error('title') 
             <span class="text-red-500 text-sm">{{ $message }}</span> 
@@ -24,9 +24,9 @@
 
     <!-- Deskripsi Quiz -->
     <div class="mb-4">
-        <label for="description" class="block text-gray-700 font-semibold text-md">Deskripsi</label>
+        <label for="description" class="block text-gray-700 font-semibold">Deskripsi</label>
         <textarea name="description" id="description" rows="3" 
-                  class="w-full text-gray-600 border-gray-300 rounded-lg border focus:outline-none focus:ring-1 focus:ring-sky-300 focus:border-sky-300 p-2
+                  class="w-full text-gray-700 text-sm border-gray-300 rounded-lg border focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 p-2
                   @error('description') border-red-500 @enderror">{{ old('description', $quiz->description) }}</textarea>
         @error('description') 
             <span class="text-red-500 text-sm">{{ $message }}</span> 
@@ -35,9 +35,9 @@
 
     <!-- Durasi Quiz -->
     <div class="mb-4">
-        <label for="duration" class="block text-gray-700 font-semibold text-md">Durasi (Menit)</label>
+        <label for="duration" class="block text-gray-700 font-semibold">Durasi (Menit)</label>
         <input type="number" name="duration" id="duration" value="{{ old('duration', $quiz->duration) }}" 
-               class="w-full text-gray-600 border-gray-300 border rounded-lg focus:outline-none focus:ring-1 focus:ring-sky-300 focus:border-sky-300 p-2
+               class="w-full text-gray-700 text-sm border-gray-300 border rounded-lg focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 p-2
                @error('duration') border-red-500 @enderror">
         @error('duration') 
             <span class="text-red-500 text-sm">{{ $message }}</span> 
@@ -54,7 +54,7 @@
                     <label for="questions[{{ $index }}][question]" class="block text-gray-700 font-semibold">Soal {{ $index + 1 }}</label>
                     <input type="text" name="questions[{{ $index }}][question]" id="questions[{{ $index }}][question]" 
                            value="{{ old("questions.$index.question", $question->question) }}" 
-                           class="w-full text-gray-600 border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-sky-300 focus:border-sky-300 p-2
+                           class="w-full text-gray-700 text-sm border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 p-2
                            @error("questions.$index.question") border-red-500 @enderror">
                     @error("questions.$index.question") 
                         <span class="text-red-500 text-sm">{{ $message }}</span> 
@@ -69,13 +69,13 @@
                             <input type="text" name="questions[{{ $index }}][answers][{{ $answerIndex }}]" 
                                    id="questions[{{ $index }}][answers][{{ $answerIndex }}]" 
                                    value="{{ old("questions.$index.answers.$answerIndex", $answer->answer) }}" 
-                                   class="flex-1 text-gray-600 border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-sky-300 focus:border-sky-500 p-2
+                                   class="flex-1 text-gray-700 text-sm border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-sky-300 focus:border-sky-500 p-2
                                    @error("questions.$index.answers.$answerIndex") border-red-500 @enderror">
 
                             <!-- Checkbox untuk Jawaban Benar -->
                             <input type="radio" name="questions[{{ $index }}][correct_answer]" value="{{ $answerIndex }}" 
                                    {{ old("questions.$index.correct_answer") == $answerIndex ? 'checked' : '' }} class="focus:ring focus:ring-blue-300">
-                            <span class="text-sm text-gray-600 hidden sm:inline ml-2">Benar</span>
+                            <span class="text-sm text-gray-700 text-sm hidden sm:inline ml-2">Benar</span>
                         </div>
                     @endforeach
                 </div>
@@ -119,17 +119,17 @@
         <div id="question-list"></div>
 
         <!-- Tombol Tambah Soal -->
-        <button type="button" onclick="addQuestion()" class="mt-4 bg-green-400 hover:bg-green-500 text-white font-semibold py-2 px-4 rounded">
+        <button type="button" onclick="addQuestion()" class="mt-4 bg-green-400 hover:bg-green-300 text-white font-semibold py-2 px-4 rounded">
             Tambah Soal
         </button>
     </div>
 
     <!-- Tombol aksi -->
     <div class="mt-6 flex justify-end space-x-2">
-        <a href="{{ route('materi.show', ['courseId' => $course->id, 'materiId' => $materi->id]) }}" class="bg-red-400 hover:bg-red-300 text-white font-semibold py-2 px-4 rounded">
+        <a href="{{ route('materi.show', ['courseId' => $course->id, 'materiId' => $materi->id]) }}" class="bg-red-400 hover:bg-red-300 text-white font-semibold py-2 px-4 rounded-lg">
             Batal
         </a>
-        <button type="submit" class="bg-sky-400 hover:bg-sky-300 text-white font-semibold py-2 px-4 rounded">
+        <button type="submit" class="bg-sky-400 hover:bg-sky-300 text-white text-sm font-semibold py-2 px-4 rounded-lg">
             Simpan
         </button>
     </div>

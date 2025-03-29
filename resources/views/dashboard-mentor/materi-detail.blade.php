@@ -110,7 +110,7 @@
         </div>
 
         @if (session('success'))
-            <div id="flash-message" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
+            <div id="flash-message" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-3 mt-3">
                 {{ session('success') }}
             </div>
         @endif
@@ -161,7 +161,7 @@
                         @endforeach
                         @if ($quizzes->isEmpty())
                             <tr>
-                                <td colspan="4" class="text-center text-gray-500 py-4 text-sm">Belum ada kuis untuk materi ini.</td>
+                                <td colspan="4" class="text-center py-4 text-sm text-gray-600 border-b border-l border-r border-gray-200">Belum ada kuis untuk materi ini.</td>
                             </tr>
                         @endif
                     </tbody>
@@ -180,4 +180,42 @@
         </div>      
     </div>
 </div>
+
+<!-- Modal Popup -->
+<div id="deleteModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden z-[1000]">
+    <div class="bg-white p-5 rounded-lg shadow-lg w-96 mx-4">
+        <h2 class="text-lg text-gray-700 text-center font-semibold mb-2">Konfirmasi Hapus</h2>
+        <p class="text-gray-600 text-center mb-4">Apakah Anda yakin ingin menghapus kuis ini?</p>
+        <div class="flex justify-center space-x-2">
+            <button onclick="closeDeleteModal()" class="px-4 py-2 bg-sky-400 text-white hover:bg-sky-300 rounded-md">Batal</button>
+            <form id="deleteForm" method="POST">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="px-4 py-2 bg-red-400 hover:bg-red-300  text-white rounded-md">Hapus</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    //untuk mengatur flash message dari backend
+    document.addEventListener('DOMContentLoaded', function () {
+        const flashMessage = document.getElementById('flash-message');
+            if (flashMessage) {
+                setTimeout(() => {
+                    flashMessage.remove();
+            }, 3000); // Hapus pesan setelah 3 detik
+        }
+    });
+
+    //untuk membuka/menutup popup konfirmasi penghapusa data
+    function openDeleteModal(url) {
+        document.getElementById('deleteForm').action = url;
+        document.getElementById('deleteModal').classList.remove('hidden');
+    }
+    function closeDeleteModal() {
+        document.getElementById('deleteModal').classList.add('hidden');
+    }
+</script>
+
 @endsection

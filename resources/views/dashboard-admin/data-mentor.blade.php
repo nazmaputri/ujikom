@@ -112,33 +112,6 @@
                                             </svg>
                                         </button>
                                     </form>
-
-                                    <!-- Modal Konfirmasi -->
-                                    <div id="deleteModal" class="fixed inset-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center p-4 hidden z-100">
-                                        <div class="bg-white p-6 rounded-lg shadow-lg">
-                                            <h2 class="text-lg font-semibold">Konfirmasi Penghapusan</h2>
-                                            <p>Apakah Anda yakin ingin menghapus pengguna ini?</p>
-                                            <div class="mt-4 flex justify-center space-x-4">
-                                                <button onclick="closeDeleteModal()" class="px-4 py-2 bg-sky-400 hover:bg-sky-300 text-white rounded-md">Batal</button>
-                                                <button onclick="confirmDelete()" class="ml-2 px-4 py-2 bg-red-400 hover:bg-red-300 text-white rounded-md">Hapus</button>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Script untuk membuka dan menutup modal -->
-                                    <script>
-                                        function openDeleteModal() {
-                                            document.getElementById('deleteModal').classList.remove('hidden');
-                                        }
-
-                                        function closeDeleteModal() {
-                                            document.getElementById('deleteModal').classList.add('hidden');
-                                        }
-
-                                        function confirmDelete() {
-                                            document.getElementById('deleteForm').submit(); // Kirim form untuk menghapus user
-                                        }
-                                    </script>
                                 </div>
                             </td>                                                                        
                         </tr>
@@ -154,6 +127,18 @@
     </div>
 </div>
 
+<!-- Modal Konfirmasi Hapus Data Mentor-->
+<div id="deleteModal" class="fixed inset-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center p-4 hidden z-[1000]">
+    <div class="bg-white p-6 rounded-lg shadow-lg">
+        <h2 class="text-lg font-semibold text-center text-gray-700">Konfirmasi Hapus</h2>
+        <p class="text-center text-gray-600">Apakah Anda yakin ingin menghapus pengguna ini?</p>
+        <div class="mt-4 flex justify-center space-x-4">
+            <button onclick="closeDeleteModal()" class="px-4 py-2 bg-sky-400 hover:bg-sky-300 text-white rounded-md">Batal</button>
+            <button onclick="confirmDelete()" class="ml-2 px-4 py-2 bg-red-400 hover:bg-red-300 text-white rounded-md">Hapus</button>
+        </div>
+    </div>
+</div>
+
 <script>
     //untuk mengatur flash message dari backend
     document.addEventListener('DOMContentLoaded', function () {
@@ -164,6 +149,19 @@
             }, 3000); // Hapus pesan setelah 3 detik
         }
     });
+
+    //membuka/menutu modal konfirmasi penghapusan data mentor
+    function openDeleteModal() {
+        document.getElementById('deleteModal').classList.remove('hidden');
+    }
+
+    function closeDeleteModal() {
+        document.getElementById('deleteModal').classList.add('hidden');
+    }
+
+    function confirmDelete() {
+        document.getElementById('deleteForm').submit(); // Kirim form untuk menghapus user
+    }
 
     document.addEventListener('DOMContentLoaded', function () {
         const buttons = document.querySelectorAll('.tab-button');

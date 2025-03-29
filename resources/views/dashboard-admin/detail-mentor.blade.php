@@ -81,7 +81,6 @@
                             <th class="px-4 py-2 text-center border-b border-gray-200">Tanggal dibuat</th>
                             <th class="px-4 py-2 text-center border-b border-gray-200">Rating</th>
                             <th class="px-4 py-2 text-center border-b border-r border-gray-200">Aksi</th>
-
                         </tr>
                     </thead>
                 
@@ -93,7 +92,11 @@
                                 <td class="px-4 py-2 border-b border-gray-200 text-center">Rp {{ number_format($course->price, 0, ',', '.') }}</td> 
                                 <td class="px-4 py-2 border-b border-gray-200 text-center">{{\Carbon\Carbon::parse( $course->created_at)->translatedFormat('d F Y') }}
                                 <td class="px-4 py-2 border-b border-gray-200 text-center">
-                                {{ $course->average_rating ?? 'Belum ada rating' }}
+                                    @if (!empty($course->average_rating) && is_numeric($course->average_rating))
+                                        <span class="text-yellow-500">★</span> {{ $course->average_rating }}/5
+                                    @else
+                                        Belum ada rating
+                                    @endif
                                 </td>
                                 <td class="py-3 px-6 text-center border-b border-r border-gray-200">
                                     <div class="flex items-center justify-center space-x-8">
@@ -104,10 +107,12 @@
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                                             </svg>
                                         </a>
+                                    </div>
+                                </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="5" class="text-center text-gray-500 py-4 border-b border-l border-r border-gray-200">Belum ada kursus yang diajarkan oleh mentor ini.</td>
+                                <td colspan="6" class="text-center text-gray-500 py-4 border-b border-l border-r border-gray-200">Belum ada kursus yang diajarkan oleh mentor ini.</td>
                             </tr>
                         @endforelse
                     </tbody>

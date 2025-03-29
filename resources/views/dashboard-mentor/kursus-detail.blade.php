@@ -28,44 +28,6 @@
                     </p> 
                     <!-- Tombol untuk melihat sertifikat -->
                     <p id="view-certificate-btn" class="cursor-pointer text-blue-500 hover:underline text-sm">Lihat Sertifikat</p>
-                   <!-- Pop-up Modal untuk Sertifikat -->
-                    <div id="certificate-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-gray-500 bg-opacity-75">
-                        <div class="bg-white p-6 rounded-lg shadow-xl w-11/12 sm:w-2/3 lg:w-3/4 max-h-[80vh] overflow-y-auto">
-                            <!-- Sertifikat yang dimuat dari controller -->
-                            <div id="certificate-content" class="overflow-auto">
-                                <!-- Sertifikat akan dimuat di sini -->
-                                <h1 class="text-center text-2xl font-bold">Sertifikat</h1>
-                                <p class="text-center text-gray-600">Konten sertifikat akan muncul di sini.</p>
-                            </div>
-
-                            <!-- Tombol untuk menutup modal -->
-                            <div class="flex justify-center mt-4">
-                                <button id="close-modal" class="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-400">
-                                    Tutup
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Skrip untuk membuka dan menutup modal -->
-                    <script>
-                        document.getElementById('view-certificate-btn').addEventListener('click', function() {
-                            // Membuka modal
-                            document.getElementById('certificate-modal').classList.remove('hidden');
-
-                            // Memuat sertifikat menggunakan Fetch API
-                            fetch('/certificate/{{ $course->id }}')  // Ganti dengan route yang sesuai
-                                .then(response => response.text())
-                                .then(html => {
-                                    document.getElementById('certificate-content').innerHTML = html;
-                                })
-                                .catch(error => console.error('Error:', error));
-                        });
-
-                        document.getElementById('close-modal').addEventListener('click', function() {
-                            // Menutup modal
-                            document.getElementById('certificate-modal').classList.add('hidden');
-                        });
-                    </script>
                 </div>
             </div>          
                 <div class="mb-2 flex items-center justify-between p-1 border-b-2">
@@ -138,39 +100,6 @@
                                                     </svg>
                                                 </button>
                                             </form>
-
-                                            <!-- Modal Konfirmasi Hapus -->
-                                            <div id="deleteModal" class="fixed inset-0 bg-gray-500 bg-opacity-50 z-10 flex justify-center items-center hidden">
-                                                <div class="bg-white p-5 rounded-md w-full max-w-md">
-                                                    <p class="text-lg font-semibold">Apakah Anda yakin ingin menghapus materi ini?</p>
-                                                    <form id="confirmDeleteForm" action="" method="POST" class="inline">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="bg-red-400 font-bold text-white px-4 py-2 rounded-md hover:bg-red-500 mt-4">Ya</button>
-                                                    </form>
-                                                    <button onclick="closeDeleteModal()" class="bg-gray-200 font-bold px-4 py-2 rounded-md hover:bg-gray-300 mt-4">Batal</button>
-                                                </div>
-                                            </div>
-
-                                            <script>
-                                            setTimeout(() => {
-                                            document.getElementById('flash-message').style.display = 'none';
-                                            }, 3000);
-                                                let deleteUrl = '';  // Variabel untuk menyimpan URL hapus
-
-                                                // Fungsi untuk membuka modal dan mengatur URL hapus
-                                                function openDeleteModal(materiId) {
-                                                    // Set deleteUrl ke route yang benar dengan materiId
-                                                    deleteUrl = '{{ route('materi.destroy', ['courseId' => $course->id, 'materiId' => '__materiId__']) }}'.replace('__materiId__', materiId);
-                                                    document.getElementById('confirmDeleteForm').action = deleteUrl;  // Update action form dengan URL yang benar
-                                                    document.getElementById('deleteModal').classList.remove('hidden');
-                                                }
-
-                                                // Fungsi untuk menutup modal
-                                                function closeDeleteModal() {
-                                                    document.getElementById('deleteModal').classList.add('hidden');
-                                                }
-                                            </script>
                                         </div>
                                     </td>
                                 </tr>
@@ -231,7 +160,7 @@
     <div class="bg-white mt-6 p-6 rounded-lg shadow-md">
         <h2 class="text-xl font-semibold mb-4 border-b-2 pb-2 text-gray-700">Rating Kursus</h2>
 
-       <!-- Wrapper for responsiveness -->
+       <!-- Tabel rating kursus -->
        <div class="overflow-x-auto">
             <div class="min-w-full w-64">
             <table class="min-w-full text-sm mt-2 border-collapse">
@@ -264,7 +193,7 @@
                                     ? ['label' => 'Ditampilkan', 'bg' => 'bg-green-200/50', 'border' => 'border-green-300', 'text' => 'text-green-500']
                                     : ['label' => 'Disembunyikan', 'bg' => 'bg-red-200/50', 'border' => 'border-red-300', 'text' => 'text-red-500'];
                             @endphp
-                            <span class="inline-block min-w-[120px] px-2 py-0.5 rounded-xl border-2 text-center 
+                            <span class="inline-block min-w-[120px] px-2 py-0.5 rounded-xl border-2 text-center
                                 {{ $displayStatus['bg'] }} {{ $displayStatus['border'] }} {{ $displayStatus['text'] }}">
                                 {{ $displayStatus['label'] }}
                             </span>
@@ -285,30 +214,15 @@
                                 </label>
                             </form>
 
-                            <!-- Form hapus rating -->
-                            <form action="{{ route('ratingmentor.destroy', $rating->id) }}" method="POST" class="inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="text-white bg-red-400 p-1 rounded-md hover:bg-red-300">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                                    </svg>
-                                </button>
-                            </form>
+                            <!-- Button Hapus Rating -->
+                            <button type="button" onclick="confirmDelete({{ $rating->id }})" class="text-white bg-red-400 p-1 rounded-md hover:bg-red-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                </svg>
+                            </button>
+                            
                             </div>
-                        </td>                        
-                        <script>
-                            // Menambahkan event listener untuk toggle
-                            document.querySelectorAll('[id^="rating-toggle-"]').forEach(function(toggle) {
-                                toggle.addEventListener('change', function() {
-                                    var ratingId = this.id.split('-').pop();  // Mendapatkan id rating dari ID toggle
-                                    var form = this.closest('form');
-                                    
-                                    // Mengirim formulir untuk mengubah status display
-                                    form.submit();
-                                });
-                            });
-                        </script>                                      
+                        </td>                                                             
                     </tr>
                     @empty
                     <tr>
@@ -325,4 +239,104 @@
             </a>
         </div>
     </div>
+
+<!-- Popup Container Menampilkan Sertifikat -->
+<div id="certificate-popup" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-[1000]">
+    <div class="bg-white p-4 rounded-lg shadow-lg max-w-2xl w-full relative mx-4">
+        <button id="close-popup" class="absolute bg-red-100 px-2 rounded-md top-2 right-2 text-red-500 hover:text-red-400 text-lg">&times;</button>
+        <h2 class="text-lg font-semibold mb-2 text-gray-700">Sertifikat</h2>
+        <iframe id="certificate-frame" class="w-full h-96" frameborder="0"></iframe>
+    </div>
+</div>
+
+<!-- Modal Konfirmasi Hapus Materi -->
+<div id="deleteModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden z-[1000]">
+    <div class="bg-white p-5 rounded-md w-96 justify-center mx-4">
+        <h2 class="text-lg text-gray-700 text-center font-semibold mb-2">Konfirmasi Hapus</h2>
+        <p class="text-gray-600 text-center">Apakah Anda yakin ingin menghapus materi ini?</p>
+        <div class="flex justify-center space-x-4">
+        <button onclick="closeDeleteModal()" class="bg-sky-400 font-semibold px-4 py-2 rounded-md hover:bg-sky-300 text-white mt-4">Batal</button>
+        <form id="confirmDeleteForm" action="" method="POST" class="inline">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="bg-red-400 font-semibold text-white px-4 py-2 rounded-md hover:bg-red-300 mt-4">Hapus</button>
+        </form>
+        </div>
+    </div>
+</div>
+
+<!-- Popup Konfirmasi Rating Kursus -->
+<div id="confirm-popup" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden z-[1000]">
+    <div class="bg-white p-6 rounded-md w-96 mx-4 text-center">
+        <h2 class="text-lg text-gray-700 text-center font-semibold mb-2">Konfirmasi Hapus</h2>
+        <p class="text-gray-600 text-center">Apakah Anda yakin ingin menghapus rating ini?</p>
+        <div class="flex justify-center space-x-4">
+            <button type="button" onclick="closePopup()" class="bg-sky-400 font-semibold px-4 py-2 rounded-md hover:bg-sky-300 text-white mt-4">Batal</button>
+            <form id="delete-form" method="POST">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="bg-red-400 font-semibold text-white px-4 py-2 rounded-md hover:bg-red-300 mt-4">Hapus</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    setTimeout(() => {
+        document.getElementById('flash-message').style.display = 'none';
+    }, 3000);
+    
+    let deleteUrl = '';  // Variabel untuk menyimpan URL hapus materi
+        // Fungsi untuk membuka modal dan mengatur URL hapus
+        function openDeleteModal(materiId) {
+        // Set deleteUrl ke route yang benar dengan materiId
+        deleteUrl = '{{ route('materi.destroy', ['courseId' => $course->id, 'materiId' => '__materiId__']) }}'.replace('__materiId__', materiId);
+            document.getElementById('confirmDeleteForm').action = deleteUrl;  // Update action form dengan URL yang benar
+            document.getElementById('deleteModal').classList.remove('hidden');
+        }
+
+    // Fungsi untuk menutup modal
+    function closeDeleteModal() {
+        document.getElementById('deleteModal').classList.add('hidden');
+    }
+    
+    // Fungsi untuk menghapus rating kursus
+    function confirmDelete(ratingId) {
+        let deleteUrl = "{{ route('ratingmentor.destroy', '__ratingId__') }}".replace('__ratingId__', ratingId);
+        const form = document.getElementById('delete-form');
+        form.action = deleteUrl;
+        document.getElementById('confirm-popup').classList.remove('hidden');
+    }
+
+    // Fungsi untuk menutup popup konfirmasi hapus rating kursus
+    function closePopup() {
+        document.getElementById('confirm-popup').classList.add('hidden');
+    }
+
+    // Menambahkan event listener untuk toggle
+    document.querySelectorAll('[id^="rating-toggle-"]').forEach(function(toggle) {
+        toggle.addEventListener('change', function() {
+            var ratingId = this.id.split('-').pop();  // Mendapatkan id rating dari ID toggle
+            var form = this.closest('form');
+                                    
+            // Mengirim formulir untuk mengubah status display
+            form.submit();
+        });
+    });
+
+    // Menampilkan/menutup popup sertifikat kursus
+    document.getElementById("view-certificate-btn").addEventListener("click", function () {
+        fetch('/certificate/{{ $course->id }}')
+            .then(response => response.url)
+            .then(url => {
+                document.getElementById("certificate-frame").src = url;
+                document.getElementById("certificate-popup").classList.remove("hidden");
+            })
+            .catch(error => console.error("Error fetching certificate:", error));
+    });
+    
+    document.getElementById("close-popup").addEventListener("click", function () {
+        document.getElementById("certificate-popup").classList.add("hidden");
+    });
+</script>
 @endsection

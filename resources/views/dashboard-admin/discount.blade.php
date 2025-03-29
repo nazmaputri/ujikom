@@ -34,7 +34,7 @@
                 <tbody>
                     @foreach($discounts as $discount)
                         <tr class="hover:bg-sky-50 border-b border-l border-r">
-                        <td class="py-3 px-2 text-center text-gray-600 text-sm border-b border=l border-gray-200">1</td>
+                        <td class="py-3 px-2 text-center text-gray-600 text-sm border-b border=l border-gray-200">{{ $loop->iteration }}</td>
                             <td class="py-3 px-2 text-center text-gray-600 text-sm border-b border-gray-200">{{ $discount->coupon_code }}</td>
                             <td class="py-3 px-2 text-center text-gray-600 text-sm border-b border-gray-200">{{ $discount->discount_percentage }}%</td>
                             <td class="py-3 px-2 text-center text-gray-600 text-sm border-b border-gray-200">{{ \Carbon\Carbon::parse($discount->start_date)->translatedFormat('d F Y') }} - {{ \Carbon\Carbon::parse($discount->endd_date)->translatedFormat('d F Y') }}</td>
@@ -108,25 +108,6 @@
                                     </svg>
                                 </button>
 
-                                <!-- Modal Konfirmasi -->
-                                <div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden z-100">
-                                    <div class="bg-white p-6 rounded-lg shadow-lg w-96">
-                                        <h3 class="text-md font-medium text-center">Apakah Anda yakin ingin menghapus diskon ini?</h3>
-                                        <div class="mt-4 flex justify-center space-x-3">
-                                            <button onclick="closeDeleteModal()" class="bg-sky-400 hover:bg-sky-300 text-white font-semibold py-2 px-4 rounded">
-                                                Batal
-                                            </button>
-                                            <form id="deleteForm" method="POST" action="" class="inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="bg-red-400 hover:bg-red-300 text-white font-semibold py-2 px-4 rounded">
-                                                    Hapus
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-
                                 <!-- JavaScript untuk Modal -->
                                 <script>
                                     function openDeleteModal(url) {
@@ -148,6 +129,25 @@
                 </tbody>
             </table>
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Konfirmasi -->
+<div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden z-[1000]">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+        <h3 class="text-md font-medium text-center">Apakah Anda yakin ingin menghapus diskon ini?</h3>
+        <div class="mt-4 flex justify-center space-x-3">
+            <button onclick="closeDeleteModal()" class="bg-sky-400 hover:bg-sky-300 text-white font-semibold py-2 px-4 rounded-lg">
+                Batal
+            </button>
+            <form id="deleteForm" method="POST" action="" class="inline">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="bg-red-400 hover:bg-red-300 text-white font-semibold py-2 px-4 rounded-lg">
+                    Hapus
+                </button>
+            </form>
         </div>
     </div>
 </div>

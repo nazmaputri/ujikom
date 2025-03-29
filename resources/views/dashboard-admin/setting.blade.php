@@ -7,11 +7,11 @@
     <form action="{{ url('/settings') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="mb-4">
-            <label for="photo" class="block text-sm font-medium text-gray-700">Foto Profil</label>
+            <label for="photo" class="block font-semibold text-gray-700">Foto Profil</label>
             @if($user->photo)
                 <img src="{{ Storage::url($user->photo) }}" alt="Foto Profil" class="w-28 h-28 rounded-full mt-2">
             @endif
-            <input type="file" name="photo" id="photo" class="p-2 mt-2 block w-full border border-gray-200 rounded-md shadow-sm">
+            <input type="file" name="photo" id="photo" class="p-2 mt-2 text-sm text-gray-700 block w-full border border-gray-200 rounded-md shadow-sm">
             @error('photo')
                 <p class="text-red-500 text-xs">{{ $message }}</p>
             @enderror
@@ -19,8 +19,8 @@
 
         <!-- Nama -->
         <div class="mb-4">
-            <label for="name" class="block text-sm font-medium text-gray-700">Nama</label>
-            <input type="text" name="name" id="name" value="{{ old('name', $user->name) }}" class="p-2 mt-1 block w-full border border-gray-200 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500" required>
+            <label for="name" class="block font-semibold text-gray-700">Nama</label>
+            <input type="text" name="name" id="name" value="{{ old('name', $user->name) }}" class="p-2 mt-1 text-sm text-gray-700 block w-full border border-gray-200 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500" required>
             @error('name')
                 <p class="text-red-500 text-xs">{{ $message }}</p>
             @enderror
@@ -28,8 +28,8 @@
 
         <!-- Email -->
         <div class="mb-4">
-            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-            <input type="email" name="email" id="email" value="{{ old('email', $user->email) }}" class="p-2 mt-1 block w-full border border-gray-200 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500" required>
+            <label for="email" class="block font-semibold text-gray-700">Email</label>
+            <input type="email" name="email" id="email" value="{{ old('email', $user->email) }}" class="p-2 mt-1 text-sm text-gray-700 block w-full border border-gray-200 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500" required>
             @error('email')
                 <p class="text-red-500 text-xs">{{ $message }}</p>
             @enderror
@@ -37,8 +37,8 @@
 
         <!-- Password -->
         <div class="mb-4 relative">
-            <label for="password" class="block text-sm font-medium text-gray-700">Masukkan Kata Sandi Baru</label>
-            <input type="password" name="password" id="password" class="p-2 mt-1 block w-full border-gray-200 border rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500">
+            <label for="password" class="block font-semibold text-gray-700">Masukkan Kata Sandi Baru</label>
+            <input type="password" name="password" id="password" class="p-2 mt-1 block w-full text-sm text-gray-700 border-gray-200 border rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500">
             <span class="absolute top-1/2 right-3 mt-3 transform -translate-y-1/2 cursor-pointer text-gray-500" id="togglePassword">
                 <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5">
                     <path d="M10 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
@@ -52,8 +52,8 @@
 
         <!-- Confirm Password -->
         <div class="mb-4 relative">
-            <label for="password_confirmation" class="block text-sm font-medium text-gray-700">Konfirmasi Kata Sandi Baru</label>
-            <input type="password" name="password_confirmation" id="password_confirmation" class="p-2 mt-1 block w-full border border-gray-200 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500">
+            <label for="password_confirmation" class="block font-semibold text-gray-700">Konfirmasi Kata Sandi Baru</label>
+            <input type="password" name="password_confirmation" id="password_confirmation" class="p-2 mt-1 block text-sm text-gray-700 w-full border border-gray-200 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500">
             <span class="absolute top-1/2 right-1 transform -translate-x-1/2 cursor-pointer text-gray-500" id="toggleConfirmPassword">
                 <svg id="eyeConfirmIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5">
                     <path d="M10 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
