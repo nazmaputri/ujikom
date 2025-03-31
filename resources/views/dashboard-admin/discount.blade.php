@@ -37,13 +37,12 @@
                         <td class="py-3 px-2 text-center text-gray-600 text-sm border-b border=l border-gray-200">{{ $loop->iteration }}</td>
                             <td class="py-3 px-2 text-center text-gray-600 text-sm border-b border-gray-200">{{ $discount->coupon_code }}</td>
                             <td class="py-3 px-2 text-center text-gray-600 text-sm border-b border-gray-200">{{ $discount->discount_percentage }}%</td>
-                            <td class="py-3 px-2 text-center text-gray-600 text-sm border-b border-gray-200">{{ \Carbon\Carbon::parse($discount->start_date)->translatedFormat('d F Y') }} - {{ \Carbon\Carbon::parse($discount->endd_date)->translatedFormat('d F Y') }}</td>
+                            <td class="py-3 px-2 text-center text-gray-600 text-sm border-b border-gray-200">{{ \Carbon\Carbon::parse($discount->start_date)->translatedFormat('d F Y') }} - {{ \Carbon\Carbon::parse($discount->end_date)->translatedFormat('d F Y') }}</td>
                             <td class="py-3 px-2 text-center border-b border=r border-gray-200">
                                 <div class="flex justify-center space-x-6">
-                                    <!-- Tombol Lihat Detail -->
-                                <a href="#"
-                                class="text-white bg-sky-300 p-1 rounded-md hover:bg-sky-200" title="Lihat"
-                                onclick="openDiscountModal(
+                                <!-- Tombol Lihat Detail -->
+                                <a href="#" class="text-white bg-sky-300 p-1 rounded-md hover:bg-sky-200" title="Lihat"
+                                    onclick="openDiscountModal(
                                     '{{ $discount->id }}',
                                     '{{ $discount->coupon_code }}',
                                     '{{ $discount->discount_percentage }}',
@@ -59,42 +58,6 @@
                                 </svg>
                                 </a>
 
-                                <!-- Modal Detail Discount -->
-                                <div id="discountModal" class="fixed inset-0 flex items-center text-left justify-center bg-black bg-opacity-50 hidden z-100">
-                                <div class="bg-white p-6 rounded-md w-96">
-                                    <h2 class="text-xl font-bold mb-4">Detail Discount</h2>
-                                    <p><strong>Coupon Code:</strong> <span id="modalCouponCode"></span></p>
-                                    <p><strong>Discount Percentage:</strong> <span id="modalDiscountPercentage"></span>%</p>
-                                    <p><strong>Start Date:</strong> <span id="modalStartDate"></span></p>
-                                    <p><strong>End Date:</strong> <span id="modalEndDate"></span></p>
-                                    <p><strong>Start Time:</strong> <span id="modalStartTime"></span></p>
-                                    <p><strong>End Time:</strong> <span id="modalEndTime"></span></p>
-                                    <p><strong>Apply To All:</strong> <span id="modalApplyToAll"></span></p>
-                                    <div class="mt-4 text-right">
-                                        <button class="bg-red-400 hover:bg-red-300 text-white px-4 py-2 rounded-md" onclick="closeDiscountModal()">Tutup</button>
-                                    </div>
-                                </div>
-                                </div>
-
-                                <script>
-                                function openDiscountModal(id, couponCode, discountPercentage, startDate, endDate, startTime, endTime, applyToAll) {
-                                    // Isi data ke modal
-                                    document.getElementById('modalCouponCode').textContent = couponCode;
-                                    document.getElementById('modalDiscountPercentage').textContent = discountPercentage;
-                                    document.getElementById('modalStartDate').textContent = startDate;
-                                    document.getElementById('modalEndDate').textContent = endDate;
-                                    document.getElementById('modalStartTime').textContent = startTime;
-                                    document.getElementById('modalEndTime').textContent = endTime;
-                                    document.getElementById('modalApplyToAll').textContent = applyToAll ? 'Yes' : 'No';
-                                    // Tampilkan modal
-                                    document.getElementById('discountModal').classList.remove('hidden');
-                                }
-
-                                function closeDiscountModal() {
-                                    document.getElementById('discountModal').classList.add('hidden');
-                                }
-                                </script>
-
                                 <!-- Tombol Edit -->
                                 <a href="{{ route('discount.edit', $discount->id) }}" class="text-white bg-yellow-300 p-1 rounded-md  hover:bg-yellow-200" title="Edit">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
@@ -108,20 +71,6 @@
                                     </svg>
                                 </button>
 
-                                <!-- JavaScript untuk Modal -->
-                                <script>
-                                    function openDeleteModal(url) {
-                                        // Set action URL form delete sesuai dengan discount yang dipilih
-                                        document.getElementById('deleteForm').action = url;
-                                        // Tampilkan modal
-                                        document.getElementById('deleteModal').classList.remove('hidden');
-                                    }
-
-                                    function closeDeleteModal() {
-                                        // Sembunyikan modal
-                                        document.getElementById('deleteModal').classList.add('hidden');
-                                    }
-                                </script>
                                 </div>
                             </td>
                         </tr>
@@ -152,6 +101,41 @@
     </div>
 </div>
 
+<!-- Modal Detail Discount -->
+<div id="discountModal" class="fixed inset-0 flex items-center text-left justify-center bg-black bg-opacity-50 hidden z-[1000]">
+    <div class="bg-white p-4 rounded-md mx-4 w-full md:w-[700px]">
+    <div class="flex items-center justify-between w-full mb-4">
+        <h2 class="text-gray-700 font-semibold w-full text-center text-lg">Detail Discount</h2>
+        <button class="bg-red-400 hover:bg-red-300 text-white px-2 py-0.5 rounded-md" onclick="closeDiscountModal()">x</button>
+    </div>
+        <p class="text-gray-700 font-semibold">Kode Kupon:<span id="modalCouponCode"></span></p>
+        <p class="text-gray-700 font-semibold">Apply To All: <span id="modalApplyToAll"></span></p>
+        <!-- Tabel dengan border bottom dashed -->
+        <div class="overflow-x-auto">
+            <table class="w-full border-collapse mt-4">
+                <thead class="bg-gray-100">
+                    <tr class="border-b border-dashed border-gray-400">
+                        <th class="px-4 py-2 text-center text-sm text-gray-700">Potongan</th>
+                        <th class="px-4 py-2 text-center text-sm text-gray-700">Tanggal Mulai</th>
+                        <th class="px-4 py-2 text-center text-sm text-gray-700">Tanggal Selesai</th>
+                        <th class="px-4 py-2 text-center text-sm text-gray-700">Jam Mulai</th>
+                        <th class="px-4 py-2 text-center text-sm text-gray-700">Jam Selesai</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="border-b border-dashed border-gray-300">
+                        <td class="px-4 py-2 text-sm text-gray-700 text-center"><span id="modalDiscountPercentage"></span>%</td>
+                        <td class="px-4 py-2 text-sm text-gray-700 text-center"><span id="modalStartDate"></span></td>
+                        <td class="px-4 py-2 text-sm text-gray-700 text-center"><span id="modalEndDate"></span></td>
+                        <td class="px-4 py-2 text-sm text-gray-700 text-center"><span id="modalStartTime"></span></td>
+                        <td class="px-4 py-2 text-sm text-gray-700 text-center"><span id="modalEndTime"></span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
 <script>
     //untuk mengatur flash message dari backend
     document.addEventListener('DOMContentLoaded', function () {
@@ -162,5 +146,43 @@
                 }, 3000); // Hapus pesan setelah 3 detik
             }
         });
+    
+    // untuk menampilkan detail diskon 
+    function openDiscountModal(id, couponCode, discountPercentage, startDate, endDate, startTime, endTime, applyToAll) {
+        // Isi data ke modal
+        document.getElementById('modalCouponCode').textContent = couponCode;
+        document.getElementById('modalDiscountPercentage').textContent = discountPercentage;
+        document.getElementById('modalStartDate').textContent = new Date(startDate).toLocaleDateString('id-ID', {
+            day: '2-digit',
+            month: 'long',
+            year: 'numeric'
+        });
+        document.getElementById('modalEndDate').textContent = new Date(endDate).toLocaleDateString('id-ID', {
+            day: '2-digit',
+            month: 'long',
+            year: 'numeric'
+        });
+        document.getElementById('modalStartTime').textContent = startTime;
+        document.getElementById('modalEndTime').textContent = endTime;
+        document.getElementById('modalApplyToAll').textContent = applyToAll ? 'Yes' : 'No';
+            // Tampilkan modal
+            document.getElementById('discountModal').classList.remove('hidden');
+        }
+
+    function closeDiscountModal() {
+        document.getElementById('discountModal').classList.add('hidden');
+    }
+
+    function openDeleteModal(url) {
+        // Set action URL form delete sesuai dengan discount yang dipilih
+        document.getElementById('deleteForm').action = url;
+        // Tampilkan modal
+        document.getElementById('deleteModal').classList.remove('hidden');
+    }
+
+    function closeDeleteModal() {
+        // Sembunyikan modal
+        document.getElementById('deleteModal').classList.add('hidden');
+    }
 </script>
 @endsection

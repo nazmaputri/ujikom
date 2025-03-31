@@ -36,17 +36,17 @@
                 <!-- Bagian Langganan -->
                 <div class="lg:w-2/3 w-full flex flex-col justify-center bg-white shadow-lg rounded-xl p-8 text-center">
                     <h2 class="md:text-2xl text-xl font-semibold text-gray-700 mb-2" data-aos="zoom-in">
-                        Yuk Berlangganan Untuk Akses Materinya!
+                        Yuk Beli Kursusnya Sekarang Untuk Akses Materinya!
                     </h2>
                     <!-- Deskripsi -->
                     <p class="text-sm text-gray-700 mb-6 px-6 lg:px-20" data-aos="zoom-in">
-                        Berlangganan sekarang di Eduflix dan mulai tingkatkan skillmu! Pilih kursus yang kamu butuhkan, 
+                        Mari belajar di Eduflix dan mulai tingkatkan skillmu! Pilih kursus yang kamu butuhkan, 
                         pelajari kapan saja, di mana saja. Nikmati video pembelajaran terstruktur dan modul praktik interaktif yang dirancang oleh para ahli di bidangnya.
                     </p>
                     <!-- Button Langganan -->
                     <a href="/login">
                         <button class="bg-yellow-300 hover:bg-yellow-200 text-gray-700 font-semibold py-3 px-6 rounded-full text-md shadow-lg shadow-yellow-100 hover:shadow-none" data-aos="zoom-in">
-                            Langganan Sekarang
+                            Beli Sekarang
                         </button>
                     </a>                    
                 </div>

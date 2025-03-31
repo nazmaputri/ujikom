@@ -18,6 +18,8 @@
             </div>
         @endif
 
+        <div id="flash-container"></div>
+
         <!-- Pemberitahuan Diskon (Tetap Ada di Atas Keranjang) -->
         @if ($activeDiscount)
         <div class="bg-yellow-100 text-yellow-700 p-4 mb-4 rounded-lg">
@@ -101,7 +103,11 @@
             <!-- Total Harga -->
             <div class="flex justify-end space-x-3 items-center mt-3 flex-wrap">
                 <h3 class="font-semibold text-gray-700">
-                    Total: <span id="total-price" class="text-red-500">Rp {{ number_format($totalPriceAfterDiscount, 0, ',', '.') }}</span>
+                    Total: 
+                    @if ($couponCode) 
+                        <span class="text-gray-500 line-through">Rp {{ number_format($totalPrice, 0, ',', '.') }}</span> 
+                    @endif
+                    <span id="total-price" class="text-red-500">Rp {{ number_format($totalPriceAfterDiscount, 0, ',', '.') }}</span>
                 </h3>
                 <button class="bg-sky-400 text-white font-semibold py-1.5 px-3 rounded-lg hover:bg-sky-300" 
                     id="pay-now" 
@@ -114,43 +120,49 @@
         @endif
     </div>
 
-    <script>
-        //untuk mengatur flash message dari backend
-        document.addEventListener('DOMContentLoaded', function () {
-            const flashMessage = document.getElementById('flash-message');
+<script>
+    //untuk mengatur flash message dari backend
+    document.addEventListener('DOMContentLoaded', function () {
+        const flashMessage = document.getElementById('flash-message');
             if (flashMessage) {
                 setTimeout(() => {
                     flashMessage.remove();
                 }, 3000); // Hapus pesan setelah 3 detik
             }
-        });
+    });
 
-        document.getElementById('pay-now').addEventListener('click', function(e) {
-            e.preventDefault();
+    document.getElementById('pay-now').addEventListener('click', function(e) {
+        e.preventDefault();
+
+        const button = this;
+        button.disabled = true; // Nonaktifkan tombol setelah diklik
+        button.classList.add('opacity-50', 'cursor-not-allowed'); // Tambahkan efek visual tombol disable
         
-            const totalPrice = this.getAttribute('data-total-price');
-            if (!totalPrice || isNaN(totalPrice)) {
-                alert('Harga tidak valid');
-                return;
-            }
+        const totalPrice = this.getAttribute('data-total-price');
+        if (!totalPrice || isNaN(totalPrice)) {
+            showFlashMessage('Harga tidak valid', 'error');
+            button.disabled = false; // Aktifkan kembali jika terjadi error
+            button.classList.remove('opacity-50', 'cursor-not-allowed');
+            return;
+        }
         
-            // Jika terdapat input kode kupon, ambil nilainya
-            const couponInput = document.getElementById('coupon-code');
-            const couponCode = couponInput ? couponInput.value : null;
+        // Jika terdapat input kode kupon, ambil nilainya
+        const couponInput = document.getElementById('coupon-code');
+        const couponCode = couponInput ? couponInput.value : null;
         
-            // Buat payload untuk payment creation
-            const payload = { amount: totalPrice };
-            if (couponCode) {
-                payload.coupon_code = couponCode;
-            }
+        // Buat payload untuk payment creation
+        const payload = { amount: totalPrice };
+        if (couponCode) {
+            payload.coupon_code = couponCode;
+        }
         
-            fetch('/create-payment', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                },
-                body: JSON.stringify(payload)
+        fetch('/create-payment', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            },
+            body: JSON.stringify(payload)
             })
             .then(response => response.json())
             .then(data => {
@@ -158,12 +170,12 @@
                 if (data.snapToken) {
                     snap.pay(data.snapToken, {
                         onSuccess: function(result) {
-                            alert('Pembayaran berhasil');
+                            showFlashMessage('Pembayaran berhasil', 'success');
 
                             // Pastikan ambil order_id dari result Midtrans
                             const orderId = result.order_id || result.transaction_id;
                             if (!orderId) {
-                                alert('Order ID tidak ditemukan dari response pembayaran.');
+                                showFlashMessage('Order ID tidak ditemukan dari response pembayaran.', 'error');
                                 return;
                             }
 
@@ -181,44 +193,69 @@
                             })
                             .then(res => res.json())
                             .then(response => {
-                                console.log(response);
-                                alert(response.message);
-                                location.reload(); // reload halaman setelah sukses
+                                showFlashMessage(response.message);
+                                setTimeout(() => location.reload(), 2000);
                             })
                             .catch(error => {
                                 console.error('Error updating payment status:', error);
-                                alert('Gagal mengupdate status pembayaran.');
+                                showFlashMessage('Gagal mengupdate status pembayaran.', 'error');
                             });
                         },
 
                         onPending: function(result) {
-                            alert('Pembayaran sedang diproses');
+                            showFlashMessage('Pembayaran sedang diproses', 'info');
                         },
 
                         onError: function(result) {
                             console.error('Payment error:', result);
-                            alert('Pembayaran gagal');
+                            showFlashMessage('Pembayaran gagal', 'error');
                         }
                     });
                 } else {
-                    alert('Gagal mendapatkan token pembayaran');
+                    showFlashMessage('Gagal mendapatkan token pembayaran', 'error');
+                    button.disabled = false; // Aktifkan kembali jika gagal
+                    button.classList.remove('opacity-50', 'cursor-not-allowed');
                 }
             })
             .catch(error => {
                 console.error('Error creating payment:', error);
-                alert('Terjadi kesalahan saat memproses pembayaran.');
+                showFlashMessage('Terjadi kesalahan saat memproses pembayaran.', 'error');
+                button.disabled = false; // Aktifkan kembali jika terjadi error
+                button.classList.remove('opacity-50', 'cursor-not-allowed');
             });
         });
         
-        document.getElementById('apply-coupon').addEventListener('click', function() {
-            let couponCode = document.getElementById('coupon-code').value;
-            if (couponCode) {
-                window.location.href = "{{ route('cart.index') }}?coupon=" + couponCode;
-            } else {
-                alert("Masukkan kode kupon terlebih dahulu!");
-            }
-        });
-    </script>
-        
-        
+    document.getElementById('apply-coupon').addEventListener('click', function() {
+        let couponCode = document.getElementById('coupon-code').value;
+        if (couponCode) {
+            window.location.href = "{{ route('cart.index') }}?coupon=" + couponCode;
+        } else {
+            alert("Masukkan kode kupon terlebih dahulu!");
+        }
+    });
+
+    // Fungsi untuk menampilkan flash message di dalam kontainer
+    function showFlashMessage(message, type = 'success') {
+        const flashContainer = document.getElementById('flash-container');
+        flashContainer.innerHTML = ''; // Hapus pesan lama sebelum menambahkan yang baru
+
+        const flashMessage = document.createElement('div');
+        flashMessage.id = 'flash-message';
+
+        const colorClass = {
+            'success': 'bg-green-100 border-green-400 text-green-700',
+            'error': 'bg-red-100 border-red-400 text-red-700',
+            'info': 'bg-blue-100 border-blue-400 text-blue-700'
+        }[type] || 'bg-gray-100 border-gray-400 text-gray-700';
+
+        flashMessage.className = `${colorClass} border p-2 rounded mb-3`;
+        flashMessage.textContent = message;
+
+        flashContainer.appendChild(flashMessage);
+
+        setTimeout(() => {
+            flashMessage.remove();
+        }, 3000);
+    }
+</script>
 @endsection

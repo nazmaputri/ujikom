@@ -67,7 +67,7 @@
                 <!-- Button -->
                 <div class="p-4 mt-auto flex-col sm:flex-row justify-between gap-4">
                     <!-- Button Lanjut Belajar -->
-                    <a href="{{ route('daftar-kursus') }}" class="flex-1">
+                    <a href="{{ route('study-peserta', ['id' => $course->id]) }}" class="flex-1">
                         <button class="bg-yellow-200/50 mb-4 text-yellow-500 border border-yellow-300 w-full py-2 rounded-lg font-semibold flex items-center justify-center gap-2 hover:text-white hover:bg-yellow-300 transition-colors">
                             Lanjut Belajar
                         </button>
