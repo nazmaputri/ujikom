@@ -98,7 +98,5 @@ class Course extends Model
 
         return 'Akses Seumur Hidup';
     }
-
-
 }
 

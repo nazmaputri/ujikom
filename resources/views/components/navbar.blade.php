@@ -48,19 +48,19 @@
     <div id="hs-navbar-hcail" class="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow md:block md:w-auto md:basis-auto md:order-2 md:col-span-6 bg-navbar-default md:bg-transparent rounded-lg pl-4 pb-4 pt-2 z-50 mt-2" aria-labelledby="hs-navbar-hcail-collapse">
       <div class="flex flex-col gap-y-4 gap-x-0 mt-5 md:flex-row md:justify-center md:items-center md:gap-y-0 md:gap-x-7 md:mt-0">
         <div>
-          <a href="#home" class="relative inline-block hover:text-sky-600 focus:outline-none text-gray-700" href="#" aria-current="page" id="link-home">Beranda</a>
+          <a href="#home" class="relative inline-block hover:text-sky-600 focus:outline-none text-gray-700 transition-all duration-300 hover:translate-y-[-2px]" href="#" aria-current="page" id="link-home">Beranda</a>
         </div>
         <div>
-          <a href="#about" class="inline-block hover:text-sky-600 focus:outline-none text-gray-700" id="link-about">Tentang</a>
+          <a href="#about" class="inline-block hover:text-sky-600 focus:outline-none text-gray-700 transition-all duration-300 hover:translate-y-[-2px]" id="link-about">Tentang</a>
         </div>
         <div>
-          <a href="#category" class="inline-block hover:text-sky-600 focus:outline-none text-gray-700"id="link-category">Kategori</a>
+          <a href="#category" class="inline-block hover:text-sky-600 focus:outline-none text-gray-700 transition-all duration-300 hover:translate-y-[-2px]"id="link-category">Kategori</a>
         </div>
         <div>
-            <a href="#price" class="inline-block hover:text-sky-600 focus:outline-none text-gray-700"id="link-price">Harga</a>
+            <a href="#price" class="inline-block hover:text-sky-600 focus:outline-none text-gray-700 transition-all duration-300 hover:translate-y-[-2px]"id="link-price">Harga</a>
         </div>
         <div>
-            <a href="#rating" class="inline-block hover:text-sky-600 focus:outline-none text-gray-700"id="link-rating">Rating</a>
+            <a href="#rating" class="inline-block hover:text-sky-600 focus:outline-none text-gray-700 transition-all duration-300 hover:translate-y-[-2px]"id="link-rating">Rating</a>
           </div>
       </div>
     </div>

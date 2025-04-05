@@ -11,7 +11,7 @@
                     <div class="flex">
                     <a href="{{ route('kursus.detail', $course->id) }}" class="block rounded-lg transition-transform transform hover:scale-105 duration-300">
                         <!-- Card Kursus -->
-                        <div class="bg-white border border-gray-300 rounded-lg shadow-md  hover:shadow-lg h-full w-64 flex flex-col overflow-hidden" data-aos="zoom-in">
+                        <div class="bg-white border border-gray-300 rounded-lg shadow-md  hover:shadow-lg h-full w-72 flex flex-col overflow-hidden" data-aos="zoom-in">
                             <!-- Gambar Kursus -->
                             <div class="w-full">
                                 <img src="{{ asset('storage/' . $course->image_path) }}" alt="{{ $course->title }}" class="w-full h-48 object-cover">
@@ -20,7 +20,7 @@
                             <!-- Konten Kursus -->
                             <div class="p-4 flex flex-col">
                                 <!-- Judul Kursus -->
-                                <h1 class="text-xl font-semibold text-gray-800 mb-2">{{ Str::limit($course->title, 20, '...') }}</h1>
+                                <h1 class="text-xl font-semibold text-gray-800 mb-2">{{ Str::limit($course->title, 23, '...') }}</h1>
                                 
                                 <!-- Nama Mentor -->
                                 <p class="text-sm text-gray-600 mb-2">
@@ -56,6 +56,10 @@
                         
                                 <!-- Harga Kursus -->
                                 <p class="inline-flex items-center text-xl mt-1 rounded-2xl font-bold">
+                                    <!-- menerima variabel untuk menampilkan harga setelah ada diskon -->
+                                    <!-- @if ($course->price_after_discount < $course->price) 
+                                        <span class="text-gray-500 line-through">Rp {{ number_format($course->price, 0, ',', '.') }}</span> 
+                                    @endif -->
                                     <span class="text-red-400 inline-flex items-center text-sm rounded-xl font-semibold">Rp. {{ number_format($course->price, 0, ',', '.') }}</span>
                                 </p>
                             </div>
