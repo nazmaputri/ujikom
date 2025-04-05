@@ -61,6 +61,15 @@ class DashboardAdminController extends Controller
         return redirect()->route('categories.show', $name)->with('success', 'Kursus dipublikasikan!');
     }
 
+    public function hiddencourse($id, $name)
+    {
+        $course = Course::findOrFail($id);
+        $course->status = 'nopublished';
+        $course->save();
+
+        return redirect()->route('categories.show', $name)->with('success', 'Kursus batal dipublikasikan!');
+    }
+
     public function rating()
     {
         $ratings = Rating::paginate(5); 
