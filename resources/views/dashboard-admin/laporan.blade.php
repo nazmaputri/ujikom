@@ -2,17 +2,19 @@
 
 @section('content')
 <div class="container mx-auto">
-    <!-- Laporan Pendapatan Mentor (2% Komisi) -->
     <div class="bg-white shadow-md rounded-lg p-6 mb-6">
+        <!-- Total Pendapatan -->
+        <div class="font-semibold">
+            <p class="text-gray-700 font-semibold">Total Pendapatan Admin: <span class="text-red-500 font-semibold">Rp {{ number_format($totalRevenue, 0, ',', '.') }}</span></p>
+        </div>
+
         <div class="flex flex-col items-center mb-4">
             <div class="flex items-center space-x-4">
                 <h2 class="text-xl font-semibold inline-block pb-1 text-gray-700">
                     Laporan Pendapatan Mentor (2% Komisi)
                 </h2>
                 @php
-                    // Rentang tahun yang ditampilkan dari 2023 hingga 2025
                     $years = range(2023, 2025);
-                    // Gunakan tahun yang dikirim dari controller (variabel $year) jika ada, jika tidak gunakan tahun sekarang
                     $currentYear = isset($year) ? $year : date('Y');
                 @endphp
                 <select id="yearFilter" class="p-1 border rounded-md focus:outline-none focus:ring focus:ring-sky-200">
@@ -25,8 +27,39 @@
             </div>
             <div class="border-b-2 w-full mt-1"></div>
         </div>
+
+        <!-- Grafik -->
         <div style="position: relative; height: 300px; width: 100%;">
             <canvas id="revenueChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Pendapatan Per Kursus -->
+    <div class="bg-white shadow-md rounded-lg p-6">
+        <h3 class="text-lg font-semibold text-gray-700 mb-2">Detail Pendapatan per Kursus</h3>
+        <div class="overflow-x-auto">
+            @if (count($coursesRevenue) > 0)
+                <table class="min-w-full divide-y divide-gray-200 text-sm">
+                    <thead class="bg-sky-100 text-gray-700">
+                        <tr>
+                            <th class="px-4 py-2 text-left">Judul Kursus</th>
+                            <th class="px-4 py-2 text-right">Total Pendapatan (Rp)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        @foreach ($coursesRevenue as $course)
+                            <tr class="hover:bg-sky-50">
+                                <td class="px-4 py-2 text-gray-700">{{ $course['title'] }}</td>
+                                <td class="px-4 py-2 text-right text-red-500">
+                                    Rp. {{ number_format(array_sum($course['monthly']), 0, ',', '.') }}
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            @else
+                <p class="text-gray-500 text-sm">Belum ada pendapatan</p>
+            @endif
         </div>
     </div>
 </div>
@@ -35,48 +68,31 @@
 document.addEventListener('DOMContentLoaded', function () {
     const ctx = document.getElementById('revenueChart').getContext('2d');
 
-    // Data yang diterima dari controller
     const coursesRevenue = @json($coursesRevenue);
     const monthLabels = @json($monthNames);
 
-    // Siapkan dataset untuk setiap kursus
-    const datasets = [];
-    const colors = [
-        'rgba(255, 99, 132, 0.6)',
-        'rgba(54, 162, 235, 0.6)',
-        'rgba(255, 206, 86, 0.6)',
-        'rgba(75, 192, 192, 0.6)',
-        'rgba(153, 102, 255, 0.6)',
-        'rgba(255, 159, 64, 0.6)'
-    ];
-    let colorIndex = 0;
-    // coursesRevenue diharapkan berbentuk objek dengan key course_id
+    // Buat array 12 bulan dan jumlahkan semua pendapatan kursus untuk tiap bulan
+    const totalPerMonth = Array(12).fill(0);
     for (const courseId in coursesRevenue) {
         if (coursesRevenue.hasOwnProperty(courseId)) {
-            const course = coursesRevenue[courseId];
-            // Pastikan data monthly tersedia untuk 12 bulan
-            const data = [];
+            const monthly = coursesRevenue[courseId].monthly;
             for (let i = 1; i <= 12; i++) {
-                data.push(course.monthly[i] || 0);
+                totalPerMonth[i - 1] += monthly[i] || 0;
             }
-            datasets.push({
-                label: course.title,
-                data: data,
-                borderColor: colors[colorIndex % colors.length],
-                backgroundColor: colors[colorIndex % colors.length],
-                fill: false,
-                tension: 0.1
-            });
-            colorIndex++;
         }
     }
 
-    // Buat grafik menggunakan Chart.js
-    const revenueChart = new Chart(ctx, {
-        type: 'line',
+    new Chart(ctx, {
+        type: 'bar',
         data: {
             labels: monthLabels,
-            datasets: datasets
+            datasets: [{
+                label: 'Total Pendapatan Bulanan',
+                data: totalPerMonth,
+                backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
         },
         options: {
             responsive: true,
@@ -95,11 +111,22 @@ document.addEventListener('DOMContentLoaded', function () {
                         text: 'Bulan'
                     }
                 }
+            },
+            plugins: {
+                legend: {
+                    display: true
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return 'Rp ' + context.raw.toLocaleString('id-ID');
+                        }
+                    }
+                }
             }
         }
     });
 
-    // Update grafik saat tahun dipilih
     document.getElementById('yearFilter').addEventListener('change', function () {
         const selectedYear = this.value;
         window.location.href = `?year=${selectedYear}`;

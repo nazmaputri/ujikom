@@ -45,6 +45,15 @@
                         <!-- Teks hanya muncul pada mode desktop (sm dan lebih besar) -->
                         <span class="ml-2">Tambah Materi</span>
                     </a> 
+
+                    <a href="#" class="mt-2 inline-flex shadow-md shadow-sky-100 hover:shadow-none items-center space-x-2 text-white bg-sky-300 hover:bg-sky-200 font-semibold py-2 px-4 rounded-md">
+                        <!-- Ikon muncul pada semua ukuran layar -->
+                        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor">
+                            <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344l0-64-64 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l64 0 0-64c0-13.3 10.7-24 24-24s24 10.7 24 24l0 64 64 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-64 0 0 64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"/>
+                        </svg>
+                        <!-- Teks hanya muncul pada mode desktop (sm dan lebih besar) -->
+                        <span class="ml-2">Tugas Akhir</span>
+                    </a> 
                 </div>
         
                 @if (session('success'))
@@ -215,7 +224,7 @@
                             </form>
 
                             <!-- Button Hapus Rating -->
-                            <button type="button" onclick="confirmDelete({{ $rating->id }})" class="text-white bg-red-400 p-1 rounded-md hover:bg-red-300">
+                            <button type="button" onclick="confirmDelete({{ $rating->id }})" class="text-white bg-red-400 p-1 rounded-md hover:bg-red-300" title="Hapus">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
                                 </svg>
