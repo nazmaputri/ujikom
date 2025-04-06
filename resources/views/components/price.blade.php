@@ -1,6 +1,6 @@
 <!-- Price Section -->
 <section id="price" class="bg-white py-16">
-    <div class="container mx-auto px-2">
+    <div class="container mx-auto px-2 md:px-12">
         <div class="mb-6 text-center">
             <h3 class="md:text-3xl text-2xl font-bold text-sky-400" data-aos="fade-down">Rekomendasi Kursus EduFlix</h3>
             <p class="text-md text-gray-700 mt-2" data-aos="fade-down">Pilih kursus yang sesuai dengan kebutuhan Anda.</p>

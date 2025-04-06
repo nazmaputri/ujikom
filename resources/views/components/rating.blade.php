@@ -1,6 +1,6 @@
 <!-- Testimoni Section -->
 <section id="rating" class="bg-sky-50 py-16">
-    <div class="container mx-auto px-2">
+    <div class="container mx-auto px-2 md:px-12">
         <div class="mb-6 text-center">
             <h3 class="md:text-3xl text-2xl font-bold text-sky-400" data-aos="fade-down">
                 Testimoni Pengguna
@@ -15,11 +15,11 @@
                 Belum ada rating
             </div>
         @else
-            <div class="flex space-x-6 m-7">
+            <div class="flex space-x-6 py-2">
                 @foreach ($ratings as $rating)
                     @if ($rating->display) 
                         <div class="bg-white border border-gray-200 rounded-lg shadow-md w-full md:w-1/2 lg:w-1/3 p-6 mt-6 mx-2 hover:shadow-lg transition-shadow duration-300 ease-in-out" data-aos="zoom-in-up">
-                            <div class="flex items-center mb-4">
+                            <div class="flex items-center mb-1">
                                 <!-- Gambar avatar (ikon user) -->
                                 <div class="w-14 h-14 rounded-full flex items-center justify-center">
                                     <img width="48" height="48" src="https://img.icons8.com/pulsar-color/48/user-male-circle.png" alt="user-male-circle"/>
@@ -28,8 +28,8 @@
                                 <!-- Nama dan Rating -->
                                 <div class="ml-4">
                                     <!-- Nama User -->
-                                    <h4 class="text-xl font-semibold text-sky-400 capitalize">{{ $rating->nama }}</h4>
-                                    <div class="flex items-center mt-1">
+                                    <h4 class="text-xl font-semibold text-sky-400">{{ $rating->nama }}</h4>
+                                    <div class="flex items-center">
                                         <!-- Menampilkan bintang berdasarkan rating -->
                                         @for ($i = 0; $i < 5; $i++)
                                             <span class="{{ $i < $rating->rating ? 'text-yellow-500' : 'text-gray-300' }}">&starf;</span>
@@ -37,8 +37,8 @@
                                     </div>
                                 </div>
                             </div>
-                            
-                            <p class="text-gray-700 mt-2">"{{ $rating->comment }}"</p>
+                            <p class="text-gray-700">{{ $rating->comment }}</p>
+                            <h4 class="text-xs text-gray-600 mt-1">{{ \Carbon\Carbon::parse($rating->created_at)->translatedFormat('d F Y') }}</h4>
                         </div>
                     @endif
                 @endforeach
@@ -58,7 +58,7 @@
 
 <!-- Rating Section -->
 <section id="rating" class="bg-sky-50 py-16">
-    <div class="container mx-auto px-6">
+    <div class="container mx-auto px-2">
         <div class="flex flex-col lg:flex-row lg:space-x-12 items-center">
             <!-- Image Section -->
             <div class="lg:w-1/3 order-1 lg:order-2 lg:mb-0 flex justify-center" data-aos="fade-left">

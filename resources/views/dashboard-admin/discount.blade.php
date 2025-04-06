@@ -5,11 +5,30 @@
     <!-- Wrapper div dengan background putih dan padding -->
     <div class="">
         <h2 class="text-xl font-semibold mb-6 border-b-2 pb-2 text-gray-700 text-center">Diskon</h2>
-        <div class="inline-flex shadow-md shadow-sky-100 hover:shadow-none items-center space-x-2 text-white bg-sky-300 hover:bg-sky-200 font-semibold py-2 px-4 rounded-md">
-            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor">
-                <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344l0-64-64 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l64 0 0-64c0-13.3 10.7-24 24-24s24 10.7 24 24l0 64 64 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-64 0 0 64c0 13.3-10.7 24-24 24s-24-10.7-24-24z" />
-            </svg>
-            <a href="{{ route('discount-tambah') }}" class=" text-white rounded transition duration-300">Tambah Diskon</a>
+        <div class="flex flex-col md:flex-row items-center justify-between space-y-4 mb-4">
+            <!-- searchbar -->
+            <form action="{{ route('discount') }}" method="GET" class="w-full md:max-w-xs">
+                <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Cari</label>
+                <div class="relative flex items-center">
+                    <input type="search" name="search" id="search" 
+                        class="block w-full pl-4 pr-14 py-2.5 text-sm text-gray-700 border-2 border-sky-300 rounded-full focus:outline-none bg-gray-50" 
+                        placeholder="Cari Kode Kupon..." value="{{ request('search') }}" />
+                    <button type="submit" 
+                        class="absolute right-1 py-2.5 bg-sky-300 text-white hover:bg-sky-200 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-sm px-3 font-semibold flex items-center justify-center">
+                        <svg class="w-4 h-4 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                        </svg>
+                    </button>
+                </div>
+            </form>
+            
+            <!-- button tambah -->
+            <div class="inline-flex shadow-md shadow-sky-100 hover:shadow-none items-center space-x-2 text-white bg-sky-300 hover:bg-sky-200 font-semibold py-2 px-4 rounded-md">
+                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor">
+                    <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344l0-64-64 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l64 0 0-64c0-13.3 10.7-24 24-24s24 10.7 24 24l0 64 64 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-64 0 0 64c0 13.3-10.7 24-24 24s-24-10.7-24-24z" />
+                </svg>
+                <a href="{{ route('discount-tambah') }}" class=" text-white rounded transition duration-300">Tambah Diskon</a>
+            </div>
         </div>
 
         @if (session('success'))
@@ -32,6 +51,13 @@
                     </tr>
                 </thead>
                 <tbody>
+                @if($discounts->isEmpty())
+                    <tr>
+                        <td colspan="5" class="py-2 px-2 text-center text-gray-700 text-sm border-l border-b border-r">
+                            Tidak ada data diskon yang tersedia
+                        </td>
+                    </tr>
+                @else
                     @foreach($discounts as $discount)
                         <tr class="hover:bg-sky-50 border-b border-l border-r">
                         <td class="py-3 px-2 text-center text-gray-600 text-sm border-b border=l border-gray-200">{{ $loop->iteration }}</td>
@@ -75,6 +101,7 @@
                             </td>
                         </tr>
                     @endforeach
+                    @endif
                 </tbody>
             </table>
             </div>

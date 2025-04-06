@@ -60,7 +60,7 @@
                                 <path d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"/>
                             </svg>
                         </button>
-                        <button type="submit" id="submit-btn"
+                        <button type="button" id="submit-btn"
                             class="hidden bg-sky-400 shadow-md shadow-sky-200 text-white hover:shadow-none hover:bg-sky-300 font-semibold px-4 py-2 rounded-lg flex items-center gap-2">
                             Kirim
                             <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" class="w-5 h-5" viewBox="0 0 50 50" fill="currentColor">
@@ -73,13 +73,13 @@
         </div>        
 
         <!-- Pop-up Validasi -->
-        <div id="confirmation-popup" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden">
+        <div id="confirmation-popup" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
             <div class="absolute inset-0 flex justify-center items-center">
                 <div class="bg-white p-6 rounded shadow-lg">
-                    <h3 class="text-lg font-semibold">Yakin ingin mengirim kuis ini?</h3>
-                    <div class="flex justify-center space-x-3 mt-4">
-                        <button id="cancel-submit" class="bg-red-500 text-white px-4 py-2 rounded-lg">Tidak</button>
-                        <button id="confirm-submit" class="bg-sky-500 text-white px-4 py-2 rounded-lg">Ya</button>
+                    <h3 class="text-lg font-semibold text-gray-700">Yakin ingin mengirim kuis ini?</h3>
+                    <div class="flex justify-center space-x-4 mt-4">
+                        <button id="cancel-submit" class="bg-red-400 hover:bg-red-300 text-white px-4 py-2 rounded-lg">Tidak</button>
+                        <button id="confirm-submit" class="bg-sky-400 hover:bg-sky-300 text-white px-4 py-2 rounded-lg">Ya</button>
                     </div>
                 </div>
             </div>

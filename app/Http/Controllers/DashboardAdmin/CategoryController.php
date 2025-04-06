@@ -10,11 +10,17 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::paginate(5);
+        $search = $request->input('search'); // Ambil input dari searchbar
+
+        $categories = Category::when($search, function ($query, $search) {
+            return $query->where('name', 'like', "%{$search}%");
+        })->paginate(5);
+
         $courses = Course::paginate(10);
-        return view('dashboard-admin.category', compact('categories', 'courses'));
+
+        return view('dashboard-admin.category', compact('categories', 'courses', 'search'));
     }
 
     public function show($name)

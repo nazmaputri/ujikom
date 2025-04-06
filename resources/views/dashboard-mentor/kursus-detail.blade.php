@@ -116,7 +116,7 @@
                             @endforeach
                             @if ($materi->isEmpty())
                                 <tr>
-                                    <td colspan="4" class="text-center text-gray-500 py-4 text-sm">Belum ada materi untuk kursus ini.</td>
+                                    <td colspan="4" class="text-center text-gray-500 py-4 text-sm border-l border-b border-r">Belum ada materi untuk kursus ini.</td>
                                 </tr>
                             @endif
                         </tbody>

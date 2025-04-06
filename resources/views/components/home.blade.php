@@ -1,6 +1,6 @@
 <!-- Home Section -->
 <section id="home" class="flex items-center min-h-[80vh] bg-sky-50 text-sky-600" data-aos="fade-up">
-    <div class="container mx-auto px-2 md:px-16 py-8 mt-4">
+    <div class="container mx-auto px-2 md:px-12 py-8 mt-4">
         <div class="flex flex-col-reverse lg:flex-row items-center">
             <!-- Text Content -->
             <div class="w-full lg:w-1/2 flex flex-col justify-center space-y-6 pt-8 lg:pt-0">
@@ -24,7 +24,7 @@
 
 <!-- Card Section -->
 <div class="relative bg-sky-50 z-10 pb-6 lg:pb-20">
-    <div class="container mx-auto px-6">
+    <div class="container mx-auto px-6 md:px-12">
         <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6" data-aos="fade-up">
             <!-- Card 1 -->
             <div class="bg-white shadow-lg rounded-xl overflow-hidden transform transition-transform hover:scale-105">

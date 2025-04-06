@@ -11,7 +11,7 @@
             <div class="relative flex items-center">
                 <!-- Input Search -->
                 <input type="search" name="search" id="search" 
-                    class="block w-full pl-4 pr-14 py-2.5 text-sm text-gray-900 border-2 border-sky-300 rounded-full bg-gray-50" 
+                    class="block w-full pl-4 pr-14 py-2.5 text-sm text-gray-700 border-2 border-sky-300 focus:outline-none rounded-full bg-gray-50" 
                     placeholder="Cari Peserta (Nama, Email)" value="{{ request('search') }}" />
                 <!-- Button Search -->
                 <button type="submit" 
