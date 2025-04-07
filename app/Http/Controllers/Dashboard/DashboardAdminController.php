@@ -97,7 +97,7 @@ class DashboardAdminController extends Controller
         $user = User::findOrFail($id);
     
         // Ambil kursus yang dimiliki oleh mentor berdasarkan ID user
-        $courses = Course::where('mentor_id', $id)->get();
+        $courses = Course::where('mentor_id', $id)->paginate(5);
 
         // Loop untuk menghitung rata-rata rating tiap kursus
         foreach ($courses as $course) {

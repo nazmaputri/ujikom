@@ -38,7 +38,7 @@
                     @if($category->image_path)
                         <div class="mt-6">
                             <label class="block text-gray-700 font-semibold mb-2">Gambar Saat Ini</label>
-                            <img src="{{ asset('storage/' . $category->image_path) }}" alt="{{ $category->name }}" class="w-32 h-32 object-cover rounded">
+                            <img src="{{ asset('storage/' . $category->image_path) }}" alt="{{ $category->name }}" class="w-80 h-30 object-cover rounded">
                         </div>
                     @endif
                 </div>

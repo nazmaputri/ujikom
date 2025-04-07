@@ -106,6 +106,9 @@
             </table>
             </div>
         </div>
+        <div class="pagination mt-4">
+            {{ $discounts->links('pagination::tailwind') }}
+        </div>
     </div>
 </div>
 

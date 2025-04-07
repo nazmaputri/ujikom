@@ -26,7 +26,7 @@ class CategoryController extends Controller
     public function show($name)
     {
         $category = Category::with('courses')->where('name', $name)->firstOrFail();
-        $courses = Course::paginate(5);
+        $courses = $category->courses()->paginate(5);
   
         return view('dashboard-admin.category-detail', compact('category', 'courses'));
     }    

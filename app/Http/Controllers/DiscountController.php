@@ -21,7 +21,7 @@ class DiscountController extends Controller
                 ->orWhere('start_date', 'like', '%' . $search . '%')
                 ->orWhere('end_date', 'like', '%' . $search . '%');
             });
-        })->get();
+        })->paginate(5);
 
         return view('dashboard-admin.discount', compact('discounts', 'search'));
     }

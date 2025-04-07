@@ -42,15 +42,15 @@
                 <table class="min-w-full divide-y divide-gray-200 text-sm">
                     <thead class="bg-sky-100 text-gray-700">
                         <tr>
-                            <th class="px-4 py-2 text-left">Judul Kursus</th>
-                            <th class="px-4 py-2 text-right">Total Pendapatan (Rp)</th>
+                            <th class="px-4 py-2 text-left border-l border-t">Judul Kursus</th>
+                            <th class="px-4 py-2 text-right border-r border-t">Total Pendapatan (Rp)</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200">
                         @foreach ($coursesRevenue as $course)
                             <tr class="hover:bg-sky-50">
-                                <td class="px-4 py-2 text-gray-700">{{ $course['title'] }}</td>
-                                <td class="px-4 py-2 text-right text-red-500">
+                                <td class="px-4 py-2 text-gray-700 border-l border-b">{{ $course['title'] }}</td>
+                                <td class="px-4 py-2 text-right text-red-500 border-r border-b">
                                     Rp. {{ number_format(array_sum($course['monthly']), 0, ',', '.') }}
                                 </td>
                             </tr>

@@ -42,48 +42,51 @@
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" data-aos="zoom-in-down">
                 @forelse ($category->courses as $course)
+                <!-- container card kursus -->
+                   <div class="w-72">
                     <a href="{{ route('kursus.detail', $course->id) }}" class="block bg-white rounded-lg shadow-md hover:shadow-lg transition-transform transform hover:scale-105">
-                        <div class="flex flex-col overflow-hidden">
-                            <div class="w-full">
-                                <img src="{{ asset('storage/' . $course->image_path) }}" alt="{{ $course->title }}" class="w-full h-36 object-cover">
-                            </div>
-                            <div class="p-3 flex flex-col">
-                                <h1 class="text-base font-semibold text-gray-800 mb-1">{{ $course->title }}</h1>
-                                <p class="text-xs text-gray-600 mb-1 capitalize">
-                                    Mentor: {{ $course->mentor ? $course->mentor->name : 'Mentor tidak ditemukan' }}
-                                </p>
-                                <div class="flex items-center">
-                                    <div class="flex">
-                                        @for ($i = 0; $i < 5; $i++)
-                                            @if ($i < floor($course->average_rating))
-                                                <svg class="w-3 h-3 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
-                                                    <path d="M9.049 2.927a1 1 0 011.902 0l1.715 4.993 5.274.406a1 1 0 01.593 1.75l-3.898 3.205 1.473 4.74a1 1 0 01-1.516 1.11L10 15.347l-4.692 3.783a1 1 0 01-1.516-1.11l1.473-4.74-3.898-3.205a1 1 0 01.593-1.75l5.274-.406L9.049 2.927z"></path>
-                                                </svg>
-                                            @elseif ($i < ceil($course->average_rating))
-                                                <svg class="w-3 h-3" viewBox="0 0 20 20">
-                                                    <defs>
-                                                        <linearGradient id="half-star-{{ $i }}">
-                                                            <stop offset="50%" stop-color="rgb(234,179,8)" />
-                                                            <stop offset="50%" stop-color="rgb(209,213,219)" />
-                                                        </linearGradient>
-                                                    </defs>
-                                                    <path fill="url(#half-star-{{ $i }})" d="M9.049 2.927a1 1 0 011.902 0l1.715 4.993 5.274.406a1 1 0 01.593 1.75l-3.898 3.205 1.473 4.74a1 1 0 01-1.516 1.11L10 15.347l-4.692 3.783a1 1 0 01-1.516-1.11l1.473-4.74-3.898-3.205a1 1 0 01.593-1.75l5.274-.406L9.049 2.927z"></path>
-                                                </svg>
-                                            @else
-                                                <svg class="w-3 h-3 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
-                                                    <path d="M9.049 2.927a1 1 0 011.902 0l1.715 4.993 5.274.406a1 1 0 01.593 1.75l-3.898 3.205 1.473 4.74a1 1 0 01-1.516 1.11L10 15.347l-4.692 3.783a1 1 0 01-1.516-1.11l1.473-4.74-3.898-3.205a1 1 0 01.593-1.75l5.274-.406L9.049 2.927z"></path>
-                                                </svg>
-                                            @endif
-                                        @endfor
-                                        <span class="text-yellow-500 font-bold text-xs ml-2">{{ number_format($course->average_rating, 1) }} / 5</span>
-                                    </div>
+                            <div class="flex flex-col overflow-hidden">
+                                <div class="w-full">
+                                    <img src="{{ asset('storage/' . $course->image_path) }}" alt="{{ $course->title }}" class="w-full h-36 object-cover">
                                 </div>
-                                <p class="inline-flex items-center text-sm">
-                                    <span class="text-red-500 inline-flex items-center text-sm p-1 rounded-lg font-semibold">Rp. {{ number_format($course->price, 0, ',', '.') }}</span>
-                                </p>
+                                <div class="p-3 flex flex-col">
+                                    <h1 class="text-base font-semibold text-gray-800 mb-1">{{ $course->title }}</h1>
+                                    <p class="text-xs text-gray-600 mb-1 capitalize">
+                                        Mentor: {{ $course->mentor ? $course->mentor->name : 'Mentor tidak ditemukan' }}
+                                    </p>
+                                    <div class="flex items-center">
+                                        <div class="flex">
+                                            @for ($i = 0; $i < 5; $i++)
+                                                @if ($i < floor($course->average_rating))
+                                                    <svg class="w-3 h-3 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path d="M9.049 2.927a1 1 0 011.902 0l1.715 4.993 5.274.406a1 1 0 01.593 1.75l-3.898 3.205 1.473 4.74a1 1 0 01-1.516 1.11L10 15.347l-4.692 3.783a1 1 0 01-1.516-1.11l1.473-4.74-3.898-3.205a1 1 0 01.593-1.75l5.274-.406L9.049 2.927z"></path>
+                                                    </svg>
+                                                @elseif ($i < ceil($course->average_rating))
+                                                    <svg class="w-3 h-3" viewBox="0 0 20 20">
+                                                        <defs>
+                                                            <linearGradient id="half-star-{{ $i }}">
+                                                                <stop offset="50%" stop-color="rgb(234,179,8)" />
+                                                                <stop offset="50%" stop-color="rgb(209,213,219)" />
+                                                            </linearGradient>
+                                                        </defs>
+                                                        <path fill="url(#half-star-{{ $i }})" d="M9.049 2.927a1 1 0 011.902 0l1.715 4.993 5.274.406a1 1 0 01.593 1.75l-3.898 3.205 1.473 4.74a1 1 0 01-1.516 1.11L10 15.347l-4.692 3.783a1 1 0 01-1.516-1.11l1.473-4.74-3.898-3.205a1 1 0 01.593-1.75l5.274-.406L9.049 2.927z"></path>
+                                                    </svg>
+                                                @else
+                                                    <svg class="w-3 h-3 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path d="M9.049 2.927a1 1 0 011.902 0l1.715 4.993 5.274.406a1 1 0 01.593 1.75l-3.898 3.205 1.473 4.74a1 1 0 01-1.516 1.11L10 15.347l-4.692 3.783a1 1 0 01-1.516-1.11l1.473-4.74-3.898-3.205a1 1 0 01.593-1.75l5.274-.406L9.049 2.927z"></path>
+                                                    </svg>
+                                                @endif
+                                            @endfor
+                                            <span class="text-yellow-500 font-bold text-xs ml-2">{{ number_format($course->average_rating, 1) }} / 5</span>
+                                        </div>
+                                    </div>
+                                    <p class="inline-flex items-center text-sm">
+                                        <span class="text-red-500 inline-flex items-center text-sm p-1 rounded-lg font-semibold">Rp. {{ number_format($course->price, 0, ',', '.') }}</span>
+                                    </p>
+                                </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                   </div>
                 @empty
                     <p class="col-span-full text-center text-gray-500">
                         Belum ada kursus dalam kategori ini.

@@ -142,41 +142,42 @@
 </div>
 
  <script>
- // Menghapus error dan border merah saat pengguna mulai mengetik
-    const inputs = document.querySelectorAll('input, textarea, select');
-    inputs.forEach(input => {
-        input.addEventListener('input', function() {
-            const errorSpan = document.getElementById('error-' + input.id);
-            if (errorSpan) {
-                errorSpan.style.display = 'none';  // Sembunyikan pesan error
-            }
-            input.classList.remove('border-red-500');  // Hapus border merah
+        // Menghapus error dan border merah saat pengguna mulai mengetik
+        const inputs = document.querySelectorAll('input, textarea, select');
+        inputs.forEach(input => {
+            input.addEventListener('input', function() {
+                const errorSpan = document.getElementById('error-' + input.id);
+                if (errorSpan) {
+                    errorSpan.style.display = 'none';  // Sembunyikan pesan error
+                }
+                input.classList.remove('border-red-500');  // Hapus border merah
+            });
         });
-    });
-                        // Ambil elemen toggle dan pesan status
-                        const chatToggle = document.getElementById('chat-toggle');
-                        const chatStatus = document.getElementById('chat-status');
-                        const chatStatusInactive = document.getElementById('chat-status-inactive');
+        
+        // Ambil elemen toggle dan pesan status
+        const chatToggle = document.getElementById('chat-toggle');
+        const chatStatus = document.getElementById('chat-status');
+        const chatStatusInactive = document.getElementById('chat-status-inactive');
 
-                        // Fungsi untuk menampilkan atau menyembunyikan pesan berdasarkan status toggle
-                        function updateChatStatus() {
-                            if (chatToggle.checked) {
-                                chatStatus.classList.remove('hidden');
-                                chatStatusInactive.classList.add('hidden');
-                            } else {
-                                chatStatus.classList.add('hidden');
-                                chatStatusInactive.classList.remove('hidden');
-                            }
-                        }
+        // Fungsi untuk menampilkan atau menyembunyikan pesan berdasarkan status toggle
+        function updateChatStatus() {
+            if (chatToggle.checked) {
+                chatStatus.classList.remove('hidden');
+                chatStatusInactive.classList.add('hidden');
+            } else {
+                chatStatus.classList.add('hidden');
+                chatStatusInactive.classList.remove('hidden');
+            }
+        }
 
-                        // Menampilkan status berdasarkan keadaan toggle saat pertama kali dimuat
-                        window.addEventListener('DOMContentLoaded', () => {
-                            updateChatStatus();  // Panggil fungsi untuk set status saat halaman pertama kali dimuat
-                        });
+        // Menampilkan status berdasarkan keadaan toggle saat pertama kali dimuat
+        window.addEventListener('DOMContentLoaded', () => {
+            updateChatStatus();  // Panggil fungsi untuk set status saat halaman pertama kali dimuat
+        });
 
-                        // Menambahkan event listener untuk toggle
-                        chatToggle.addEventListener('change', function() {
-                            updateChatStatus();  // Panggil fungsi untuk set status saat toggle berubah
-                        });
-                    </script>
+        // Menambahkan event listener untuk toggle
+        chatToggle.addEventListener('change', function() {
+            updateChatStatus();  // Panggil fungsi untuk set status saat toggle berubah
+        });
+</script>
 @endsection
