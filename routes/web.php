@@ -28,6 +28,7 @@ Route::get('/', [LandingPageController::class, 'lp'])->name('landingpage');
 Route::get('/course/{id}', [LandingPageController::class, 'detail'])->name('kursus.detail');
 Route::get('/category/{name}', [LandingPageController::class, 'category'])->name('category.detail');
 Route::post('/ratings', [RatingController::class, 'store'])->name('rating.store');
+Route::get('/beli-kursus/{id}', [KeranjangController::class, 'handlePurchase'])->name('beli.kursus');
 
 // Route berdasarkan role
 

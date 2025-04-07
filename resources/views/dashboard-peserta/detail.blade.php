@@ -70,74 +70,114 @@
                 <p class="text-gray-600 text-center">Belum ada materi</p>
             @else
             @foreach($course->materi as $materi)
-            <div class="bg-neutral-50 p-4 rounded-lg shadow-md">
-                <div x-data="{ open: false }">
-                    <div @click="open = !open" class="flex justify-between items-center cursor-pointer">
-                        <span class="text-gray-700 font-semibold mr-2">{{ sprintf('%02d', $loop->iteration) }}.</span>
-                        <h4 class="text-lg font-semibold text-gray-700 flex-1 capitalize">{{ $materi->judul }}</h4>
-                        <svg :class="open ? 'transform rotate-180' : ''" class="w-5 h-5 transition-transform duration-300 ease-in-out text-gray-600 hover:text-gray-800" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                        </svg>
-                    </div>
+                <div class="bg-neutral-50 p-4 rounded-lg shadow-md">
+                    <div x-data="{ open: false }">
+                        <div @click="open = !open" class="flex justify-between items-center cursor-pointer">
+                            <span class="text-gray-700 font-semibold mr-2">{{ sprintf('%02d', $loop->iteration) }}.</span>
+                            <h4 class="text-lg font-semibold text-gray-700 flex-1 capitalize">{{ $materi->judul }}</h4>
+                            <svg :class="open ? 'transform rotate-180' : ''" class="w-5 h-5 transition-transform duration-300 ease-in-out text-gray-600 hover:text-gray-800" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
 
-                    <div 
-                        x-show="open"
-                        x-transition:enter="transition ease-in-out duration-300 transform"
-                        x-transition:enter-start="opacity-0 scale-95 translate-y-2"
-                        x-transition:enter-end="opacity-100 scale-100 translate-y-0"
-                        x-transition:leave="transition ease-in-out duration-300 transform"
-                        x-transition:leave-start="opacity-100 scale-100 translate-y-0"
-                        x-transition:leave-end="opacity-0 scale-95 translate-y-2"
-                        class="mt-2"
-                    >
-                        <p class="text-gray-600 mb-2">{{ $materi->deskripsi }}</p>
+                        <div 
+                            x-show="open"
+                            x-transition
+                            class="mt-2"
+                        >
+                            <p class="text-gray-600 mb-2">{{ $materi->deskripsi }}</p>
 
-                        @if($materi->videos->count())
-                        <div class="mt-4">
-                            <h5 class="text-md font-semibold text-gray-700 flex items-center space-x-2 mb-2">
-                                <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 512 512">
-                                    <path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zM188.3 147.1c7.6-4.2 16.8-4.1 24.3 .5l144 88c7.1 4.4 11.5 12.1 11.5 20.5s-4.4 16.1-11.5 20.5l-144 88c-7.4 4.5-16.7 4.7-24.3 .5s-12.3-12.2-12.3-20.9l0-176c0-8.7 4.7-16.7 12.3-20.9z" />
-                                </svg>
-                                <span>Video</span>
-                            </h5>                            
-                            <ul class="grid grid-cols-1 gap-4">
-                                @foreach($materi->videos as $video)
-                                    <li class="text-gray-700">
-                                        <p>- {{ $video->judul }}</p>
+                            <ul class="space-y-1">
+                                @foreach($materi->videos as $index => $video)
+                                    <li class="text-sm text-gray-700">
+                                        @if($course->is_purchased || ($loop->first && $materi->is_preview))
+                                            <button onclick="openModal('modal-{{ $materi->id }}-{{ $index }}')" class="text-blue-600 font-semibold hover:underline">
+                                                ▶ {{ $video->judul }}
+                                            </button>
+
+                                            <div id="modal-{{ $materi->id }}-{{ $index }}" class="fixed inset-0 hidden z-50 bg-black bg-opacity-75 flex items-center justify-center">
+                                                <div class="relative w-full max-w-5xl p-4">
+                                                    <video class="w-full h-auto" controls>
+                                                        <source src="{{ asset('storage/' . $video->video_url) }}" type="video/mp4">
+                                                    </video>
+                                                    <button onclick="closeModal('modal-{{ $materi->id }}-{{ $index }}')" class="absolute top-2 right-2 text-white text-xl font-bold">&times;</button>
+                                                </div>
+                                            </div>
+                                        @else
+                                            🔒 <span class="text-gray-500">{{ $video->judul }} (Terkunci)</span>
+                                        @endif
                                     </li>
                                 @endforeach
                             </ul>
-                        </div>
-                        @else
-                        <p class="text-gray-600 mt-4">Belum ada video untuk materi ini.</p>
-                        @endif
 
-                        @if($materi->pdfs->count())
-                        <div class="mt-4">
-                            <h5 class="text-md font-semibold text-gray-700 flex items-center space-x-2 mb-2">
-                                <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
-                                    <path d="M64 464c-8.8 0-16-7.2-16-16L48 64c0-8.8 7.2-16 16-16l160 0 0 80c0 17.7 14.3 32 32 32l80 0 0 288c0 8.8-7.2 16-16 16L64 464zM64 0C28.7 0 0 28.7 0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-293.5c0-17-6.7-33.3-18.7-45.3L274.7 18.7C262.7 6.7 246.5 0 229.5 0L64 0zm56 256c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0zm0 96c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"/>
-                                </svg>
-                                <span>PDF</span>
-                            </h5>                            
-                            <ul class="grid grid-cols-1 gap-4">
-                                @foreach($materi->pdfs as $pdf)
-                                    <li class="text-gray-700">
-                                        <p>- {{ $pdf->judul }}</p>
-                                    </li>
-                                @endforeach
-                            </ul>
+                            <script>
+                                function openModal(id) {
+                                    document.getElementById(id).classList.remove('hidden');
+                                    document.getElementById(id).classList.add('flex');
+                                }
+
+                                function closeModal(id) {
+                                    const modal = document.getElementById(id);
+                                    const video = modal.querySelector('video');
+                                    video.pause();
+                                    video.currentTime = 0;
+                                    modal.classList.add('hidden');
+                                    modal.classList.remove('flex');
+                                }
+                            </script>
+
+                            {{-- PDF Section --}}
+                            @if($materi->pdfs->count())
+                                <div class="mt-4">
+                                    <h5 class="text-md font-semibold text-gray-700 flex items-center space-x-2 mb-2">
+                                        <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                                            <path d="..."/>
+                                        </svg>
+                                        <span>PDF</span>
+                                    </h5>
+
+                                    <ul class="space-y-2">
+                                        @foreach($materi->pdfs as $pdf)
+                                            <li class="text-gray-700">
+                                                @if($course->is_purchased)
+                                                    <p class="mb-1">{{ $pdf->judul }}</p>
+                                                    <iframe src="{{ asset('storage/' . $pdf->pdf_file) }}#toolbar=0" width="100%" height="500px" class="border rounded" allow="fullscreen"></iframe>
+                                                @else
+                                                    🔒 <span class="text-gray-500">{{ $pdf->judul }} (Terkunci)</span>
+                                                @endif
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @else
+                                <p class="text-gray-600 mt-4">Belum ada PDF untuk materi ini.</p>
+                            @endif
                         </div>
-                        @else
-                        <p class="text-gray-600 mt-4">Belum ada PDF untuk materi ini.</p>
-                        @endif
                     </div>
                 </div>
-            </div>
             @endforeach
+
             @endif
         </div>
     </div>
+
+<!-- Modal Script -->
+<script>
+    function openModal(id) {
+        document.getElementById(id).classList.remove('hidden');
+        document.getElementById(id).classList.add('flex');
+    }
+
+    function closeModal(id) {
+        const modal = document.getElementById(id);
+        const video = modal.querySelector('video');
+        video.pause();
+        video.currentTime = 0;
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }
+</script>
+
 </div>
 
 <!-- Section Ulasan Pengguna -->

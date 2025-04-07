@@ -1,5 +1,10 @@
 @extends('layouts.dashboard-peserta')
 @section('content')
+@if(session('error'))
+    <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
+        {{ session('error') }}
+    </div>
+@endif
 <div class="bg-white rounded-lg shadow-md p-5 w-full flex flex-col md:flex-row h-auto items-center">
     <div class="w-full text-center md:text-left mb-4 md:mb-0">
         <h1 class="text-xl font-semibold mb-4 text-gray-700">Selamat datang, {{ Auth::user()->name }}!</h1>

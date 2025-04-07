@@ -43,12 +43,28 @@
                         Mari belajar di Eduflix dan mulai tingkatkan skillmu! Pilih kursus yang kamu butuhkan, 
                         pelajari kapan saja, di mana saja. Nikmati video pembelajaran terstruktur dan modul praktik interaktif yang dirancang oleh para ahli di bidangnya.
                     </p>
-                    <!-- Button Langganan -->
-                    <a href="/login">
+                    <!-- Button Beli Sekarang -->
+                    <a href="{{ route('beli.kursus', ['id' => $course->id]) }}">
                         <button class="bg-yellow-300 hover:bg-yellow-200 text-gray-700 font-semibold py-3 px-6 rounded-full text-md shadow-lg shadow-yellow-100 hover:shadow-none" data-aos="zoom-in">
                             Beli Sekarang
                         </button>
-                    </a>                    
+                    </a>
+
+                    <!-- Pop-up Error jika sudah dibeli -->
+                    @if(session('error'))
+                        <div id="popupError" class="fixed top-5 right-5 bg-red-500 text-white px-6 py-4 rounded-lg shadow-lg z-50 animate-bounce">
+                            {{ session('error') }}
+                        </div>
+
+                        <script>
+                            // Hilangkan popup setelah 3 detik
+                            setTimeout(function() {
+                                const popup = document.getElementById('popupError');
+                                if (popup) popup.remove();
+                            }, 3000);
+                        </script>
+                    @endif
+                 
                 </div>
                 <!-- Informasi Kursus -->
                 <div class="lg:w-1/3 w-full p-8" data-aos="zoom-in">

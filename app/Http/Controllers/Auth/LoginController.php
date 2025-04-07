@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
+use App\Models\Keranjang;
+use App\Models\Purchase;
+use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
@@ -139,9 +142,33 @@ class LoginController extends Controller
                 return redirect()->route('welcome-mentor');
             
             case 'student':
-                Auth::guard('student')->login($user);  
+                Auth::guard('student')->login($user); 
+                
+                // Cek apakah sebelumnya ada permintaan beli kursus
+                if (Session::has('kursus_id_pending')) {
+                    $courseId = Session::pull('kursus_id_pending'); // ambil dan hapus dari session
+
+                    // Cek apakah kursus sudah dibeli
+                    $hasPurchased = Purchase::where('user_id', $user->id)
+                        ->where('course_id', $courseId)
+                        ->where('status', 'success')
+                        ->exists();
+
+                    if ($hasPurchased) {
+                        return redirect()->route('welcome-peserta')->with('error', 'Kursus ini sudah Anda beli.');
+                    }
+
+                    // Tambahkan ke keranjang hanya jika belum dibeli
+                    Keranjang::firstOrCreate([
+                        'user_id' => $user->id,
+                        'course_id' => $courseId,
+                    ]);
+
+                    return redirect()->route('cart.index')->with('success', 'Kursus berhasil ditambahkan ke keranjang.');
+                }
+
                 return redirect()->route('welcome-peserta');
-            
+
             default:
                 // Jika role tidak dikenal, logout dan tolak akses
                 Auth::logout();

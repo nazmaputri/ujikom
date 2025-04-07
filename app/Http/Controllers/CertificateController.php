@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Barryvdh\DomPDF\Facade\Pdf;
-use App\Models\Payment;
+use App\Models\Purchase;
 use App\Models\Course;
 use App\Models\MateriUSer;
 use Illuminate\Http\Request;
@@ -74,18 +74,18 @@ class CertificateController extends Controller
     public function downloadCertificate($courseId)
     {
         $userId = auth()->id();
-
-        // Cek transaksi pembayaran
-        $payment = Payment::where('user_id', $userId)
-            ->where('course_id', $courseId)
-            ->where('transaction_status', 'success') // Gunakan status 'success' untuk konsistensi
-            ->firstOrFail();
-
-        $course = $payment->course;
-
+    
+        // Ambil data pembelian dari tabel purchases
+        $purchase = Purchase::where('user_id', $userId)
+                            ->where('course_id', $courseId)
+                            ->where('status', 'success') // pastikan status pembelian sukses
+                            ->firstOrFail();
+    
+        $course = $purchase->course;
+    
         // Data untuk sertifikat
         $data = [
-            'participant_name'       => $payment->user->name,
+            'participant_name'       => $purchase->user->name,
             'course_title'           => $course->title,
             'course_category'        => $course->category,
             'course_start_date'      => $course->start_date,
@@ -94,11 +94,12 @@ class CertificateController extends Controller
             'signature_title_left'   => 'Direktur Kursus',
             'signature_title_right'  => 'Mentor Kursus',
         ];
-
-       // Menggunakan DOMPDF untuk membuat sertifikat PDF dengan ukuran landscape
+    
+        // Buat PDF menggunakan DOMPDF
         $pdf = Pdf::loadView('dashboard-mentor.sertifikat', $data)
-        ->setPaper('a4', 'landscape');
-
-        return $pdf->download('certificate.pdf');        
+                  ->setPaper('a4', 'landscape');
+    
+        return $pdf->download('certificate.pdf');
     }
+    
 }

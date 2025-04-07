@@ -191,23 +191,23 @@
         </div>
 
         <div class="logo-sertif">
-            <img src="{{ asset('storage/logo-sertif.png') }}" alt="logo-sertif">
+            <img src="{{ asset('storage/logo-sertif.jpg') }}" alt="logo-sertif">
         </div>
 
         <div class="elemen-kanan-atas">
-            <img src="{{ asset('storage/kanan-atas.png') }}" alt="elemen-kanan-atas">
+            <img src="{{ asset('storage/kanan-atas.jpg') }}" alt="elemen-kanan-atas">
         </div>
 
         <div class="elemen-kanan-bawah">
-            <img src="{{ asset('storage/kanan-bawah.png') }}" alt="elemen-kanan-bawah">
+            <img src="{{ asset('storage/kanan-bawah.jpg') }}" alt="elemen-kanan-bawah">
         </div>
 
         <div class="elemen-kiri-bawah">
-            <img src="{{ asset('storage/kiri-bawah.png') }}" alt="elemen-kiri-bawah">
+            <img src="{{ asset('storage/kiri-bawah.jpg') }}" alt="elemen-kiri-bawah">
         </div>
 
         <div class="elemen-kiri-atas">
-            <img src="{{ asset('storage/kiri-atas.png') }}" alt="elemen-kiri-atas">
+            <img src="{{ asset('storage/kiri-atas.jpg') }}" alt="elemen-kiri-atas">
         </div>
 
         <div class="signature">
