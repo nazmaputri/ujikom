@@ -12,7 +12,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('rating_kursus', function (Blueprint $table) {
-            $table->boolean('display')->default(true)->after('comment'); // Menambahkan kolom display
+            $table->boolean('display')->default(false)->after('comment'); // Menambahkan kolom display
         });
     }
     

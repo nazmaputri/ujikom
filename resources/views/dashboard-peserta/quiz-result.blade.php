@@ -3,9 +3,11 @@
 @section('content')
     <div class="container mx-auto">
         <div class="bg-white shadow-lg rounded-lg overflow-hidden p-6">
-            <h1 class="text-xl font-semibold text-gray-700 border-b-2 pb-2 flex justify-between items-center">
+            <h1 class="text-xl font-semibold text-gray-700 border-b-2 mb-1 flex justify-between items-center">
                 <span>Hasil Kuis : {{ $quiz->title }}</span>
-                <span class="text-3xl cursor-pointer hover:text-red-500" onclick="closeQuizResult()">×</span>
+                <div class="px-1 mb-1 rounded-md bg-red-200 hover:bg-red-100">
+                    <span class="text-3xl cursor-pointer text-red-500 hover:text-red-400" onclick="closeQuizResult()">×</span>
+                </div>
             </h1>
             <script>
                 function closeQuizResult() {

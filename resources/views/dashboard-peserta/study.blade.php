@@ -129,7 +129,7 @@
                             <div class="bg-white p-6 rounded-lg shadow-lg max-w-md w-full sm:px-4 md:px-6 sm:mx-4 md:mx-6">
                                 <h3 id="modalTitle" class="text-lg font-semibold mb-4">Konfirmasi</h3>
                                 <p id="modalMessage" class="text-gray-700 mb-6"></p>
-                                <div class="flex justify-end space-x-4">
+                                <div class="flex justify-center space-x-4">
                                     <button id="cancelButton" class="bg-red-400 font-semibold text-white px-4 py-2 rounded-md hover:bg-red-300 focus:outline-none">
                                         Tidak
                                     </button>

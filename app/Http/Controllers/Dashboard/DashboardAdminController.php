@@ -61,6 +61,15 @@ class DashboardAdminController extends Controller
         return redirect()->route('categories.show', $name)->with('success', 'Kursus dipublikasikan!');
     }
 
+    public function hiddencourse($id, $name)
+    {
+        $course = Course::findOrFail($id);
+        $course->status = 'nopublished';
+        $course->save();
+
+        return redirect()->route('categories.show', $name)->with('success', 'Kursus batal dipublikasikan!');
+    }
+
     public function rating()
     {
         $ratings = Rating::paginate(5); 
@@ -88,7 +97,7 @@ class DashboardAdminController extends Controller
         $user = User::findOrFail($id);
     
         // Ambil kursus yang dimiliki oleh mentor berdasarkan ID user
-        $courses = Course::where('mentor_id', $id)->get();
+        $courses = Course::where('mentor_id', $id)->paginate(5);
 
         // Loop untuk menghitung rata-rata rating tiap kursus
         foreach ($courses as $course) {
@@ -291,6 +300,8 @@ class DashboardAdminController extends Controller
     
         // Untuk keperluan grafik, kita bisa mengelompokkan data revenue per kursus.
         $coursesRevenue = [];
+        $totalRevenue = 0; // 🆕 Variabel total pendapatan admin
+
         foreach ($revenues as $rev) {
             // Inisialisasi jika belum ada
             if (!isset($coursesRevenue[$rev->course_id])) {
@@ -301,6 +312,8 @@ class DashboardAdminController extends Controller
             }
             // Set nilai revenue untuk bulan tertentu
             $coursesRevenue[$rev->course_id]['monthly'][(int)$rev->month] = (float)$rev->admin_revenue;
+            // 🆕 Tambahkan pendapatan ke total
+            $totalRevenue += (float)$rev->admin_revenue;
         }
     
         // Ambil daftar tahun yang tersedia dari data purchases (opsional)
@@ -310,7 +323,7 @@ class DashboardAdminController extends Controller
             ->orderBy('year', 'asc')
             ->pluck('year');
     
-        return view('dashboard-admin.laporan', compact('coursesRevenue', 'monthNames', 'years', 'year'));
+        return view('dashboard-admin.laporan', compact('coursesRevenue', 'monthNames', 'years', 'year', 'totalRevenue'));
     }    
     
     // menampilkan halaman form tambah mentor

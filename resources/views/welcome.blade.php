@@ -20,7 +20,7 @@
         }
     </style>
 </head>
-<body class="font-sans dark:text-white/50">
+<body class="font-sans">
     @include('components.navbar')
     @include('components.home')
     @include('components.about')

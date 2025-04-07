@@ -10,11 +10,20 @@ use Carbon\Carbon;
 
 class DiscountController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $discounts = Discount::all(); // Ambil semua data diskon
-    
-        return view('dashboard-admin.discount', compact('discounts'));
+        $search = $request->input('search');
+
+        $discounts = Discount::when($search, function ($query, $search) {
+            return $query->where(function ($q) use ($search) {
+                $q->where('coupon_code', 'like', '%' . $search . '%')
+                ->orWhere('discount_percentage', 'like', '%' . $search . '%')
+                ->orWhere('start_date', 'like', '%' . $search . '%')
+                ->orWhere('end_date', 'like', '%' . $search . '%');
+            });
+        })->paginate(5);
+
+        return view('dashboard-admin.discount', compact('discounts', 'search'));
     }
 
     public function create()

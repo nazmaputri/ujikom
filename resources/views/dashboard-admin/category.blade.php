@@ -2,17 +2,31 @@
 
 @section('content')
 <div class="container mx-auto bg-white rounded-lg p-5">
-    <h2 class="text-xl font-semibold mb-8 border-b-2 pb-2 text-gray-700 text-center">Daftar Kategori</h2>
+    <h2 class="text-xl font-semibold mb-6 border-b-2 pb-2 text-gray-700 text-center">Daftar Kategori</h2>
 
     <!-- Tombol Tambah Kategori -->
     <div class="mb-6 p-1 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 md:space-x-4">
         <!-- Tombol untuk menampilkan kursus -->
-        <button id="showCoursesButton" class="bg-sky-300 shadow-md text-white px-2 py-2 rounded-md font-semibold hover:bg-sky-200 flex items-center space-x-2">
+        <!-- <button id="showCoursesButton" class="bg-sky-300 shadow-md text-white px-2 py-2 rounded-md font-semibold hover:bg-sky-200 flex items-center space-x-2"> -->
             <!-- Gambar Ikon -->
-            <img id="toggleIcon" class="w-5 h-5" style="filter: invert(1);" src="https://img.icons8.com/ios-glyphs/30/fine-print--v1.png" alt="fine-print--v1" />
+            <!-- <img id="toggleIcon" class="w-5 h-5" style="filter: invert(1);" src="https://img.icons8.com/ios-glyphs/30/fine-print--v1.png" alt="fine-print--v1" /> -->
             <!-- Teks Tombol -->
-            <span id="buttonText">Tampilkan Semua Kursus</span>
-        </button>
+            <!-- <span id="buttonText">Tampilkan Semua Kursus</span> -->
+        <!-- </button> -->
+        <form action="{{ route('categories.index') }}" method="GET" class="w-full md:max-w-xs">
+            <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Cari</label>
+                <div class="relative flex items-center">
+                    <input type="search" name="search" id="search" 
+                        class="block w-full pl-4 pr-14 py-2.5 text-sm text-gray-700 border-2 border-sky-300 rounded-full focus:outline-none bg-gray-50" 
+                        placeholder="Cari Kategori..." value="{{ request('search') }}" />
+                    <button type="submit" 
+                        class="absolute right-1 py-2.5 bg-sky-300 text-white hover:bg-sky-200 focus:ring-4 focus:outline-none focus:ring-blue-300  rounded-full text-sm px-3 font-semibold flex items-center justify-center">
+                        <svg class="w-4 h-4 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                        </svg>
+                    </button>
+                </div>
+        </form>
     
         <!-- Tambah Kategori -->
         <a id="addCategoryButton" href="{{ route('categories.create') }}" class="inline-flex shadow-md shadow-sky-100 hover:shadow-none items-center space-x-2 text-white bg-sky-300 hover:bg-sky-200 font-semibold py-2 px-4 rounded-md">
@@ -87,6 +101,11 @@
                             </td>
                         </tr>
                     @endforeach
+                    @if($categories->isEmpty())
+                    <tr>
+                        <td colspan="3" class="px-2 py-2 text-center text-sm text-gray-600 border-b border-l border-r border-gray-200">Data Kategori tidak ditemukan</td>
+                    </tr>
+                    @endif
             </tbody>
         </table>
         </div>
@@ -94,10 +113,6 @@
         <div class="mt-4">
             {{ $categories->links() }} 
         </div>
-
-        @if($categories->isEmpty())
-            <div class="mt-4 text-gray-400 text-center">Belum ada kategori yang ditambahkan.</div>
-        @endif
     </div>
 
     <!-- Daftar Kursus (Awalnya disembunyikan) -->

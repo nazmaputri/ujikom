@@ -27,6 +27,18 @@
 <div class="mt-6 bg-white p-6 rounded-lg shadow-md">
     <h3 class="text-xl font-semibold mb-4 border-b-2 pb-2 text-gray-700">Daftar Kursus</h3>
 
+    @if (session('success'))
+        <div id="flash-message" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-3">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if(session('info'))
+        <div id="flash-message" class="bg-yellow-100 border-yellow-400 text-yellow-700 px-4 py-3 rounded relative mb-3">
+            {{ session('info') }}
+        </div>
+    @endif
+
     <!-- Membungkus tabel dengan div untuk pengguliran -->
     <div class="overflow-x-auto">
         <div class="min-w-full w-64">
@@ -40,13 +52,6 @@
                     <th class="px-4 py-2 border-b border-r border-gray-200">Aksi</th>
                 </tr>
             </thead>
-
-            <!-- Notifikasi -->
-            @if (session('success'))
-                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
-                    {{ session('success') }}
-                </div>
-            @endif
 
             <tbody class="text-gray-600 text-sm">
                 @forelse ($category->courses as $index => $course)
@@ -70,36 +75,53 @@
                                 </a>
 
                                 <!-- Tombol Setujui Kursus -->
-                                <form action="{{ route('courses.approve', ['id' => $course->id, 'name' => $category->name]) }}" method="POST" class="flex items-center" title="Setujui Kursus">
+                                <form action="{{ route('courses.approve', ['id' => $course->id, 'name' => $category->name]) }}" 
+                                    method="POST" 
+                                    class="flex items-center" 
+                                    title="Setujui Kursus">
                                     @csrf
                                     @method('PATCH')
-                                    <button type="submit" 
-                                            class="font-semibold p-1 rounded-md
-                                                @if($course->status == 'approved' || $course->status == 'published') 
-                                                    bg-gray-300 text-white cursor-not-allowed 
-                                                @else 
-                                                    bg-green-300 hover:bg-green-200 text-white 
-                                                @endif"
-                                            @if($course->status == 'approved' || $course->status == 'published') disabled @endif>
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-5 h-5 text-white" fill="currentColor">
+                                    <button type="submit"
+                                        class="font-semibold p-1 rounded-md
+                                            {{ $course->status == 'pending' ? 'bg-green-300 hover:bg-green-200 text-white' : 'bg-gray-300 text-white cursor-not-allowed' }}"
+                                        {{ $course->status != 'pending' ? 'disabled' : '' }}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" 
+                                            class="w-5 h-5 text-white" fill="currentColor">
                                             <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/>
                                         </svg>
                                     </button>
                                 </form>
 
-                                <!-- Tombol Publikasikan Kursus -->
-                                @if($course->status == 'approved')
-                                    <form action="{{ route('courses.publish', ['id' => $course->id, 'name' => $category->name]) }}" method="POST" class="flex items-center" title="Publikasikan">
-                                        @csrf
-                                        @method('PATCH')
-                                        <button type="submit" 
-                                                class="bg-sky-300 hover:bg-sky-200 text-white font-bold p-1 rounded">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418" />
-                                            </svg>                                              
-                                        </button>
-                                    </form>
-                                @endif
+
+                                @php
+                                    $canToggle = in_array($course->status, ['approved', 'published', 'nopublished']);
+                                @endphp
+
+                                <form 
+                                    action="{{ 
+                                        $course->status == 'published' 
+                                            ? route('hiddencourse', ['id' => $course->id, 'name' => $category->name]) 
+                                            : ($course->status == 'approved' || $course->status == 'nopublished'
+                                                ? route('courses.publish', ['id' => $course->id, 'name' => $category->name]) 
+                                                : '#') 
+                                    }}" 
+                                    method="POST" class="toggle-form">
+                                    @csrf
+                                    @method('PATCH')
+
+                                    <button type="submit"
+                                        class="relative w-9 h-5 rounded-full transition-colors duration-300 ease-in-out mt-1
+                                            {{ $course->status == 'published' ? 'bg-green-400' : 'bg-gray-300' }}
+                                            {{ !$canToggle ? 'cursor-not-allowed opacity-60' : '' }}"
+                                        title="{{ $course->status == 'published' ? 'Sembunyikan Kursus' : 'Publikasikan Kursus' }}"
+                                        {{ !$canToggle ? 'disabled' : '' }}>
+
+                                        <div class="absolute top-0.5 start-[2px] bg-white border-gray-300 border rounded-full h-4 w-4
+                                            transition-transform duration-300 ease-in-out
+                                            {{ $course->status == 'published' ? 'translate-x-full border-white' : '' }}">
+                                        </div>
+                                    </button>
+                                </form>
                             </div>
                         </td>
                     </tr>
@@ -125,5 +147,15 @@
     </div>   
 </div>
 
-
+<script>
+     //untuk mengatur flash message dari backend
+     document.addEventListener('DOMContentLoaded', function () {
+        const flashMessage = document.getElementById('flash-message');
+            if (flashMessage) {
+                setTimeout(() => {
+                    flashMessage.remove();
+            }, 3000); // Hapus pesan setelah 3 detik
+        }
+    });
+</script>
 @endsection

@@ -30,7 +30,7 @@ class CourseController extends Controller
                 $query->where('title', 'LIKE', "%{$search}%")
                     ->orWhere('price', 'LIKE', "%{$search}%");
             })
-            ->paginate(5);
+            ->paginate(10);
 
         // Kirim data ke view
         return view('dashboard-mentor.kursus', compact('courses', 'search'));

@@ -72,37 +72,36 @@
                         </div>
                     </div>
                 </div>
-
-                <script>
-                    function toggleFeature(button) {
-                        const card = button.closest('.card');
-                        const content = card.querySelector('.feature-content');
-                        const svg = button.querySelector('svg');
-                        const isOpen = content.classList.contains('max-h-[200px]');
-                
-                        // Tutup semua card
-                        document.querySelectorAll('.feature-content').forEach(c => {
-                            c.classList.remove('max-h-[200px]', 'opacity-100');
-                            c.classList.add('max-h-0', 'opacity-0');
-                        });
-                
-                        // Hapus border-sky-400 dari semua card
-                        document.querySelectorAll('.card').forEach(c => {
-                            c.classList.remove('border-sky-400');
-                        });
-                
-                        // Jika belum terbuka, buka konten yang diklik
-                        if (!isOpen) {
-                            content.classList.remove('max-h-0', 'opacity-0');
-                            content.classList.add('max-h-[200px]', 'opacity-100'); // Sesuaikan max-height dengan tinggi konten
-                            card.classList.add('border-sky-400');
-                            svg.classList.add('rotate-180');
-                        } else {
-                            svg.classList.remove('rotate-180');
-                        }
-                    }
-                </script>
             </div>
         </div>
     </div>
+<script>
+    function toggleFeature(button) {
+        const card = button.closest('.card');
+        const content = card.querySelector('.feature-content');
+        const svg = button.querySelector('svg');
+        const isOpen = content.classList.contains('max-h-[200px]');
+                
+        // Tutup semua card
+        document.querySelectorAll('.feature-content').forEach(c => {
+            c.classList.remove('max-h-[200px]', 'opacity-100');
+            c.classList.add('max-h-0', 'opacity-0');
+        });
+                
+    // Hapus border-sky-400 dari semua card
+    document.querySelectorAll('.card').forEach(c => {
+        c.classList.remove('border-sky-400');
+    });
+                
+    // Jika belum terbuka, buka konten yang diklik
+    if (!isOpen) {
+        content.classList.remove('max-h-0', 'opacity-0');
+        content.classList.add('max-h-[200px]', 'opacity-100'); // Sesuaikan max-height dengan tinggi konten
+        card.classList.add('border-sky-400');
+        svg.classList.add('rotate-180');
+    } else {
+        svg.classList.remove('rotate-180');
+      }
+    }
+</script>
 </section>

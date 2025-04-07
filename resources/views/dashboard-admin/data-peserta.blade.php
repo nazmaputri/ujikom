@@ -3,7 +3,7 @@
 @section('content')
 <div class="container mx-auto">
     <div class="bg-white shadow-md rounded-lg p-6 mb-6">
-        <h2 class="text-xl font-semibold mb-8 border-b-2 pb-2 text-gray-700 text-center">Data Peserta</h2>
+        <h2 class="text-xl font-semibold mb-5 border-b-2 pb-2 text-gray-700 text-center">Data Peserta</h2>
 
         <!-- Search Bar -->
         <form action="{{ route('datapeserta-admin') }}" method="GET" class="w-full max-w-xs mb-4">
@@ -11,11 +11,11 @@
             <div class="relative flex items-center">
                 <!-- Input Search -->
                 <input type="search" name="search" id="search" 
-                    class="block w-full pl-4 pr-14 py-3 text-sm text-gray-900 border-2 border-sky-300 rounded-full bg-gray-50" 
+                    class="block w-full pl-4 pr-14 py-2.5 text-sm text-gray-700 border-2 border-sky-300 focus:outline-none rounded-full bg-gray-50" 
                     placeholder="Cari Peserta (Nama, Email)" value="{{ request('search') }}" />
                 <!-- Button Search -->
                 <button type="submit" 
-                    class="absolute right-2.5 bottom-2 bg-sky-300 text-white hover:bg-sky-200 focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-full text-sm px-4 py-2 flex items-center justify-center">
+                    class="absolute right-1 py-2.5 bg-sky-300 text-white hover:bg-sky-200 focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-full text-sm px-3 flex items-center justify-center">
                     <svg class="w-4 h-4 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                     </svg>

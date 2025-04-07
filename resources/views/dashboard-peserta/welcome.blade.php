@@ -23,7 +23,7 @@
                 <img src="{{ asset('storage/' . $course->image_path) }}" alt="Kursus {{ $course->title }}" class="w-full h-40 object-cover rounded-t-lg">
     
                 <!-- Course Content -->
-                <div class="p-4 flex flex-col flex-grow">
+                <div class="px-4 pt-4 pb-1 flex flex-col flex-grow">
                     <div class="flex justify-between items-center mb-2">
                         <!-- Course Title and Rating -->
                         <div>
@@ -65,7 +65,7 @@
                     </div>
                 </div>
                 <!-- Button -->
-                <div class="p-4 mt-auto flex-col sm:flex-row justify-between gap-4">
+                <div class="p-2 mt-auto flex-col sm:flex-row justify-between gap-3">
                     <!-- Button Lanjut Belajar -->
                     <a href="{{ route('study-peserta', ['id' => $course->id]) }}" class="flex-1">
                         <button class="bg-yellow-200/50 mb-4 text-yellow-500 border border-yellow-300 w-full py-2 rounded-lg font-semibold flex items-center justify-center gap-2 hover:text-white hover:bg-yellow-300 transition-colors">

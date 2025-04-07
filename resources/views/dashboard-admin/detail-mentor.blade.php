@@ -87,7 +87,7 @@
                     <tbody class="text-gray-600 text-sm">
                         @forelse ($courses as $index => $course) 
                             <tr class="bg-white hover:bg-sky-50 border-b text-sm">
-                                <td class="px-2 py-2 text-center border-b border-l border-gray-200">{{ $index + 1 }}</td>
+                                <td class="px-2 py-2 text-center border-b border-l border-gray-200">{{ $courses->firstItem() + $index }}</td>
                                 <td class="px-4 py-2 border-b border-gray-200">{{ $course->title }}</td>
                                 <td class="px-4 py-2 border-b border-gray-200 text-center">Rp {{ number_format($course->price, 0, ',', '.') }}</td> 
                                 <td class="px-4 py-2 border-b border-gray-200 text-center">{{\Carbon\Carbon::parse( $course->created_at)->translatedFormat('d F Y') }}
@@ -117,6 +117,10 @@
                         @endforelse
                     </tbody>
                 </table>
+            </div>
+            <!-- Tampilkan Pagination -->
+            <div class="mt-4">
+                {{ $courses->links('pagination::tailwind') }}
             </div>
         </div>
         <div class="text-right pt-10">

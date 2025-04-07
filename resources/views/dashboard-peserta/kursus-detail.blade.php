@@ -61,7 +61,7 @@
                 @csrf
                 <input type="hidden" name="course_id" value="{{ $course->id }}">
                 <div class="mb-4">
-                    <label for="stars" class="block text-sm font-medium text-gray-600 mb-2">Rating</label>
+                    <label for="stars" class="block text-sm font-medium text-gray-600 mb-2 font-semibold">Rating</label>
                     <div id="starRating" class="flex space-x-1">
                         @for ($i = 1; $i <= 5; $i++)
                             <svg data-value="{{ $i }}" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 cursor-pointer hover:text-yellow-500" fill="currentColor" viewBox="0 0 24 24">
@@ -93,7 +93,7 @@
                     });
                 </script>                
                 <div class="mb-4">
-                    <label for="comment" class="block text-sm text-gray-600 font-medium">Komentar</label>
+                    <label for="comment" class="block text-sm text-gray-600 font-semibold">Komentar</label>
                     <textarea name="comment" id="comment" class="w-full text-sm border rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500" rows="4" placeholder="Tulis komentar Anda (opsional)"></textarea>
                 </div>
                 <div class="flex justify-end">

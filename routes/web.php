@@ -69,6 +69,7 @@ Route::middleware(['auth:admin'])->group(function () {
     // Kategori
     Route::patch('/courses/{id}/{name}/approve', [DashboardAdminController::class, 'approve'])->name('courses.approve');
     Route::patch('/courses/{id}/{name}/publish', [DashboardAdminController::class, 'publish'])->name('courses.publish');
+    Route::patch('/courses/{id}/{name}/hiddencourse', [DashboardAdminController::class, 'hiddencourse'])->name('hiddencourse');
     Route::resource('categories', CategoryController::class);
     Route::get('/categories/{name}', [CategoryController::class, 'show'])->name('categories.show');
 });

@@ -142,7 +142,14 @@
                 <h2 class="md:text-xl text-md font-semibold text-gray-700 capitalize mb-1 capitalize">{{ $course->title }}</h2>
                 <p class="text-gray-700">{{ $course->description }}</p>
                 <p class="text-gray-600 capitalize">Mentor : {{ $course->mentor->name }}</p>
-                <p class="text-red-400 inline-flex items-center text-md rounded-xl font-semibold">Rp. {{ number_format($course->price, 0, ',', '.') }}</p>
+                <!-- Harga Kursus -->
+                <p class="inline-flex items-center text-xl mt-1 rounded-2xl font-bold">
+                    <!-- menerima variabel untuk menampilkan harga setelah ada diskon -->
+                    <!-- @if ($course->price_after_discount < $course->price) 
+                            <span class="text-gray-500 line-through">Rp {{ number_format($course->price, 0, ',', '.') }}</span> 
+                         @endif -->
+                    <span class="text-red-400 inline-flex items-center text-sm rounded-xl font-semibold">Rp. {{ number_format($course->price, 0, ',', '.') }}</span>
+                </p>
             </div>
         </div>
         

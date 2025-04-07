@@ -1,6 +1,6 @@
 <!-- Price Section -->
 <section id="price" class="bg-white py-16">
-    <div class="container mx-auto px-2">
+    <div class="container mx-auto px-2 md:px-12">
         <div class="mb-6 text-center">
             <h3 class="md:text-3xl text-2xl font-bold text-sky-400" data-aos="fade-down">Rekomendasi Kursus EduFlix</h3>
             <p class="text-md text-gray-700 mt-2" data-aos="fade-down">Pilih kursus yang sesuai dengan kebutuhan Anda.</p>
@@ -11,7 +11,7 @@
                     <div class="flex">
                     <a href="{{ route('kursus.detail', $course->id) }}" class="block rounded-lg transition-transform transform hover:scale-105 duration-300">
                         <!-- Card Kursus -->
-                        <div class="bg-white border border-gray-300 rounded-lg shadow-md  hover:shadow-lg h-full w-64 flex flex-col overflow-hidden" data-aos="zoom-in">
+                        <div class="bg-white border border-gray-300 rounded-lg shadow-md  hover:shadow-lg h-full w-72 flex flex-col overflow-hidden" data-aos="zoom-in">
                             <!-- Gambar Kursus -->
                             <div class="w-full">
                                 <img src="{{ asset('storage/' . $course->image_path) }}" alt="{{ $course->title }}" class="w-full h-48 object-cover">
@@ -20,7 +20,7 @@
                             <!-- Konten Kursus -->
                             <div class="p-4 flex flex-col">
                                 <!-- Judul Kursus -->
-                                <h1 class="text-xl font-semibold text-gray-800 mb-2">{{ Str::limit($course->title, 20, '...') }}</h1>
+                                <h1 class="text-xl font-semibold text-gray-800 mb-2">{{ Str::limit($course->title, 23, '...') }}</h1>
                                 
                                 <!-- Nama Mentor -->
                                 <p class="text-sm text-gray-600 mb-2">
@@ -56,6 +56,10 @@
                         
                                 <!-- Harga Kursus -->
                                 <p class="inline-flex items-center text-xl mt-1 rounded-2xl font-bold">
+                                    <!-- menerima variabel untuk menampilkan harga setelah ada diskon -->
+                                    <!-- @if ($course->price_after_discount < $course->price) 
+                                        <span class="text-gray-500 line-through">Rp {{ number_format($course->price, 0, ',', '.') }}</span> 
+                                    @endif -->
                                     <span class="text-red-400 inline-flex items-center text-sm rounded-xl font-semibold">Rp. {{ number_format($course->price, 0, ',', '.') }}</span>
                                 </p>
                             </div>

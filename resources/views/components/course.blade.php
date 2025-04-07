@@ -13,15 +13,15 @@
         <div class="overflow-x-auto hide-scrollbar"> 
             <div class="flex space-x-6 m-7">
                 @foreach($categories as $category)
-                    <div class="course-card bg-white border border-gray-300 rounded-lg shadow-md overflow-hidden flex-none w-80 flex-shrink-0 flex flex-col transition-transform duration-300 ease-in-out" data-aos="zoom-in-down">
+                    <div class="course-card bg-white border border-gray-300 rounded-lg shadow-md overflow-hidden flex-none w-72 flex-shrink-0 flex flex-col transition-transform duration-300 ease-in-out" data-aos="zoom-in-down">
                         <div class="flex justify-center mt-5">
                             <img src="{{ asset('storage/' . $category->image_path) }}" alt="{{ $category->name }}" class="w-36 h-32">
                         </div>
                         <div class="p-4 flex flex-col flex-grow">
-                            <h4 class="text-xl font-semibold text-sky-400 text-center">{{ $category->name }}</h4>
+                            <h4 class="text-xl font-semibold text-gray-800 text-center">{{ $category->name }}</h4>
                             <p class="text-gray-600 mt-2 flex-grow text-center text-sm">{{ $category->description }}</p>
                             <div class="mt-4">
-                                <a href="{{ route('category.detail',  $category->name) }}" class="inline-block w-full bg-sky-400 text-white px-4 py-2 rounded-xl shadow-md shadow-sky-200 hover:bg-sky-500 text-center">
+                                <a href="{{ route('category.detail',  $category->name) }}" class="inline-block w-full bg-sky-400 text-white px-4 py-2 rounded-xl shadow-md shadow-sky-200 hover:bg-sky-300 text-center">
                                     Lihat Kursus
                                 </a>
                             </div>

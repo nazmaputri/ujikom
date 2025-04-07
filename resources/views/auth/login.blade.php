@@ -22,13 +22,16 @@
     <div class="flex justify-center items-center min-h-screen px-4">
         <div class="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-lg">
             <!-- Logo and Website Name -->
-            <div class="flex flex-col items-center justify-center space-y-2">
-                <a href="{{ route('landingpage') }}">
+            <div class="flex flex-col items-center justify-center space-y-2">   
                 <div class="flex items-center space-x-3">
-                    <img src="{{ asset('storage/eduflix-1.png') }}" alt="Logo" class="w-18 h-16">
+                    <a href="{{ route('landingpage') }}" class="flex items-center space-x-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-sky-600 transition-all duration-300 hover:translate-y-[-2px]">
+                            <path fill-rule="evenodd" d="M11.03 3.97a.75.75 0 0 1 0 1.06l-6.22 6.22H21a.75.75 0 0 1 0 1.5H4.81l6.22 6.22a.75.75 0 1 1-1.06 1.06l-7.5-7.5a.75.75 0 0 1 0-1.06l7.5-7.5a.75.75 0 0 1 1.06 0Z" clip-rule="evenodd" />
+                        </svg>
+                        <img src="{{ asset('storage/eduflix-1.png') }}" alt="Logo" class="w-[72px] h-16">
+                    </a>
                     <h1 class="text-xl font-semibold text-sky-600">Masuk</h1>
                 </div>
-                </a>
             </div>         
             
             @if (session('success'))

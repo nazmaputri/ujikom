@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-lg">
-    <h2 class="text-2xl font-semibold text-gray-800 border-b-2 pb-2 mb-4">Pengaturan Akun</h2>
+    <h2 class="text-2xl font-semibold text-gray-700 border-b-2 pb-2 mb-4">Pengaturan Akun</h2>
     <form action="{{ url('/settings') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="mb-4">
@@ -11,7 +11,7 @@
             @if($user->photo)
                 <img src="{{ Storage::url($user->photo) }}" alt="Foto Profil" class="w-28 h-28 rounded-full mt-2">
             @endif
-            <input type="file" name="photo" id="photo" class="p-2 mt-2 text-sm text-gray-700 block w-full border border-gray-200 rounded-md shadow-sm">
+            <input type="file" name="photo" id="photo" class="p-2 mt-2 text-sm text-gray-700 block w-full border border-gray-200 rounded-md shadow-sm text-gray-700">
             @error('photo')
                 <p class="text-red-500 text-xs">{{ $message }}</p>
             @enderror

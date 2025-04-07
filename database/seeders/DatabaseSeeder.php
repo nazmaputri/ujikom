@@ -54,11 +54,11 @@ class DatabaseSeeder extends Seeder
             'comment' => 'tes rating aja',
         ]);
 
-        // Rating::create([
-        //     'nama' => 'intan',
-        //     'email' => 'intan@gmail.com',
-        //     'rating' => '3',
-        //     'comment' => 'tes rating'
-        // ]);
+        Rating::create([
+            'nama' => 'intan',
+            'email' => 'intan@gmail.com',
+            'rating' => '3',
+            'comment' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.'
+        ]);
     }
 }
