@@ -169,9 +169,9 @@
                 </div>
             </div>
         <div class="mt-6 flex justify-end">
-            <a href="{{ route('categories.show', $category->name) }}" class="bg-sky-400 hover:bg-sky-300 text-white font-semibold py-2 px-4 rounded">
+            {{-- <a href="{{ route('categories.show', $category->name) }}" class="bg-sky-400 hover:bg-sky-300 text-white font-semibold py-2 px-4 rounded">
                 Kembali
-            </a>
+            </a> --}}
         </div> 
     </div>
 @endsection

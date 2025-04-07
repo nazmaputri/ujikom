@@ -102,6 +102,8 @@ class DashboardAdminController extends Controller
         return view('dashboard-admin.detail-mentor', compact('user', 'courses'));
     }    
 
+
+
     public function mentor(Request $request)
     {
         // Ambil query pencarian dari input
@@ -124,8 +126,17 @@ class DashboardAdminController extends Controller
     public function detailpeserta($id)
     {
         $user = User::findOrFail($id);
-        return view('dashboard-admin.detail-peserta', compact('user'));
-    }
+    
+        // Ambil kursus yang telah dibeli peserta berdasarkan pembayaran sukses
+        $purchasedCourses = Purchase::where('user_id', $id)
+            ->whereHas('payment', function ($query) {
+                $query->where('transaction_status', 'success');
+            })
+            ->with('course.category')
+            ->get();
+    
+        return view('dashboard-admin.detail-peserta', compact('user', 'purchasedCourses'));
+    }    
 
     public function peserta(Request $request)
     {
@@ -193,21 +204,32 @@ class DashboardAdminController extends Controller
         ]);
     }    
 
-    public function detailkursus($id, $name) {
-        $category = Category::with('courses')->where('name', $name)->firstOrFail();
+    public function detailkursus($id, $name = null) 
+    {
+        // Jika $name diberikan, maka ambil kategori berdasarkan nama tersebut
+        if ($name) {
+            $category = Category::with('courses')->where('name', $name)->firstOrFail();
+        } else {
+            // Jika tidak ada $name, ambil kategori kursus berdasarkan kursus ID
+            $course = Course::findOrFail($id);
+            $category = $course->category; // Ambil kategori dari relasi di model Course
+        }
+
+        // Ambil kursus berdasarkan ID
         $course = Course::findOrFail($id);
-    
+
         // Ambil user yang sedang login
         $user = auth()->user();
-    
+
         // Ambil peserta yang telah membayar dengan status sukses
         $participants = Purchase::where('user_id', $user->id)
                                 ->where('status', 'success')
                                 ->where('course_id', $id)
                                 ->paginate(5);
-    
+
+        // Mengembalikan tampilan dengan data yang diperlukan
         return view('dashboard-admin.detail-kursus', compact('course', 'category', 'participants'));
-    }    
+    }
 
     public function updateStatus($id)
     {

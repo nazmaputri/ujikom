@@ -12,12 +12,12 @@
 
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
 
-     <!-- AOS CSS -->
-     <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <!-- AOS CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-
+    
      <!-- Custom Style -->
      <style>
         body {
@@ -58,22 +58,71 @@
                             <h3 class="text-xl font-semibold text-gray-700 mb-4">Materi</h3>
                             <ul class="divide-y divide-gray-200">
                                 @foreach ($course->materi as $index => $materi)
+                                    @php
+                                        $firstVideo = $materi->videos->first(); // ambil video pertama
+                                    @endphp
                                     <li class="flex items-center space-x-4 py-3">
                                         <!-- Icon -->
                                         <svg class="h-5 w-5 text-gray-700" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 512 512">
-                                            <path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zM188.3 147.1c7.6-4.2 16.8-4.1 24.3 .5l144 88c7.1 4.4 11.5 12.1 11.5 20.5s-4.4 16.1-11.5 20.5l-144 88c-7.4 4.5-16.7 4.7-24.3 .5s-12.3-12.2-12.3-20.9l0-176c0-8.7 4.7-16.7 12.3-20.9z"/>
+                                            <path d="..."/>
                                         </svg>
-                                        <!-- Nomor dan Judul Materi -->
-                                        <span class="text-sm font-semibold text-gray-700 capitalize">
-                                            {{ $index + 1 }}. {{ $materi->judul }}
-                                        </span>
+                        
+                                        <!-- Judul Materi -->
+                                        @if ($materi->is_preview && $firstVideo)
+                                            <button class="text-sm font-semibold text-blue-600 hover:underline capitalize open-video-btn"data-video-url="{{ asset('storage/' . $firstVideo->video_url) }}">
+                                                {{ $index + 1 }}. {{ $materi->judul }}
+                                            </button>
+                                        @else
+                                            <span class="text-sm font-semibold text-gray-700 capitalize">
+                                                {{ $index + 1 }}. {{ $materi->judul }}
+                                            </span>
+                                        @endif
                                     </li>
                                 @endforeach
-                            </ul>                            
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!-- Fullscreen Modal -->
+            <div id="videoModal" class="fixed inset-0 bg-black bg-opacity-90 z-50 hidden items-center justify-center">
+                <div class="relative w-full h-full">
+                    <button 
+                        onclick="closeModal()" 
+                        class="absolute top-4 right-4 text-white text-2xl z-50 hover:text-red-500">
+                        ✖
+                    </button>
+                    <video id="modalVideo" controls autoplay class="w-full h-full object-contain bg-black"></video>
+                </div>
+            </div>
+            
+            <script>
+                // Buka modal
+                document.querySelectorAll('.open-video-btn').forEach(button => {
+                    button.addEventListener('click', function () {
+                        const videoUrl = this.getAttribute('data-video-url');
+                        const modal = document.getElementById('videoModal');
+                        const video = document.getElementById('modalVideo');
+            
+                        video.src = videoUrl;
+                        modal.classList.remove('hidden');
+                        modal.classList.add('flex');
+                    });
+                });
+            
+                // Tutup modal
+                function closeModal() {
+                    const modal = document.getElementById('videoModal');
+                    const video = document.getElementById('modalVideo');
+            
+                    modal.classList.remove('flex');
+                    modal.classList.add('hidden');
+                    video.pause();
+                    video.currentTime = 0;
+                    video.src = '';
+                }
+            </script>
         </div>        
     </section>
 
@@ -176,5 +225,6 @@
              once: true,    
          });
      </script>
+
 </body>
 </html>

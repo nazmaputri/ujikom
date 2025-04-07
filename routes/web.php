@@ -39,6 +39,7 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::post('dashboard-admin/store-mentor', [DashboardAdminController::class, 'registerMentorByAdmin'])->name('store-mentor');
     Route::get('dashboard-admin/data-peserta', [DashboardAdminController::class, 'peserta'])->name('datapeserta-admin');
     Route::get('/kursus/{id}/{name}', [DashboardAdminController::class, 'detailkursus'])->name('detail-kursusadmin');
+    Route::get('/kursus/{id}', [DashboardAdminController::class, 'detailkursus'])->name('detailkursus');
     Route::get('dashboard-admin/laporan', [DashboardAdminController::class, 'laporan'])->name('laporan-admin');
     Route::get('dashboard-admin/rating', [DashboardAdminController::class, 'rating'])->name('rating-admin');
     Route::post('/admin/users/{id}/status', [DashboardAdminController::class, 'updateStatus'])->name('admin.users.updateStatus'); //this method is patch before edited
@@ -121,6 +122,7 @@ Route::middleware(['auth:mentor'])->group(function () {
     Route::resource('courses', CourseController::class);
 
     // Materi
+    Route::patch('/materi/{id}/toggle-preview', [MateriController::class, 'togglePreview'])->name('materi.togglePreview');
     Route::get('/materi/{courseId}/{materiId}', [MateriController::class, 'show'])->name('materi.show');
     Route::get('/materi/{courseId}', [MateriController::class, 'create'])->name('materi.create');
     Route::post('/materi/{courseId}', [MateriController::class, 'store'])->name('materi.store');

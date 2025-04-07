@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'login']);
 
+// Route untuk login dengan Google
+Route::get('login/google', [LoginController::class, 'redirectToGoogle'])->name('login.google');
+
+// Route untuk callback setelah login dengan Google
+Route::get('auth/google-callback', [LoginController::class, 'handleGoogleCallback']);
+
 //Route untuk register
 Route::get('register', [RegisterController::class, 'show'])->name('register');
 Route::get('register-mentor', [RegisterController::class, 'showmentor'])->name('registermentor');

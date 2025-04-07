@@ -29,6 +29,20 @@ class MateriController extends Controller
         return view('dashboard-mentor.materi-create', compact('course'));
     }    
 
+    public function togglePreview($id)
+    {
+        $materi = Materi::findOrFail($id);
+
+        // Reset semua preview di kursus yang sama
+        Materi::where('courses_id', $materi->courses_id)->update(['is_preview' => false]);
+
+        // Set yang ini jadi preview
+        $materi->is_preview = true;
+        $materi->save();
+
+        return back()->with('success', 'Materi preview berhasil diatur.');
+    }      
+
     public function show($courseId, $materiId)
     {
         $materi = Materi::with(['videos', 'pdfs', 'youtubes', 'course'])->findOrFail($materiId);

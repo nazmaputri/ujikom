@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
 
 class LoginController extends Controller
@@ -15,6 +16,70 @@ class LoginController extends Controller
     {
         return view('auth.login');
     }
+
+    // Redirect user ke Google untuk login
+    public function redirectToGoogle()
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+    // Callback yang menerima data dari Google dan login pengguna
+    public function handleGoogleCallback()
+    {
+        try {
+            $googleUser = Socialite::driver('google')->user();
+            $email = $googleUser->getEmail();
+    
+            // Cari user berdasarkan email
+            $user = User::where('email', $email)->first();
+    
+            // Kalau user tidak ditemukan
+            if (!$user) {
+                return redirect()->route('register')->withErrors([
+                    'email' => 'Email Anda belum terdaftar. Silakan daftar terlebih dahulu.',
+                ]);
+            }
+    
+            // Cek verifikasi email
+            if (is_null($user->email_verified_at)) {
+                return redirect()->route('login')->withErrors([
+                    'email' => 'Email Anda belum diverifikasi.',
+                ]);
+            }
+    
+            // Cek status akun
+            if ($user->status !== 'active') {
+                return redirect()->route('login')->withErrors([
+                    'email' => 'Akun Anda tidak aktif.',
+                ]);
+            }
+    
+            // Login pengguna
+            switch ($user->role) {
+                case 'admin':
+                    Auth::guard('admin')->login($user); 
+                    return redirect()->route('welcome-admin');
+                
+                case 'mentor':
+                    Auth::guard('mentor')->login($user); 
+                    return redirect()->route('welcome-mentor');
+                
+                case 'student':
+                    Auth::guard('student')->login($user);  
+                    return redirect()->route('welcome-peserta');
+                
+                default:
+                    Auth::logout();
+                    return redirect('login')->withErrors(['email' => 'Role tidak dikenal.']);
+            }
+    
+        } catch (\Exception $e) {
+            return redirect()->route('login')->withErrors([
+                'google' => 'Gagal login dengan Google. Coba lagi nanti.',
+            ]);
+        }
+    }
+    
 
     public function login(Request $request)
     {

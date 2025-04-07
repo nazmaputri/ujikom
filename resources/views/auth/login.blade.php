@@ -76,6 +76,16 @@
             <h4 class="text-center text-sky-600">
                 Belum punya akun? 
                 <a href="{{ route('register') }}" class="text-blue-900 underline">Daftar</a>
+                <div class="flex justify-center mt-6">
+                    <a href="{{ route('login.google') }}" 
+                       class="flex items-center justify-center border border-gray-300 rounded-md px-4 py-2 hover:bg-gray-100 transition duration-200">
+                        <img width="24" height="24" 
+                             src="https://img.icons8.com/color/48/google-logo.png" 
+                             alt="google-logo" 
+                             class="mr-2" />
+                        <span class="text-sm text-gray-700 font-medium">Login dengan Google</span>
+                    </a>
+                </div>                
             </h4>
 
         </div>

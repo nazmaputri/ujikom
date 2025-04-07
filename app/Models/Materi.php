@@ -14,7 +14,8 @@ class Materi extends Model
     protected $fillable = [
         'judul', 
         'deskripsi', 
-        'courses_id'
+        'courses_id',
+        'is_preview'
     ];
 
     public function videos()
