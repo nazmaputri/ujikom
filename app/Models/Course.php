@@ -44,7 +44,7 @@ class Course extends Model
 
     public function category()
     {
-        return $this->belongsTo(Category::class); 
+        return $this->belongsTo(Category::class, 'category', 'name'); 
     }
 
     public function materi()

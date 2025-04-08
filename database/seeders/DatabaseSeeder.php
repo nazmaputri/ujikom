@@ -42,14 +42,28 @@ class DatabaseSeeder extends Seeder
 
         RatingKursus::create([
             'user_id' => 2,
-            'course_id' => 1,
+            'course_id' => 2,
             'stars' => 2,
             'comment' => 'tes rating',
         ]);
 
         RatingKursus::create([
             'user_id' => 2,
-            'course_id' => 1,
+            'course_id' => 2,
+            'stars' => 2,
+            'comment' => 'tes rating aja',
+        ]);
+
+        RatingKursus::create([
+            'user_id' => 2,
+            'course_id' => 2,
+            'stars' => 2,
+            'comment' => 'tes rating aja',
+        ]);
+
+        RatingKursus::create([
+            'user_id' => 2,
+            'course_id' => 2,
             'stars' => 2,
             'comment' => 'tes rating aja',
         ]);

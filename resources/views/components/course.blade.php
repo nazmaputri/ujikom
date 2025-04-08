@@ -19,7 +19,7 @@
                         </div>
                         <div class="p-4 flex flex-col flex-grow">
                             <h4 class="text-xl font-semibold text-gray-800 text-center">{{ $category->name }}</h4>
-                            <p class="text-gray-600 mt-2 flex-grow text-center text-sm">{{ $category->description }}</p>
+                            <p class="text-gray-600 mt-2 flex-grow text-center text-sm">{{ Str::limit($category->description, 100) }}</p>
                             <div class="mt-4">
                                 <a href="{{ route('category.detail',  $category->name) }}" class="inline-block w-full bg-sky-400 text-white px-4 py-2 rounded-xl shadow-md shadow-sky-200 hover:bg-sky-300 text-center">
                                     Lihat Kursus

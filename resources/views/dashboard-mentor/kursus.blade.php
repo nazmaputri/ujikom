@@ -16,7 +16,7 @@
                     <!-- Input Search -->
                     <input type="search" name="search" id="search" 
                         class="block w-full pl-4 pr-14 py-3 text-sm text-gray-700 border-2 border-sky-300 rounded-full focus:outline-none bg-gray-50 focus:ring-sky-400 focus:border-sky-400" 
-                        placeholder="Cari Kursus" value="{{ request('search') }}" />
+                        placeholder="Cari Kursus Atau Kategori" value="{{ request('search') }}" />
                     <!-- Button Search -->
                     <button type="submit" 
                         class="absolute right-2 bottom-2 bg-sky-300 text-white hover:bg-sky-200 focus:ring-4 focus:outline-none focus:ring-sky-300 font-semibold rounded-full text-sm px-3 py-2 flex items-center justify-center">
@@ -53,6 +53,7 @@
                     <tr class="bg-sky-200 text-gray-600 text-sm">
                         <th class="px-4 py-2 border-b border-l border-gray-200">No</th>
                         <th class="px-4 py-2 border-b border-gray-200">Judul</th>
+                        <th class="px-4 py-2 border-b border-gray-200">Kategori</th>
                         <th class="px-4 py-2 border-b border-gray-200">Harga</th>
                         <th class="px-4 py-2 border-b border-r border-gray-200">Aksi</th>
                     </tr>
@@ -60,17 +61,18 @@
                 <tbody class="text-gray-600 text-sm font-light">
                     @if($courses->isEmpty())
                         <tr>
-                            <td colspan="4" class="text-center py-4 text-sm text-gray-600 border-b border-l border-r border-gray-200">Data tidak tersedia</td>
+                            <td colspan="5" class="text-center py-2 text-sm text-gray-600 border-b border-l border-r border-gray-200">Data tidak tersedia</td>
                         </tr>
                     @endif
                     @foreach ($courses as $index => $course)
                     <tr class="bg-white hover:bg-sky-50 user-row">
                         <!-- Kolom No -->
                         <td class="px-4 py-2 text-center border-b border-l  border-gray-200">{{ $index + 1 + ($courses->currentPage() - 1) * $courses->perPage() }}</td>
-                        <td class="px-4 py-2 border-b border-gray-200">{{ $course->title }}</td>
+                        <td class="px-4 py-2 border-b border-gray-200 capitalize">{{ Str::limit($course->title, 40) }}</td>
+                        <td class="px-4 py-2 border-b border-gray-200 capitalize">{{ Str::limit($course->category, 40) }}</td>
                         <td class="px-4 py-2 text-center border-b border-gray-200">{{ $course->price ? 'Rp. ' . number_format($course->price, 0, ',', '.') : 'Gratis' }}</td>
                         <td class="py-2 px-4 text-center border-b  border-r border-gray-200">
-                            <div class="flex items-center justify-center space-x-6">
+                            <div class="flex items-center justify-center space-x-3">
                                 <!-- Tombol Chat -->
                                 <a href="{{ $course->chat ? route('chat.mentor', ['courseId' => $course->id]) : '#' }}" class="text-white bg-green-300 p-1 rounded-md hover:bg-green-200 {{ !$course->chat ? 'cursor-not-allowed opacity-50' : '' }}" id="chatButton" {{ !$course->chat ? 'disabled' : '' }} title="{{ !$course->chat ? 'Chat Tidak Aktif' : 'Chat Aktif' }}">
                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" fill="currentColor" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">

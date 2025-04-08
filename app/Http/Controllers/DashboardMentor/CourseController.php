@@ -26,11 +26,16 @@ class CourseController extends Controller
 
         // Ambil kursus yang hanya dimiliki oleh mentor yang login
         $courses = Course::where('mentor_id', $mentorId)
-            ->when($search, function ($query) use ($search) {
-                $query->where('title', 'LIKE', "%{$search}%")
-                    ->orWhere('price', 'LIKE', "%{$search}%");
-            })
-            ->paginate(10);
+        ->when($search, function ($query) use ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'LIKE', "%{$search}%")
+                ->orWhere('price', 'LIKE', "%{$search}%")
+                ->orWhereHas('category', function ($q2) use ($search) {
+                    $q2->where('name', 'LIKE', "%{$search}%");
+                });
+            });
+        })
+        ->paginate(10);
 
         // Kirim data ke view
         return view('dashboard-mentor.kursus', compact('courses', 'search'));

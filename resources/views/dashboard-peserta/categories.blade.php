@@ -12,6 +12,7 @@
                     <img class="w-full h-48 object-cover" src="{{ asset('storage/' . $category->image_path) }}" alt="{{ $category->title }}">
                     <div class="p-4 flex flex-col flex-grow">
                         <h3 class="text-lg font-semibold text-gray-800 capitalize flex-grow">{{ $category->name }}</h3>
+                        <h3 class="text-sm text-gray-600 flex-grow">{{ $category->description }}</h3>
                         <div class="flex justify-end mt-4">
                             <a href="{{ route('categories-detail', ['id' => $category->id]) }}" class="flex mt-auto text-sm bg-sky-400 text-white p-2 rounded-lg hover:bg-sky-300 space-x-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">

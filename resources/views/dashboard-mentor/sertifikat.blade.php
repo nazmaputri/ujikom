@@ -2,219 +2,150 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sertifikat Kelulusan</title>
+    <!-- Import font dari Google Fonts -->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
+        @page {
+            margin: 0;
+        }
+
         body {
             margin: 0;
-            padding: 10;
-            font-family: 'Montserrat', sans-serif;
-            background-color: #ffffff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        .certificate-container {
-            position: relative;
-            width: 1123px; /* Ukuran A4 Landscape */
-            height: 794px;
-            background-color: #ffffff;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            overflow: hidden;
+            font-family: 'Montserrat', sans-serif;
         }
 
-        .certificate-content-wrapper {
-            /* width: calc(100% - 160px); */
-            /* margin-left: 160px; */
-            text-align: center;
-            padding: 40px;
-            padding-left: 60px;
-            position: relative; /* Pastikan wrapper teks berada di atas */
-            z-index: 10; /* Teks berada di atas elemen latar belakang */
+        .container {
+            width: 1123px;
+            height: 794px;
+            position: relative;
+            background-color: #fff;
         }
 
-        .certificate-title {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #2563eb;
-            text-transform: uppercase;
-            text-align: center;
-            margin-bottom: 0px;
+        .top-image {
+            position: absolute;
+            top: 0;
         }
 
-        .certificate-text {
-            font-size: 1rem;
-            color: #4b5563;
-            margin-top: 20px;
-            text-align: center;
+        .left-top {
+            left: 0;
         }
 
-        .certificate-name {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #374151;
-            text-transform: uppercase;
-            border-bottom: 2px solid #2563eb;
-            display: inline-block;
-            padding-bottom: 5px;
-            margin-top: 10px;
-            text-align: center;
+        .right-top {
+            right: 0;
+        }
+
+        .bottom-image {
+            position: absolute;
+            bottom: 0;
+        }
+
+        .left-bottom {
+            left: 0;
+        }
+
+        .right-bottom {
+            right: 0;
         }
 
         .signature {
             position: absolute;
-            right: 50px;
             bottom: 50px;
-            text-align: center;
+            left: 50px;
+            right: 50px;
+            width: calc(100% - 100px);
         }
 
-        .signature img {
-            width: 120px;
-            height: auto;
+        h1 {
+            color: #2563eb;
+            font-size: 32px;
+            margin: 0;
         }
 
-        .signature-line {
-            border-top: 2px solid #9ca3af;
-            width: 200px;
-            margin: 10px auto 5px;
-        }
-
-        .signature-title {
-            font-size: 1rem;
+        .subtitle {
+            color: #2563eb;
+            font-size: 20px;
             font-weight: bold;
+            margin: 5px 0;
+        }
+
+        .recipient {
+            font-size: 24px;
             color: #374151;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-bottom: 2px solid #2563eb;
+            display: inline-block;
+            padding-bottom: 5px;
+            margin: 10px 0;
         }
 
-        .logo-sertif {
-            position: absolute;
-            top: 100px;
-            right: 0;
-            z-index: 20; /* Lebih tinggi dari elemen-kanan-atas */
-            padding: 20px; /* Opsional, jika ingin beri jarak dari sisi */
-        }
-
-        .logo-sertif img {
-            width: 100px; /* Sesuaikan ukuran logo */
-            height: auto;
-        }
-
-        /* Posisi elemen kanan atas */
-        .elemen-kanan-atas {
-            position: absolute;
-            top: 100px;
-            right: 0;
-        }
-
-        .elemen-kanan-atas img {
-            width: 250px; /* Sesuaikan ukuran */
-            height: auto;
-            opacity: 0.6; /* Supaya lebih transparan */
-        }
-
-        .elemen-kiri-bawah {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-        }
-
-        .elemen-kiri-bawah img {
-            width: 250px; /* Sesuaikan ukuran yang diinginkan */
-            height: auto; /* Menjaga aspek rasio */
-        }
-
-        /* Posisi elemen kanan bawah */
-        .elemen-kanan-bawah {
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            transform: translate(10px, 10px); /* Sedikit pergeseran agar pas */
-        }
-
-        .elemen-kanan-bawah img {
-            width: 250px; /* Sesuaikan ukuran */
-            height: auto;
-        }
-
-        /* Posisi elemen kiri atas */
-        .elemen-kiri-atas {
-            padding-bottom: auto;
-            position: absolute;
-            left: 0;
-            top: 100px;
-        }
-
-        .elemen-kiri-atas img {
-            top: 0;
-            width: 200px; /* Sesuaikan ukuran */
-            height: auto;
-        }
-
-        @media print {
-            body {
-                margin: 0;
-                padding: 0;
-                width: 100%;
-                height: 100%;
-            }
-
-            .certificate-container {
-                width: 1123px !important;
-                height: 794px !important;
-                page-break-before: avoid;
-                page-break-after: avoid;
-                page-break-inside: avoid;
-                border: none;
-                box-shadow: none;
-            }
-
-            .side-background {
-                display: block;
-            }
-        }
     </style>
 </head>
 <body>
-    <div class="certificate-container">
-        <div class="certificate-content-wrapper">
-            <div class="certificate-title">SERTIFIKAT KELULUSAN</div>
-            <p class="certificate-text">Diberikan kepada</p>
-            <div class="certificate-name">{{ $participant_name }}</div>
-            <p class="certificate-text">Atas penyelesaian kursus <strong>{{ $course_title }}</strong> dalam kategori {{ $course_category }}.</p>
+    <div class="container">
+
+        {{-- Background kiri atas --}}
+        <div class="top-image left-top">
+            <img src="{{ isset($is_pdf) && $is_pdf ? public_path('storage/kiri-atas.png') : asset('storage/kiri-atas.png') }}"
+                 style="width: 200px;" alt="kiri-atas">
         </div>
 
-        <div class="logo-sertif">
-            <img src="{{ asset('storage/logo-sertif.jpg') }}" alt="logo-sertif">
+        {{-- Background kanan atas --}}
+        <div class="top-image right-top">
+            <img src="{{ isset($is_pdf) && $is_pdf ? public_path('storage/kanan-atas.png') : asset('storage/kanan-atas.png') }}"
+                 style="width: 250px;" alt="kanan-atas">
         </div>
 
-        <div class="elemen-kanan-atas">
-            <img src="{{ asset('storage/kanan-atas.jpg') }}" alt="elemen-kanan-atas">
+        {{-- Konten Utama --}}
+        <div class="content" style="text-align: center; padding-top: {{ isset($is_pdf) && $is_pdf ? '100px' : '200px' }};">
+            <h1 style="color: #2563eb; font-size: {{ isset($is_pdf) && $is_pdf ? '50px' : '32px' }}; margin: 0;">SERTIFIKAT</h1>
+            <p style="color: #2563eb; font-size: {{ isset($is_pdf) && $is_pdf ? '36px' : '20px' }}; font-weight: bold; margin: 10px 0;">KELULUSAN</p>
+            <p style="font-size: {{ isset($is_pdf) && $is_pdf ? '24px' : '16px' }}; margin: 10px 0;">Diberikan kepada :</p>
+            <p style="font-size: {{ isset($is_pdf) && $is_pdf ? '34px' : '24px' }}; color: #374151; font-weight: bold; text-transform: uppercase; border-bottom: 3px solid #2563eb; display: inline-block; padding-bottom: 8px; margin: 20px 0;">
+                {{ $participant_name }}
+            </p>
+            <p style="font-size: {{ isset($is_pdf) && $is_pdf ? '22px' : '16px' }};">Atas penyelesaian kursus <strong>{{ $course_title }}</strong> dalam kategori {{ $course_category }}.</p>
         </div>
 
-        <div class="elemen-kanan-bawah">
-            <img src="{{ asset('storage/kanan-bawah.jpg') }}" alt="elemen-kanan-bawah">
+        {{-- Background kiri bawah --}}
+        <div class="bottom-image left-bottom">
+            <img src="{{ isset($is_pdf) && $is_pdf ? public_path('storage/kiri-bawah.png') : asset('storage/kiri-bawah.png') }}"
+                 style="width: 250px;" alt="kiri-bawah">
         </div>
 
-        <div class="elemen-kiri-bawah">
-            <img src="{{ asset('storage/kiri-bawah.jpg') }}" alt="elemen-kiri-bawah">
+        {{-- Background kanan bawah --}}
+        <div class="bottom-image right-bottom">
+            <img src="{{ isset($is_pdf) && $is_pdf ? public_path('storage/kanan-bawah.png') : asset('storage/kanan-bawah.png') }}"
+                 style="width: 250px;" alt="kanan-bawah">
         </div>
 
-        <div class="elemen-kiri-atas">
-            <img src="{{ asset('storage/kiri-atas.jpg') }}" alt="elemen-kiri-atas">
-        </div>
-
+        {{-- Tanda Tangan --}}
         <div class="signature">
-            <img src="{{ asset('storage/tanda-tangan.png') }}" alt="Tanda Tangan">
-            <div class="signature-line"></div>
-            <p class="signature-title">CEO</p>
+            <table style="width: 100%;">
+                <tr>
+                    <td style="text-align: center;">
+                        <img src="{{ isset($is_pdf) && $is_pdf ? public_path('storage/tanda-tangan.png') : asset('storage/tanda-tangan.png') }}"
+                             style="width: 120px;" alt="tanda-tangan">
+                        <div style="border-top: 2px solid #9ca3af; width: 200px; margin: 10px auto 5px;"></div>
+                        <p style="font-size: 16px; font-weight: bold; color: #374151;">
+                            {{ $signature_title_left ?? 'Direktur' }}
+                        </p>
+                    </td>
+                    <td style="text-align: center;">
+                        <img src="{{ isset($is_pdf) && $is_pdf ? public_path('storage/tanda-tangan.png') : asset('storage/tanda-tangan.png') }}"
+                             style="width: 120px;" alt="tanda-tangan">
+                        <div style="border-top: 2px solid #9ca3af; width: 200px; margin: 10px auto 5px;"></div>
+                        <p style="font-size: 16px; font-weight: bold; color: #374151;">
+                            {{ $signature_title_right ?? 'Mentor' }}
+                        </p>
+                    </td>
+                </tr>
+            </table>
         </div>
+
     </div>
 </body>
 </html>

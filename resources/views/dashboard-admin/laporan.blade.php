@@ -38,28 +38,37 @@
     <div class="bg-white shadow-md rounded-lg p-6">
         <h3 class="text-lg font-semibold text-gray-700 mb-2">Detail Pendapatan per Kursus</h3>
         <div class="overflow-x-auto">
-            @if (count($coursesRevenue) > 0)
+           <div class="min-w-full w-64">
+           @if (count($coursesRevenue) > 0)
                 <table class="min-w-full divide-y divide-gray-200 text-sm">
                     <thead class="bg-sky-100 text-gray-700">
                         <tr>
-                            <th class="px-4 py-2 text-left border-l border-t">Judul Kursus</th>
-                            <th class="px-4 py-2 text-right border-r border-t">Total Pendapatan (Rp)</th>
+                            <th class="px-4 py-2 border-l border-t text-center">No</th>
+                            <th class="px-4 py-2 text-left border-t">Judul Kursus</th>
+                            <th class="px-4 py-2 text-right border-t">Total Pendapatan</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200">
-                        @foreach ($coursesRevenue as $course)
-                            <tr class="hover:bg-sky-50">
-                                <td class="px-4 py-2 text-gray-700 border-l border-b">{{ $course['title'] }}</td>
-                                <td class="px-4 py-2 text-right text-red-500 border-r border-b">
-                                    Rp. {{ number_format(array_sum($course['monthly']), 0, ',', '.') }}
-                                </td>
-                            </tr>
-                        @endforeach
+                    @foreach ($paginatedCourses as $course)
+                        <tr class="hover:bg-sky-50">
+                            <td class="px-4 py-2 text-gray-700 text-sm border-l border-b text-center">
+                                {{ $loop->iteration }}
+                            </td>
+                            <td class="px-4 py-2 text-gray-700 border-b">{{ $course['title'] }}</td>
+                            <td class="px-4 py-2 text-right text-red-500 border-r border-b">
+                                Rp. {{ number_format(array_sum($course['monthly']), 0, ',', '.') }}
+                            </td>
+                        </tr>
+                    @endforeach
                     </tbody>
                 </table>
             @else
                 <p class="text-gray-500 text-sm">Belum ada pendapatan</p>
             @endif
+           </div>
+        </div>
+        <div class="mt-4">
+            {{ $paginatedCourses->links() }}
         </div>
     </div>
 </div>

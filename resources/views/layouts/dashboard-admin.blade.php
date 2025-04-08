@@ -179,7 +179,7 @@
                     <!-- Nama dan Role -->
                     @if(Auth::check())
                         <div class="hidden md:block flex flex-col">
-                            <p class="text-gray-800 font-semibold mr-2 text-sm">{{ Auth::user()->name }}</p>
+                            <p class="text-gray-800 font-semibold mr-2 text-sm">{{ Str::limit(Auth::user()->name, 9) }}</p>
                             <p class="text-gray-600 text-sm">{{ Auth::user()->role }}</p>
                         </div>
                     @else

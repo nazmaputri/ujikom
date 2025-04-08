@@ -1,6 +1,6 @@
 <footer class="bg-sky-500 text-white py-10">
-    <div class="w-full mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 text-center sm:text-left">
+    <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 text-center justify-center place-items-center sm:text-left">
             <!-- Logo & Deskripsi -->
             <div class="flex flex-col items-center sm:items-start">
                 <a href="#" class="flex items-center space-x-3">

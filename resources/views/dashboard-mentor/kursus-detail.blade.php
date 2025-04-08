@@ -68,10 +68,10 @@
                     <table class="min-w-full mt-4 border-collapse">
                         <thead>
                             <tr class="bg-sky-200 text-gray-600 text-sm">
-                                <th class="px-4 py-2 border-b border-l border-gray-200">No</th>
-                                <th class="px-4 py-2  border-b border-gray-200">Judul</th>
-                                <th class="px-4 py-2  border-b border-gray-200">Kursus</th>
-                                <th class="px-4 py-2  border-b border-r border-gray-200">Aksi</th>
+                                <th class="px-4 py-2 border-b border-t border-l border-gray-200">No</th>
+                                <th class="px-4 py-2  border-b border-t border-gray-200">Judul</th>
+                                <th class="px-4 py-2  border-b border-t border-gray-200">Kursus</th>
+                                <th class="px-4 py-2  border-b border-t border-r border-gray-200">Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="text-gray-600 text-sm font-light">
@@ -87,35 +87,39 @@
                                         {{ $materiItem->course->title ?? 'Kursus tidak ditemukan' }}
                                     </td>
                                     <td class="py-2 px-4 text-center border-b  border-r border-gray-200">
-                                        <div class="flex items-center justify-center space-x-6">
+                                        <div class="flex items-center justify-center space-x-4">
                                             <!-- Toggle preview -->
                                             <form action="{{ route('materi.togglePreview', $materiItem->id) }}" method="POST">
                                                 @csrf
                                                 @method('PATCH')
-                                                <label class="inline-flex items-center cursor-pointer">
-                                                    <input 
-                                                        type="checkbox" 
-                                                        name="is_preview"
-                                                        onchange="this.form.submit()" 
-                                                        {{ $materiItem->is_preview ? 'checked' : '' }}
-                                                        class="sr-only peer"
-                                                    >
-                                                    <div class="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-blue-600 relative transition-all">
-                                                        <div class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform peer-checked:translate-x-full"></div>
+                                                <label for="preview-toggle-{{ $materiItem->id }}" class="flex items-center cursor-pointer" title="{{ $materiItem->is_preview ? 'Sembunyikan Preview' : 'Tampilkan Preview' }}">
+                                                    <div class="relative">
+                                                        <input type="checkbox" name="is_preview" id="preview-toggle-{{ $materiItem->id }}"
+                                                            class="hidden peer"
+                                                            {{ $materiItem->is_preview ? 'checked' : '' }} 
+                                                            value="1"
+                                                            onchange="this.form.submit()" />
+                                                        <div class="block bg-gray-300 w-9 h-5 rounded-full peer-checked:bg-green-500 peer-checked:justify-end"></div>
+                                                        <div class="dot absolute top-0.5 start-[2px] bg-white h-4 w-4 rounded-full transition-transform peer-checked:translate-x-full"></div>
                                                     </div>
                                                 </label>
                                             </form>
+
+                                            <!-- button lihat detail materi -->
                                             <a href="{{ route('materi.show', ['courseId' => $course->id, $materiItem->id]) }}" class="text-white bg-sky-300 p-1 rounded-md hover:bg-sky-200" title="Lihat">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                                                 </svg>
                                             </a>
+
+                                            <!-- button edit materi -->
                                             <a href="{{ route('materi.edit', ['courseId' => $course->id, $materiItem->id]) }}" class="text-white bg-yellow-300 p-1 rounded-md hover:bg-yellow-200" title="Edit">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                                                 </svg>
                                             </a>
+
                                             <!-- Tombol untuk membuka modal -->
                                             <form id="deleteForm" action="{{ route('materi.destroy', ['courseId' => $course->id, 'materiId' => $materiItem->id]) }}" method="POST" class="inline" title="Hapus">
                                                 @csrf
@@ -133,16 +137,16 @@
                             @endforeach
                             @if ($materi->isEmpty())
                                 <tr>
-                                    <td colspan="4" class="text-center text-gray-500 py-4 text-sm border-l border-b border-r">Belum ada materi untuk kursus ini.</td>
+                                    <td colspan="4" class="text-center text-gray-500 py-2 text-sm border-l border-b border-r">Belum ada materi untuk kursus ini.</td>
                                 </tr>
                             @endif
                         </tbody>
                     </table>
                     </div>
                 </div>
-                <div class="mt-4">
-                    {{ $materi->links() }}
-                </div>
+            <div class="mt-4">
+                {{ $materi->links() }}
+            </div>
     </div>
 
    <!-- Tabel Peserta Terdaftar -->
@@ -153,10 +157,10 @@
             <table class="min-w-full mt-2 border-collapse" id="courseTable">
                 <thead>
                     <tr class="bg-sky-200 text-gray-600 text-sm">
-                        <th class="py-2 px-2 border-b border-l border-gray-200">No</th>
-                        <th class="py-2 px-4 border-b border-gray-200">Nama Peserta</th>
-                        <th class="py-2 px-4 border-b border-gray-200">Email</th>
-                        <th class="py-2 border-b border-r border-gray-200">Status Pembayaran</th>
+                        <th class="py-2 px-2 border-b border-t border-l border-gray-200">No</th>
+                        <th class="py-2 px-4 border-b border-t border-gray-200">Nama Peserta</th>
+                        <th class="py-2 px-4 border-b border-t border-gray-200">Email</th>
+                        <th class="py-2 border-b border-r border-t border-gray-200">Status Pembayaran</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -171,33 +175,32 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="4" class="py-4 text-center border-b border-l border-r border-gray-200 text-gray-500 text-sm">Belum ada peserta terdaftar.</td>
+                        <td colspan="4" class="py-2 text-center border-b border-l border-r border-gray-200 text-gray-500 text-sm">Belum ada peserta terdaftar.</td>
                     </tr>
                     @endforelse
                 </tbody>
             </table>
             </div>
-            <div class="mt-4">
-                {{ $participants->links() }}
-            </div> 
-        </div>        
+        </div> 
+        <div class="mt-4">
+            {{ $participants->links() }}
+        </div>       
     </div>
 
     <div class="bg-white mt-6 p-6 rounded-lg shadow-md">
         <h2 class="text-xl font-semibold mb-4 border-b-2 pb-2 text-gray-700">Rating Kursus</h2>
-
        <!-- Tabel rating kursus -->
        <div class="overflow-x-auto">
             <div class="min-w-full w-64">
             <table class="min-w-full text-sm mt-2 border-collapse">
                 <thead>
                     <tr class="bg-sky-200 text-gray-700">
-                        <th class="px-2 py-2 border-b border-l border-gray-200">No</th>
-                        <th class="px-4 py-2 border-b border-gray-200">Nama</th>
-                        <th class="px-4 py-2 border-b border-gray-200">Rating</th>
-                        <th class="px-4 py-2 border-b border-gray-200">Komentar</th>
-                        <th class="px-4 py-2 border-b border-gray-200">Status</th>
-                        <th class="px-4 py-2 border-b border-r border-gray-200">Aksi</th>
+                        <th class="px-2 py-2 border-b border-l border-t border-gray-200">No</th>
+                        <th class="px-4 py-2 border-b border-t border-gray-200">Nama</th>
+                        <th class="px-4 py-2 border-b border-t border-gray-200">Rating</th>
+                        <th class="px-4 py-2 border-b border-t border-gray-200">Komentar</th>
+                        <th class="px-4 py-2 border-b border-t border-gray-200">Status</th>
+                        <th class="px-4 py-2 border-b border-t border-r border-gray-200">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -252,15 +255,15 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="6" class="text-center text-gray-500 py-4 border-b border-l border-r border-gray-200 text-sm">Belum ada rating</td>
+                        <td colspan="6" class="text-center text-gray-500 py-2 border-b border-l border-r border-gray-200 text-sm">Belum ada rating</td>
                     </tr>
                     @endforelse
                 </tbody>
             </table>
-            <div class="mt-4">
-                {{ $ratings->links() }}
             </div>
-            </div>
+        </div>
+        <div class="mt-4">
+            {{ $ratings->links() }}
         </div>
         <div class="mt-6 flex justify-end">
             <a href="{{ route('courses.index') }}" class="bg-sky-400 hover:bg-sky-300 text-white font-semibold py-2 px-4 rounded">

@@ -49,9 +49,9 @@
         <table class="min-w-full border-collapse">
             <thead>
                 <tr class="bg-sky-100 text-gray-700 text-sm">
-                    <th class="py-2 px-2 text-center text-gray-700 border-b border-l border-gray-200">No</th>
-                    <th class="py-2 px-2 text-center text-gray-700 border-b  border-gray-200">Nama Kategori</th>
-                    <th class="py-2 px-2 text-center text-gray-700 border-b border-r border-gray-200">Aksi</th>
+                    <th class="py-2 px-2 text-center text-gray-700 border-b border-l border-t border-gray-200">No</th>
+                    <th class="py-2 px-2 text-center text-gray-700 border-b border-t border-gray-200">Nama Kategori</th>
+                    <th class="py-2 px-2 text-center text-gray-700 border-b border-t border-r border-gray-200">Aksi</th>
                 </tr>
             </thead>
             <tbody>
