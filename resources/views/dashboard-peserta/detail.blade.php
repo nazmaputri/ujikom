@@ -26,7 +26,7 @@
             @endif
         
             @if(!empty($course->start_date))
-                <p class="text-gray-600 text-sm"><span>Tanggal Mulai :</span> {{ $course->start_date }}</p>
+                <p class="text-gray-600 text-sm"><span>Tanggal Mulai :</span>{{ \Carbon\Carbon::parse($course->start_date)->translatedFormat('d F Y') }}</p>
             @endif
         
             @if(!empty($course->duration))

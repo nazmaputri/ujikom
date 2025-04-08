@@ -32,8 +32,8 @@
 <body>
     @include('components.navbar') 
     
-    <section id="promo" class="bg-red-600 text-white px-4 py-2 text-center pt-[100px] fixed w-full z-40">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+    <section id="promo" class="bg-red-600 text-white px-4 py-2 text-center pt-[90px] fixed w-full z-40">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 pb-3 mx-14">
             <!-- Promo text -->
             <div class="text-sm sm:text-base font-semibold">
             APRIL SMART DEALS DISKON 30%! <br class="md:hidden" />
@@ -88,7 +88,7 @@
                             @endforeach
                         </ul>
                         <a href="/">
-                            <button class="bg-sky-200 text-gray-600 py-2 px-4 rounded-full font-semibold mt-6">
+                            <button class="bg-sky-300 hover:bg-sky-200 text-gray-700 py-2 px-4 rounded-full font-semibold mt-6">
                                 Kembali
                             </button>
                         </a>

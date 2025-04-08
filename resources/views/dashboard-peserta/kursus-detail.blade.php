@@ -26,7 +26,7 @@
                 <p class="text-gray-600 text-sm capitalize"><span class="">Mentor :</span> {{ $course->mentor->name }}</p>
                 <p class="text-gray-600 text-sm">Harga : <span class="">Rp {{ number_format($course->price, 0, ',', '.') }}</span></p>
                 @if($course->start_date && $course->end_date)
-                    <p class="text-gray-600 text-sm"><span class="">Tanggal Mulai :</span> {{ \Carbon\Carbon::parse($course->start_date)->format('d F Y') }} - {{ \Carbon\Carbon::parse($course->end_date)->format('d F Y') }}</p>
+                    <p class="text-gray-600 text-sm"><span class="">Tanggal Mulai :</span> {{ \Carbon\Carbon::parse($course->start_date)->translatedFormat('d F Y') }} - {{ \Carbon\Carbon::parse($course->end_date)->translatedFormat('d F Y') }}</p>
                 @endif
                 @if($course->duration)
                     <p class="text-gray-600 text-sm"><span class="">Masa Aktif :</span> {{ $course->duration }}</p>
@@ -54,7 +54,7 @@
             </a>
         </div>
         <!-- Modal Pop-up -->
-    <div id="ratingModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
+    <div id="ratingModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
         <div class="bg-white p-6 rounded-lg shadow-lg md:w-1/3 w-full mx-4">
             <h2 class="text-lg text-gray-700 text-center font-semibold mb-4">Beri Rating untuk Kursus</h2>
             <form id="ratingForm" method="POST" action="{{ route('ratings.store', ['course_id' => $course->id]) }}">
