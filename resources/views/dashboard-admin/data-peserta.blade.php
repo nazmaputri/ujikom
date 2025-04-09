@@ -81,9 +81,9 @@
                 </tbody>
             </table>
             </div>
-            <div class="pagination mt-4">
-                {{ $users->links('pagination::tailwind') }}
-            </div>
+        </div>
+        <div class="pagination mt-4">
+            {{ $users->links('pagination::tailwind') }}
         </div>
     </div>
 </div>

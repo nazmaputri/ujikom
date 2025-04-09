@@ -77,5 +77,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Materi::class, 'materi_user', 'user_id', 'materi_id')
                     ->withTimestamps(); // Memastikan timestamp juga disimpan jika ada
     }
+
+    // Relasi ke tabel notifikasi daftar mentor
+    public function notifikasi()
+    {
+        return $this->hasMany(NotifikasiMentorDaftar::class);
+    }
   
 }

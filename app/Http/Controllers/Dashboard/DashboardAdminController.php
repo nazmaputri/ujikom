@@ -14,6 +14,7 @@ use App\Models\Payment;
 use App\Models\Rating;
 use App\Models\RatingKursus;
 use App\Models\Purchase;
+use App\Models\NotifikasiMentorDaftar;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Mail\HelloMail;
@@ -247,7 +248,7 @@ class DashboardAdminController extends Controller
         $user = User::findOrFail($id);
 
         // Periksa apakah status saat ini 'pending'
-        if ($user->status === 'pending') {
+        if (in_array($user->status, ['pending', 'inactive'])) {
             // Ubah status menjadi 'active'
             $user->status = 'active';
             $user->save();
@@ -258,7 +259,7 @@ class DashboardAdminController extends Controller
             return redirect()->back()->with('success', 'Status mentor berhasil di perbaharui dan email telah terkirim!');
         }
 
-        return redirect()->back()->with('info', 'User is already active.');
+        return redirect()->back()->with('info', 'User berhasil diaktifkan.');
     }
 
     // update status mentor menjadi pending (+oleh intan)
@@ -268,11 +269,11 @@ class DashboardAdminController extends Controller
 
         // Periksa apakah status saat ini bukan 'pending'
         if ($user->status !== 'inactive') {
-            // Ubah status menjadi 'pending'
+            // Ubah status menjadi 'inactive'
             $user->status = 'inactive';
             $user->save();
 
-            return redirect()->back()->with('success', 'Status mentor berhasil diperbarui menjadi nonaktif!'); //sebenarnya pending
+            return redirect()->back()->with('success', 'Status mentor berhasil diperbarui menjadi nonaktif!');
         }
 
         return redirect()->back()->with('info', 'User sudah dalam status nonanctive.');
@@ -396,6 +397,12 @@ class DashboardAdminController extends Controller
             'linkedin' => $request->linkedin,
             'company' => $request->company,
             'years_of_experience' => $request->years_of_experience,
+        ]);
+
+        // Tambahkan notifikasi ke database
+        NotifikasiMentorDaftar::create([
+            'user_id' => $mentor->id,
+            'message' => "{$mentor->name} berhasil melakukan daftar di Eduflix",
         ]);
 
         return redirect()->route('datamentor-admin')->with('success', 'Mentor berhasil ditambahkan!');

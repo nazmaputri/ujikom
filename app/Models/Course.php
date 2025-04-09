@@ -98,5 +98,11 @@ class Course extends Model
 
         return 'Akses Seumur Hidup';
     }
+
+    public function notifikasiMentor()
+    {
+        return $this->hasMany(NotifikasiMentorDaftar::class);
+    }
+
 }
 

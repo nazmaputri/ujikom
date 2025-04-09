@@ -52,7 +52,7 @@
                         </form>
                     @else
                         <!-- Label Kursus Sudah Dibeli -->
-                        <span class="text-sm text-white bg-green-300 rounded-md px-3 py-1 rounded cursor-not-allowed">
+                        <span class="text-sm text-green-700 bg-green-200 rounded-md px-4 cursor-not-allowed">
                             Sudah dibeli
                         </span>
                     @endif
@@ -67,7 +67,7 @@
         <h3 class="text-xl font-semibold text-gray-700 mb-6 border-b-2 border-gray-300 pb-2">Materi Kursus</h3>
         <div class="space-y-6">
             @if($course->materi->isEmpty())
-                <p class="text-gray-600 text-center">Belum ada materi</p>
+                <p class="text-gray-600 text-center text-sm">Belum ada materi</p>
             @else
             @foreach($course->materi as $materi)
                 <div class="bg-neutral-50 p-4 rounded-lg shadow-md">
