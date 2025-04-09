@@ -99,7 +99,6 @@
                             </div>
                         @endif
                     
-
                         @if ($materi->quizzes && $materi->quizzes->count())
                             <div class="mt-4">
                                 <h5 class="text-md font-semibold text-gray-700 flex items-center space-x-2 mb-2">
@@ -124,73 +123,90 @@
                                 </ul>
                             </div>
                         @endif
-                        <!-- Modal -->
-                        <div id="quizModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden z-50">
-                            <div class="bg-white p-6 rounded-lg shadow-lg max-w-md w-full sm:px-4 md:px-6 sm:mx-4 md:mx-6">
-                                <h3 id="modalTitle" class="text-lg font-semibold mb-4">Konfirmasi</h3>
-                                <p id="modalMessage" class="text-gray-700 mb-6"></p>
-                                <div class="flex justify-center space-x-4">
-                                    <button id="cancelButton" class="bg-red-400 font-semibold text-white px-4 py-2 rounded-md hover:bg-red-300 focus:outline-none">
-                                        Tidak
-                                    </button>
-                                    <a id="confirmButton" href="#" class="bg-sky-400 font-semibold text-white px-4 py-2 rounded-md hover:bg-sky-300 focus:outline-none">
-                                        Ya
-                                    </a>
-                                </div>
-                            </div>
-                        </div>                                                               
-                        <script>
-                            document.addEventListener("DOMContentLoaded", function () {
-                                const quizLinks = document.querySelectorAll(".quiz-link");
-                                const modal = document.getElementById("quizModal");
-                                const modalTitle = document.getElementById("modalTitle");
-                                const modalMessage = document.getElementById("modalMessage");
-                                const confirmButton = document.getElementById("confirmButton");
-                                const cancelButton = document.getElementById("cancelButton");
-                                
-                                // Menambahkan event listener hanya pada elemen dengan kelas .quiz-link
-                                quizLinks.forEach(link => {
-                                    link.addEventListener("click", function (event) {
-                                        event.preventDefault(); // Mencegah navigasi langsung ke URL kuis
-                                        
-                                        const title = this.dataset.quizTitle;
-                                        const url = this.dataset.quizUrl;
-                                        const duration = this.dataset.quizDuration;
-                                        
-                                        // Mengupdate konten modal
-                                        modalTitle.textContent = `Apakah Anda yakin ingin mengambil kuis ini?`;
-                                        modalMessage.textContent = `Kuis "${title}" membutuhkan waktu ${duration} menit untuk diselesaikan.`;
-                                        confirmButton.href = url; // Memastikan link kuis diteruskan ke tombol konfirmasi
-                                        
-                                        // Menampilkan modal
-                                        modal.classList.remove("hidden");
-                                    });
-                                });
-                                
-                                // Menangani tombol "Tidak"
-                                cancelButton.addEventListener("click", function () {
-                                    modal.classList.add("hidden"); // Menyembunyikan modal jika dibatalkan
-                                });
-                        
-                                // Menangani event untuk membuka/menutup dropdown kuis
-                                const dropdowns = document.querySelectorAll(".quiz-dropdown");
-                                dropdowns.forEach(dropdown => {
-                                    dropdown.addEventListener("click", function () {
-                                        // Toggle visibility of the dropdown (menampilkan atau menyembunyikan dropdown)
-                                        this.classList.toggle("hidden");
-                                    });
-                                });
-                            });
-                        </script>
+
                     </div>
                 </div>
             @endforeach
-            <div class="flex justify-end">
+            
+            @if ($finalQuizzes->count()).
+                <div class="mt-8">
+                    <div class="flex flex-col gap-3">
+                        @foreach ($finalQuizzes as $quiz)
+                            <a href="{{ route('quiz.show', $quiz->id) }}"
+                            data-quiz-title="{{ $quiz->title }}"
+                            data-quiz-duration="{{ $quiz->duration }}"
+                            class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg shadow flex items-center justify-between transition-all duration-200">
+                                <span>{{ $quiz->title }}</span>
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
+
+            <div class="flex justify-end mt-6">
                 <a href="{{ route('daftar-kursus') }}" 
                    class="bg-sky-400 hover:bg-sky-300 font-semibold text-white py-2 px-3 rounded-lg">
                     Kembali
                 </a>
             </div>
+                <!-- Modal Untuk Membuka Kuis -->
+                <div id="quizModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden z-50">
+                    <div class="bg-white p-6 rounded-lg shadow-lg max-w-md w-full sm:px-4 md:px-6 sm:mx-4 md:mx-6">
+                        <h3 id="modalTitle" class="text-lg font-semibold mb-4">Konfirmasi</h3>
+                        <p id="modalMessage" class="text-gray-700 mb-6"></p>
+                        <div class="flex justify-center space-x-4">
+                            <button id="cancelButton" class="bg-red-400 font-semibold text-white px-4 py-2 rounded-md hover:bg-red-300 focus:outline-none">
+                                Tidak
+                            </button>
+                            <a id="confirmButton" href="#" class="bg-sky-400 font-semibold text-white px-4 py-2 rounded-md hover:bg-sky-300 focus:outline-none">
+                                Ya
+                            </a>
+                        </div>
+                    </div>
+                </div>                                                         
+                <script>
+                    document.addEventListener("DOMContentLoaded", function () {
+                        const quizLinks = document.querySelectorAll(".quiz-link");
+                        const modal = document.getElementById("quizModal");
+                        const modalTitle = document.getElementById("modalTitle");
+                        const modalMessage = document.getElementById("modalMessage");
+                        const confirmButton = document.getElementById("confirmButton");
+                        const cancelButton = document.getElementById("cancelButton");
+                        
+                        // Menambahkan event listener hanya pada elemen dengan kelas .quiz-link
+                        quizLinks.forEach(link => {
+                            link.addEventListener("click", function (event) {
+                                event.preventDefault(); // Mencegah navigasi langsung ke URL kuis
+                                
+                                const title = this.dataset.quizTitle;
+                                const url = this.dataset.quizUrl;
+                                const duration = this.dataset.quizDuration;
+                                
+                                // Mengupdate konten modal
+                                modalTitle.textContent = `Apakah Anda yakin ingin mengambil kuis ini?`;
+                                modalMessage.textContent = `Kuis "${title}" membutuhkan waktu ${duration} menit untuk diselesaikan.`;
+                                confirmButton.href = url; // Memastikan link kuis diteruskan ke tombol konfirmasi
+                                
+                                // Menampilkan modal
+                                modal.classList.remove("hidden");
+                            });
+                        });
+                        
+                        // Menangani tombol "Tidak"
+                        cancelButton.addEventListener("click", function () {
+                            modal.classList.add("hidden"); // Menyembunyikan modal jika dibatalkan
+                        });
+                
+                        // Menangani event untuk membuka/menutup dropdown kuis
+                        const dropdowns = document.querySelectorAll(".quiz-dropdown");
+                        dropdowns.forEach(dropdown => {
+                            dropdown.addEventListener("click", function () {
+                                // Toggle visibility of the dropdown (menampilkan atau menyembunyikan dropdown)
+                                this.classList.toggle("hidden");
+                            });
+                        });
+                    });
+                </script>
         </div>
     </div>
 </div>

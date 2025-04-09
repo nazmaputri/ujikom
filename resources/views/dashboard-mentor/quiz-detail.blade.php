@@ -52,10 +52,19 @@
 
         <!-- Tombol Kembali -->
         <div class="mt-6 justify-end flex">
-            <a href="{{ route('materi.show', ['courseId' => $course->id, 'materiId' => $materi->id]) }}"
-               class="bg-sky-400 hover:bg-sky-300 text-white font-bold py-2 px-4 rounded">
-                Kembali
-            </a>
+            @if(isset($materiId))
+                {{-- Jika sedang membuat kuis biasa --}}
+                <a href="{{ route('materi.show', ['courseId' => $course->id, 'materiId' => $materi->id]) }}"
+                class="bg-sky-400 hover:bg-sky-300 text-white font-semibold py-2 px-4 rounded-lg">
+                    Kembali
+                </a>
+            @else
+                {{-- Jika sedang membuat tugas akhir --}}
+                <a href="{{ route('courses.show', ['course' => $course->id]) }}"
+                class="bg-sky-400 hover:bg-sky-300 text-white font-semibold py-2 px-4 rounded-lg">
+                    Kembali
+                </a>
+            @endif
         </div>
     </div>
 

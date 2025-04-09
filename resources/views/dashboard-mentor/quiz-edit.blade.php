@@ -7,7 +7,9 @@
         <h1 class="text-xl font-semibold text-gray-700 mb-6 text-center border-b-2 pb-2">Edit Kuis</h1>
 
         <!-- Form Edit Quiz -->
-        <form action="{{ route('quiz.update', ['courseId' => $courseId, 'materiId' => $materiId, $quiz->id]) }}" method="POST">
+        <form action="{{ isset($materiId)
+        ? route('quiz.update', ['courseId' => $courseId, 'materiId' => $materiId, $quiz->id])
+        : route('final-update', ['courseId' => $courseId, 'id' => $quiz->id]) }}" method="POST">    
     @csrf
     @method('PUT')
 
@@ -126,9 +128,19 @@
 
     <!-- Tombol aksi -->
     <div class="mt-6 flex justify-end space-x-2">
-        <a href="{{ route('materi.show', ['courseId' => $course->id, 'materiId' => $materi->id]) }}" class="bg-red-400 hover:bg-red-300 text-white font-semibold py-2 px-4 rounded-lg">
-            Batal
-        </a>
+        @if(isset($materiId))
+            {{-- Jika sedang membuat kuis biasa --}}
+            <a href="{{ route('materi.show', ['courseId' => $course->id, 'materiId' => $materi->id]) }}"
+            class="bg-red-400 hover:bg-red-300 text-white font-semibold py-2 px-4 rounded-lg">
+                Batal
+            </a>
+        @else
+            {{-- Jika sedang membuat tugas akhir --}}
+            <a href="{{ route('courses.show', ['course' => $course->id]) }}"
+            class="bg-red-400 hover:bg-red-300 text-white font-semibold py-2 px-4 rounded-lg">
+                Batal
+            </a>
+        @endif    
         <button type="submit" class="bg-sky-400 hover:bg-sky-300 text-white text-sm font-semibold py-2 px-4 rounded-lg">
             Simpan
         </button>

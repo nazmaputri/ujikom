@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Materi;
 use App\Models\MateriVideo;
 use App\Models\MateriPdf;
+use App\Models\Quiz;
 use App\Models\RatingKursus;
 use App\Models\Purchase;
 use Illuminate\Http\Request;
@@ -103,25 +104,34 @@ class CourseController extends Controller
         // Ambil data course beserta relasi materi yang terkait
         $course = Course::with('materi')->findOrFail($id);
         
-        // Menggunakan pagination untuk menampilkan 5 materi per halaman
+        // Menggunakan paginasi untuk menampilkan 5 materi per halaman
         $materi = $course->materi()->paginate(5);
-
-        // Ambil ID mentor yang sedang login (untuk menampilkan rating kursus berdasarkan mentor nya)
+    
+        // Ambil ID mentor yang sedang login
         $mentorId = Auth::id();
-
-        // Ambil rating berdasarkan course_id dan mentor_id (untuk menampilkan rating kursus berdasarkan kursus nya)
-        $ratings = RatingKursus::where('course_id', $id)->with('user')->paginate(5);
+    
+        // Ambil rating berdasarkan course_id (bisa disesuaikan jika ingin filter berdasarkan mentor juga)
+        $ratings = RatingKursus::where('course_id', $id)
+                    ->with('user')
+                    ->paginate(5);
+    
+        // Ambil quiz berdasarkan course_id
+        $quizzes = Quiz::where('course_id', $id)->paginate(5);
         
-        // Ambil peserta yang pembayaran kursusnya lunas
+        $finalQuizzes = Quiz::where('course_id', $id)
+                    ->whereNull('materi_id')
+                    ->get();
+
+        // Ambil peserta yang pembayaran kursusnya lunas beserta data user-nya
         $participants = Purchase::where('course_id', $id)
-        ->where('status', 'success')
-        ->with('user')
-        ->paginate(5);
+                            ->where('status', 'success')
+                            ->with('user')
+                            ->paginate(5);
     
         // Kembalikan data ke view
-        return view('dashboard-mentor.kursus-detail', compact('course', 'materi', 'participants','ratings'));
+        return view('dashboard-mentor.kursus-detail', compact('course', 'quizzes', 'finalQuizzes', 'materi', 'participants', 'ratings'));
     }
-
+    
     public function edit(Course $course)
     {
         $categories = Category::all();

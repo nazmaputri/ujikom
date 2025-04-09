@@ -135,12 +135,21 @@ Route::middleware(['auth:mentor'])->group(function () {
     Route::delete('pdf/{pdf}', [PdfController::class, 'destroy'])->name('pdf.destroy');
 
     // Quiz
-    Route::get('/quiz/{courseId}/{materiId}/{quiz}', [QuizController::class, 'detail'])->name('quiz.detail');
+    Route::get('/quiz-detail/{course}/{materi}/{quiz}', [QuizController::class, 'detail'])->name('quiz.detail');
     Route::get('/quiz/{courseId}/{materiId}', [QuizController::class, 'create'])->name('quiz.create');
     Route::post('/quiz/{courseId}/{materiId}', [QuizController::class, 'store'])->name('quiz.store');
-    Route::get('/quiz/{courseId}/{materiId}/{quiz}/edit', [QuizController::class, 'edit'])->name('quiz.edit');
+    Route::get('/quiz-edit/{courseId}/{materiId}/{quiz}', [QuizController::class, 'edit'])->name('quiz-edit');
     Route::put('/quiz/{courseId}/{materiId}/{quiz}', [QuizController::class, 'update'])->name('quiz.update');
     Route::delete('/quiz/{courseId}/{materiId}/{quiz}', [QuizController::class, 'destroy'])->name('quiz.destroy');
+
+    //Tugas Akhir
+    Route::get('/final-task/{courseId}', [QuizController::class, 'create'])->name('final-task.create');
+    Route::post('/final-task/{courseId}', [QuizController::class, 'store'])->name('final-task.store');
+    Route::get('/quiz-detail/{course}/{quiz}', [QuizController::class, 'detail'])->name('final-detail');
+    Route::get('/final-edit/{courseId}/{id}', [QuizController::class, 'edit'])->name('final-edit');
+    Route::put('/final-update/{courseId}/{id}', [QuizController::class, 'update'])->name('final-update');
+    Route::delete('/final-destroy/{course}/{quiz}', [QuizController::class, 'destroy'])->name('final-destroy');
+   
 });
 
 //Umum

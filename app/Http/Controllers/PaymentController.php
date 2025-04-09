@@ -146,20 +146,20 @@ class PaymentController extends Controller
         $payment->transaction_status = $transactionStatus;
         $payment->save();
     
-        // Jika status transaksi sukses, perbarui status pembelian di tabel purchases dan hapus data keranjang untuk user terkait
+        // Jika status transaksi sukses, perbarui status pembelian dan hapus keranjang
         if ($transactionStatus === 'success') {
             Purchase::where('transaction_id', $orderId)
                 ->update(['status' => 'success']);
     
-            // Hapus data keranjang
             Keranjang::where('user_id', $payment->user_id)->delete();
         }
     
+        // Tidak perlu redirect di sini, karena ini dipanggil dari backend (webhook/callback)
         return response()->json([
             'message' => 'Status pembayaran berhasil diperbarui.',
-            'payment' => $payment,
         ]);
-    }    
+    }
+    
     
 }
 

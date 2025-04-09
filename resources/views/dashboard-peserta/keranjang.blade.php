@@ -194,7 +194,11 @@
                             .then(res => res.json())
                             .then(response => {
                                 showFlashMessage(response.message);
-                                setTimeout(() => location.reload(), 2000);
+                                
+                                 // Arahkan user ke daftar kursus setelah 2 detik
+                                setTimeout(() => {
+                                    window.location.href = "{{ route('daftar-kursus') }}";
+                                }, 2000);
                             })
                             .catch(error => {
                                 console.error('Error updating payment status:', error);

@@ -17,7 +17,7 @@
         @endif --}}
 
         <!-- Form Tambah Kuis -->
-       <form action="{{ route('quiz.store', ['courseId' => $courseId, 'materiId' => $materiId]) }}" method="POST" class="space-y-6">
+        <form action="{{ isset($materiId) ? route('quiz.store', ['courseId' => $courseId, 'materiId' => $materiId]): route('final-task.store', ['courseId' => $courseId]) }}" method="POST" class="space-y-6">    
     @csrf
     <!-- Input untuk Judul Kuis -->
      <div>
@@ -96,9 +96,19 @@
 
     <!-- Tombol Submit -->
     <div class="mt-6 flex justify-end space-x-2">
-        <a href="{{ route('materi.show', ['courseId' => $course->id, 'materiId' => $materi->id]) }}" class="bg-red-400 hover:bg-red-300 text-white font-semibold py-2 px-4 rounded-lg">
-            Batal
-        </a>
+        @if(isset($materiId))
+            {{-- Jika sedang membuat kuis biasa --}}
+            <a href="{{ route('materi.show', ['courseId' => $course->id, 'materiId' => $materi->id]) }}"
+            class="bg-red-400 hover:bg-red-300 text-white font-semibold py-2 px-4 rounded-lg">
+                Batal
+            </a>
+        @else
+            {{-- Jika sedang membuat tugas akhir --}}
+            <a href="{{ route('courses.show', ['course' => $course->id]) }}"
+            class="bg-red-400 hover:bg-red-300 text-white font-semibold py-2 px-4 rounded-lg">
+                Batal
+            </a>
+        @endif    
         <button type="submit" class="bg-sky-400 hover:bg-sky-300 text-white font-semibold py-2 px-4 rounded-lg">
             Simpan
         </button>

@@ -155,7 +155,12 @@ class DashboardPesertaController extends Controller
             ->pluck('materi_id')
             ->toArray();
     
-        return view('dashboard-peserta.study', compact('course', 'completedMateriIds'));
+        // Mengambil kuis tugas akhir yang tidak memiliki materi_id
+        $finalQuizzes = \App\Models\Quiz::where('course_id', $id)
+                        ->whereNull('materi_id')
+                        ->get();
+    
+        return view('dashboard-peserta.study', compact('course', 'completedMateriIds', 'finalQuizzes'));
     }    
 
     public function kursusTerdaftar()
@@ -190,7 +195,7 @@ class DashboardPesertaController extends Controller
     }
 
     public function kategori() {
-        $categories = Category::paginate(4);
+        $categories = Category::paginate(6);
         return view('dashboard-peserta.categories', compact('categories'));
     }
 
