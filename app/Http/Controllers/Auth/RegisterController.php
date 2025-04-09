@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\NotifikasiMentorDaftar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -96,6 +97,14 @@ class RegisterController extends Controller
             'company' => $request->company ?? null,
             'years_of_experience' => $request->years_of_experience ?? null,
         ]);
+
+        // Tambahkan notifikasi ke database jika mentor
+        if ($request->role === 'mentor') {
+            NotifikasiMentorDaftar::create([
+                'user_id' => $user->id,
+                'message' => "{$user->name} berhasil melakukan daftar di Eduflix",
+            ]);
+        }
 
         // Redirect dan tampilkan notifikasi khusus mentor
         $message = $request->role === 'mentor'

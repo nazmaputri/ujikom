@@ -18,7 +18,7 @@
             @endif
         
             @if(!empty($course->description))
-                <p class="text-gray-600 mb-2 text-md">{{ $course->description }}</p>
+                <p class="text-gray-600 mb-2 text-sm">{{ $course->description }}</p>
             @endif
         
             @if(!empty($course->mentor->name))
@@ -26,7 +26,7 @@
             @endif
         
             @if(!empty($course->start_date))
-                <p class="text-gray-600 text-sm"><span>Tanggal Mulai :</span> {{ $course->start_date }}</p>
+                <p class="text-gray-600 text-sm"><span>Tanggal Mulai :</span>{{ \Carbon\Carbon::parse($course->start_date)->translatedFormat('d F Y') }}</p>
             @endif
         
             @if(!empty($course->duration))
@@ -52,7 +52,7 @@
                         </form>
                     @else
                         <!-- Label Kursus Sudah Dibeli -->
-                        <span class="text-sm text-white bg-green-300 rounded-md px-3 py-1 rounded cursor-not-allowed">
+                        <span class="text-sm text-green-700 bg-green-200 rounded-md px-4 cursor-not-allowed">
                             Sudah dibeli
                         </span>
                     @endif
@@ -67,14 +67,14 @@
         <h3 class="text-xl font-semibold text-gray-700 mb-6 border-b-2 border-gray-300 pb-2">Materi Kursus</h3>
         <div class="space-y-6">
             @if($course->materi->isEmpty())
-                <p class="text-gray-600 text-center">Belum ada materi</p>
+                <p class="text-gray-600 text-center text-sm">Belum ada materi</p>
             @else
             @foreach($course->materi as $materi)
                 <div class="bg-neutral-50 p-4 rounded-lg shadow-md">
                     <div x-data="{ open: false }">
                         <div @click="open = !open" class="flex justify-between items-center cursor-pointer">
-                            <span class="text-gray-700 font-semibold mr-2">{{ sprintf('%02d', $loop->iteration) }}.</span>
-                            <h4 class="text-lg font-semibold text-gray-700 flex-1 capitalize">{{ $materi->judul }}</h4>
+                            <span class="text-gray-700 font-semibold mr-2 text-sm">{{ sprintf('%02d', $loop->iteration) }}.</span>
+                            <h4 class="text-sm font-semibold text-gray-700 flex-1 capitalize">{{ $materi->judul }}</h4>
                             <svg :class="open ? 'transform rotate-180' : ''" class="w-5 h-5 transition-transform duration-300 ease-in-out text-gray-600 hover:text-gray-800" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
@@ -85,7 +85,7 @@
                             x-transition
                             class="mt-2"
                         >
-                            <p class="text-gray-600 mb-2">{{ $materi->deskripsi }}</p>
+                            <p class="text-gray-600 mb-2 text-sm">{{ $materi->deskripsi }}</p>
 
                             <ul class="space-y-1">
                                 @foreach($materi->videos as $index => $video)
@@ -129,16 +129,17 @@
                             {{-- PDF Section --}}
                             @if($materi->pdfs->count())
                                 <div class="mt-4">
-                                    <h5 class="text-md font-semibold text-gray-700 flex items-center space-x-2 mb-2">
-                                        <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
-                                            <path d="..."/>
+                                    <h5 class="text-sm font-semibold text-gray-700 flex items-center space-x-2 mb-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4">
+                                            <path fill-rule="evenodd" d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0 0 16.5 9h-1.875a1.875 1.875 0 0 1-1.875-1.875V5.25A3.75 3.75 0 0 0 9 1.5H5.625ZM7.5 15a.75.75 0 0 1 .75-.75h7.5a.75.75 0 0 1 0 1.5h-7.5A.75.75 0 0 1 7.5 15Zm.75 2.25a.75.75 0 0 0 0 1.5H12a.75.75 0 0 0 0-1.5H8.25Z" clip-rule="evenodd" />
+                                            <path d="M12.971 1.816A5.23 5.23 0 0 1 14.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 0 1 3.434 1.279 9.768 9.768 0 0 0-6.963-6.963Z" />
                                         </svg>
                                         <span>PDF</span>
                                     </h5>
 
                                     <ul class="space-y-2">
                                         @foreach($materi->pdfs as $pdf)
-                                            <li class="text-gray-700">
+                                            <li class="text-gray-700 text-sm">
                                                 @if($course->is_purchased)
                                                     <p class="mb-1">{{ $pdf->judul }}</p>
                                                     <iframe src="{{ asset('storage/' . $pdf->pdf_file) }}#toolbar=0" width="100%" height="500px" class="border rounded" allow="fullscreen"></iframe>
@@ -183,28 +184,30 @@
 <!-- Section Ulasan Pengguna -->
 <div class="bg-white p-8 rounded-lg shadow-md mt-10">
     <h3 class="text-xl font-semibold text-gray-700 mb-6 border-b-2 border-gray-300 pb-2">Ulasan Pengguna</h3>
+    <!-- card rating -->
     <div class="space-y-6">
     <!-- Jika tidak ada ulasan -->
     @if($rating->isEmpty())
-        <p class="text-gray-500 text-center">Belum ada ulasan</p>
+        <p class="text-gray-500 text-center text-sm">Belum ada ulasan</p>
     @else
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             @foreach($rating as $rating)
                 <div class="bg-neutral-50 p-4 rounded-lg shadow-md">
                     <div class="flex items-center space-x-4">
                         <img src="{{ $rating->user->profile_photo ? asset('storage/' . $rating->user->profile_photo) : asset('storage/default-profile.jpg') }}" 
-                            alt="User Profile" class="w-12 h-12 rounded-full object-cover">
+                            alt="User Profile" class="w-6 h-6 rounded-full object-cover">
                         <div>
-                            <h4 class="text-md font-semibold text-gray-700">{{ $rating->user->name }}</h4>
-                            <div class="flex items-center text-yellow-400 text-sm">
-                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.26 3.902a1 1 0 00.95.69h4.1c.969 0 1.371 1.24.588 1.81l-3.32 2.41a1 1 0 00-.364 1.118l1.26 3.902c.3.921-.755 1.688-1.54 1.118L10 14.347l-3.774 2.732c-.785.57-1.84-.197-1.54-1.118l1.26-3.902a1 1 0 00-.364-1.118L2.263 8.33c-.783-.57-.38-1.81.588-1.81h4.1a1 1 0 00.95-.69l1.148-3.902z"/>
-                                </svg>
-                                <span class="ml-1 font-semibold">{{ $rating->stars }}.0</span>
-                            </div>
+                            <h4 class="text-sm font-semibold text-gray-700">{{ $rating->user->name }}</h4>
+                            <span class="text-xs text-gray-500">{{ \Carbon\Carbon::parse($rating->created_at)->format('d F Y') }}</span>
                         </div>
                     </div>
-                    <p class="text-gray-600 mt-2">{{ $rating->comment }}</p>
+                    <!-- Rating Bintang -->
+                    <div class="flex items-center space-x-1">
+                        @for ($i = 0; $i < 5; $i++)
+                            <span class="{{ $i < $rating->stars ? 'text-yellow-500' : 'text-gray-300' }}">&starf;</span>
+                        @endfor
+                    </div>
+                    <p class="text-gray-600 text-sm">{{ $rating->comment }}</p>
                 </div>
             @endforeach
         </div>

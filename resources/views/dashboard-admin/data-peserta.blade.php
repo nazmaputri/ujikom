@@ -35,10 +35,10 @@
             <table class="min-w-full border-collapse" id="userTable">
                 <thead>
                     <tr class="bg-sky-100 text-gray-700 text-sm">
-                        <th class="py-2 border-b border-l border-gray-200">No</th>
-                        <th class="py-2 border-b border-gray-200">Nama</th>
-                        <th class="py-2 border-b border-gray-200">Email</th>
-                        <th class="py-2 border-b border-r border-gray-200">Aksi</th>
+                        <th class="py-2 border-b border-l border-t border-gray-200">No</th>
+                        <th class="py-2 border-b border-t border-gray-200">Nama</th>
+                        <th class="py-2 border-b border-t border-gray-200">Email</th>
+                        <th class="py-2 border-b border-t border-r border-gray-200">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -81,9 +81,9 @@
                 </tbody>
             </table>
             </div>
-            <div class="pagination mt-4">
-                {{ $users->links('pagination::tailwind') }}
-            </div>
+        </div>
+        <div class="pagination mt-4">
+            {{ $users->links('pagination::tailwind') }}
         </div>
     </div>
 </div>

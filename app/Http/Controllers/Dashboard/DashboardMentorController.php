@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\DashboardMentor\CourseController;
 use App\Http\Controllers\DashboardAdmin\CategoryController;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 use App\Models\Category;
 use App\Models\Course;
 use App\Models\Materi;
@@ -131,6 +133,22 @@ class DashboardMentorController extends Controller
             $coursesRevenue[$payment->id]['monthly'][$payment->month] = $payment->total;
         }
 
+        // Ubah ke collection & urutkan total tertinggi
+        $coursesRevenue = collect($coursesRevenue)->sortByDesc(function ($item) {
+            return array_sum($item['monthly'] ?? []);
+        })->values(); // reset index
+
+        // Pagination manual
+        $perPage = 5;
+        $page = $request->get('page', 1);
+        $paginatedCoursesRevenue = new LengthAwarePaginator(
+            $coursesRevenue->forPage($page, $perPage),
+            $coursesRevenue->count(),
+            $perPage,
+            $page,
+            ['path' => $request->url(), 'query' => $request->query()]
+        );
+
         $years = range(date('Y'), date('Y') - 2);
 
         return view('dashboard-mentor.laporan', compact(
@@ -139,7 +157,8 @@ class DashboardMentorController extends Controller
             'years',
             'currentYear',
             'coursesRevenue',
-            'totalRevenueYear'
+            'totalRevenueYear',
+            'paginatedCoursesRevenue'
         ));
     }
 }

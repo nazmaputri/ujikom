@@ -10,6 +10,7 @@ use App\Models\MateriVideo;
 use App\Models\MateriPdf;
 use App\Models\Quiz;
 use App\Models\RatingKursus;
+use App\Models\NotifikasiMentorDaftar;
 use App\Models\Purchase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,11 +28,16 @@ class CourseController extends Controller
 
         // Ambil kursus yang hanya dimiliki oleh mentor yang login
         $courses = Course::where('mentor_id', $mentorId)
-            ->when($search, function ($query) use ($search) {
-                $query->where('title', 'LIKE', "%{$search}%")
-                    ->orWhere('price', 'LIKE', "%{$search}%");
-            })
-            ->paginate(10);
+        ->when($search, function ($query) use ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'LIKE', "%{$search}%")
+                ->orWhere('price', 'LIKE', "%{$search}%")
+                ->orWhereHas('category', function ($q2) use ($search) {
+                    $q2->where('name', 'LIKE', "%{$search}%");
+                });
+            });
+        })
+        ->paginate(10);
 
         // Kirim data ke view
         return view('dashboard-mentor.kursus', compact('courses', 'search'));
@@ -45,58 +51,67 @@ class CourseController extends Controller
     }
 
     public function store(Request $request)
-{
-    // Validasi data yang dikirimkan dengan pesan custom
-    $request->validate([
-        'title' => 'required|string|max:255',
-        'description' => 'required|string',
-        'category' => 'required|integer',
-        'price' => 'required|numeric',
-        'capacity' => 'nullable|integer',
-        'chat' => 'nullable|boolean', // Validasi chat
-        'image' => 'required|image|mimes:jpg,png,jpeg|max:2048',
-        'start_date' => 'nullable|date|before_or_equal:end_date',
-        'end_date' => 'nullable|date|after_or_equal:start_date',
-    ], [
-        'title.required' => 'Judul kursus harus diisi.',
-        'description.required' => 'Deskripsi kursus harus diisi.',
-        'category.required' => 'Kategori kursus harus dipilih.',
-        'price.required' => 'Harga kursus harus diisi.',
-        'image.required' => 'Foto kursus harus diunggah.',
-        'start_date.required' => 'Tanggal mulai kursus harus diisi.',
-        'end_date.required' => 'Tanggal selesai kursus harus diisi.',
-        'start_date.before_or_equal' => 'Tanggal mulai harus sebelum atau sama dengan tanggal selesai.',
-        'end_date.after_or_equal' => 'Tanggal selesai harus setelah atau sama dengan tanggal mulai.',
-    ]);
-    
-    // Cari kategori berdasarkan ID
-    $category = Category::find($request->category);
-    
-    if (!$category) {
-        return redirect()->back()->withErrors(['category' => 'Kategori yang dipilih tidak ditemukan.']);
-    }
+    {
+        // Validasi data yang dikirimkan dengan pesan custom
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'category' => 'required|integer',
+            'price' => 'required|numeric',
+            'capacity' => 'nullable|integer',
+            'chat' => 'nullable|boolean', // Validasi chat
+            'image' => 'required|image|mimes:jpg,png,jpeg|max:2048',
+            'start_date' => 'nullable|date|before_or_equal:end_date',
+            'end_date' => 'nullable|date|after_or_equal:start_date',
+        ], [
+            'title.required' => 'Judul kursus harus diisi.',
+            'description.required' => 'Deskripsi kursus harus diisi.',
+            'category.required' => 'Kategori kursus harus dipilih.',
+            'price.required' => 'Harga kursus harus diisi.',
+            'image.required' => 'Foto kursus harus diunggah.',
+            'start_date.required' => 'Tanggal mulai kursus harus diisi.',
+            'end_date.required' => 'Tanggal selesai kursus harus diisi.',
+            'start_date.before_or_equal' => 'Tanggal mulai harus sebelum atau sama dengan tanggal selesai.',
+            'end_date.after_or_equal' => 'Tanggal selesai harus setelah atau sama dengan tanggal mulai.',
+        ]);
+        
+        // Cari kategori berdasarkan ID
+        $category = Category::find($request->category);
+        
+        if (!$category) {
+            return redirect()->back()->withErrors(['category' => 'Kategori yang dipilih tidak ditemukan.']);
+        }
 
-    // Buat instance baru untuk kursus
-    $course = new Course($request->only('title', 'description', 'price', 'capacity', 'start_date', 'end_date'));
-    
-    // Menyimpan kategori dan mentor
-    $course->category = $category->name;
-    $course->mentor_id = auth()->user()->id;
-    
-    // Simpan status chat (gunakan boolean untuk memastikan nilainya benar)
-    $course->chat = $request->boolean('chat');
-    
-    // Simpan gambar jika diunggah
-    if ($request->hasFile('image')) {
-        $path = $request->file('image')->store('images/kursus', 'public');
-        $course->image_path = $path; // Simpan path gambar ke database
-    }
-    
-    // Simpan data ke database
-    $course->save();
-    
-    // Redirect ke halaman kursus dengan pesan sukses
-    return redirect()->route('courses.index')->with('success', 'Kursus berhasil ditambahkan!');
+        // Buat instance baru untuk kursus
+        $course = new Course($request->only('title', 'description', 'price', 'capacity', 'start_date', 'end_date'));
+        
+        // Menyimpan kategori dan mentor
+        $course->category = $category->name;
+        $course->mentor_id = auth()->user()->id;
+        
+        // Simpan status chat (gunakan boolean untuk memastikan nilainya benar)
+        $course->chat = $request->boolean('chat');
+        
+        // Simpan gambar jika diunggah
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('images/kursus', 'public');
+            $course->image_path = $path; // Simpan path gambar ke database
+        }
+        
+        // Simpan data ke database
+        $course->save();
+
+        $mentor = auth()->user(); // PENTING: definisikan ini dulu
+        
+        // Simpan data ke tabel notifikasimentordaftar untuk menampilkan notifikasi mentor tambah kursus di role admin
+        NotifikasiMentorDaftar::create([
+            'user_id' => $mentor->id,
+            'course_id' => $course->id,
+            'message' => "{$mentor->name} berhasil menambahkan kursus \"{$course->title}\".",
+        ]);
+        
+        // Redirect ke halaman kursus dengan pesan sukses
+        return redirect()->route('courses.index')->with('success', 'Kursus berhasil ditambahkan!');
     }
 
     public function show($id)

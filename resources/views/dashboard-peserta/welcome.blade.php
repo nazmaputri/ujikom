@@ -1,21 +1,10 @@
 @extends('layouts.dashboard-peserta')
 @section('content')
-@if (session('error'))
-    <div id="flash-message" class="bg-red-100 border border-red-400 text-red-700 p-2 rounded mb-3">
+@if(session('error'))
+    <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
         {{ session('error') }}
     </div>
 @endif
-<script>
-     //untuk mengatur flash message dari backend
-     document.addEventListener('DOMContentLoaded', function () {
-        const flashMessage = document.getElementById('flash-message');
-            if (flashMessage) {
-                setTimeout(() => {
-                    flashMessage.remove();
-                }, 2000); // Hapus pesan setelah 3 detik
-            }
-    });
-</script>
 <div class="bg-white rounded-lg shadow-md p-5 w-full flex flex-col md:flex-row h-auto items-center">
     <div class="w-full text-center md:text-left mb-4 md:mb-0">
         <h1 class="text-xl font-semibold mb-4 text-gray-700">Selamat datang, {{ Auth::user()->name }}!</h1>
@@ -85,7 +74,7 @@
                     <!-- Button Lanjut Belajar -->
                     <a href="{{ route('study-peserta', ['id' => $course->id]) }}" class="flex-1">
                         <button class="bg-yellow-200/50 mb-4 text-yellow-500 border border-yellow-300 w-full py-2 rounded-lg font-semibold flex items-center justify-center gap-2 hover:text-white hover:bg-yellow-300 transition-colors">
-                            Lanjut Belajar
+                            Belajar
                         </button>
                     </a>
                 
@@ -112,4 +101,15 @@
     </div>    
 </div>
 
+<script>
+    //untuk mengatur flash message dari backend
+    document.addEventListener('DOMContentLoaded', function () {
+        const flashMessage = document.getElementById('flash-message');
+            if (flashMessage) {
+                setTimeout(() => {
+                    flashMessage.remove();
+            }, 3000); // Hapus pesan setelah 3 detik
+        }
+    });
+</script>
 @endsection

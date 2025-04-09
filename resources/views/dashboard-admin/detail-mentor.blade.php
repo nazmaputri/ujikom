@@ -75,12 +75,12 @@
                 <table class="min-w-full text-sm border-collapse">
                     <thead>
                         <tr class="bg-sky-100 text-gray-700 text-sm">
-                            <th class="px-2 py-2 text-center border-b border-l border-gray-200">No</th>
-                            <th class="px-4 py-2 text-center border-b border-gray-200">Judul</th>
-                            <th class="px-4 py-2 text-center border-b border-gray-200">Harga</th>
-                            <th class="px-4 py-2 text-center border-b border-gray-200">Tanggal dibuat</th>
-                            <th class="px-4 py-2 text-center border-b border-gray-200">Rating</th>
-                            <th class="px-4 py-2 text-center border-b border-r border-gray-200">Aksi</th>
+                            <th class="px-2 py-2 text-center border-b border-l border-gray-200 border-t">No</th>
+                            <th class="px-4 py-2 text-center border-b border-gray-200 border-t">Judul</th>
+                            <th class="px-4 py-2 text-center border-b border-gray-200 border-t">Harga</th>
+                            <th class="px-4 py-2 text-center border-b border-gray-200 border-t">Tanggal dibuat</th>
+                            <th class="px-4 py-2 text-center border-b border-gray-200 border-t">Rating</th>
+                            <th class="px-4 py-2 text-center border-b border-r border-gray-200 border-t">Aksi</th>
                         </tr>
                     </thead>
                 
@@ -88,7 +88,7 @@
                         @forelse ($courses as $index => $course) 
                             <tr class="bg-white hover:bg-sky-50 border-b text-sm">
                                 <td class="px-2 py-2 text-center border-b border-l border-gray-200">{{ $courses->firstItem() + $index }}</td>
-                                <td class="px-4 py-2 border-b border-gray-200">{{ $course->title }}</td>
+                                <td class="px-4 py-2 border-b border-gray-200">{{ Str::limit($course->title, 40) }}</td>
                                 <td class="px-4 py-2 border-b border-gray-200 text-center">Rp {{ number_format($course->price, 0, ',', '.') }}</td> 
                                 <td class="px-4 py-2 border-b border-gray-200 text-center">{{\Carbon\Carbon::parse( $course->created_at)->translatedFormat('d F Y') }}
                                 <td class="px-4 py-2 border-b border-gray-200 text-center">
@@ -112,7 +112,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6" class="text-center text-gray-500 py-4 border-b border-l border-r border-gray-200">Belum ada kursus yang diajarkan oleh mentor ini.</td>
+                                <td colspan="6" class="text-center text-gray-500 py-2 border-b border-l border-r border-gray-200">Belum ada kursus yang diajarkan oleh mentor ini.</td>
                             </tr>
                         @endforelse
                     </tbody>

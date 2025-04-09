@@ -56,11 +56,11 @@
             <tbody class="text-gray-600 text-sm">
                 @forelse ($category->courses as $index => $course)
                     <tr class="bg-white hover:bg-sky-50 border-b border-gray-200">
-                        <td class="px-2 py-2 text-center border-b border-l border-gray-200">{{ $index + 1 }}</td>
-                        <td class="px-4 py-2 capitalize border-b border-gray-200">{{ $course->title }}</td>
-                        <td class="px-4 py-2 capitalize border-b border-gray-200">{{ $course->mentor->name ?? 'Tidak Ada Mentor' }}</td>
-                        <td class="px-4 py-2 border-b border-gray-200">Rp {{ number_format($course->price, 0, ',', '.') }}</td>
-                        <td class="py-3 px-4 text-center border-b border-r border-gray-200">
+                        <td class="px-2 py-2 text-center border-b border-l border-t border-gray-200">{{ $index + 1 }}</td>
+                        <td class="px-4 py-2 capitalize border-b border-t border-gray-200">{{ $course->title }}</td>
+                        <td class="px-4 py-2 capitalize border-b border-t border-gray-200">{{ $course->mentor->name ?? 'Tidak Ada Mentor' }}</td>
+                        <td class="px-4 py-2 border-b border-t border-gray-200">Rp {{ number_format($course->price, 0, ',', '.') }}</td>
+                        <td class="py-3 px-4 text-center border-b border-t border-r border-gray-200">
                             <div class="flex justify-center items-center space-x-4">
                                 <!-- Tombol Lihat Detail -->
                                 <a href="{{ route('detail-kursusadmin', [$course->id, $category->name]) }}" 

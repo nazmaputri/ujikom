@@ -68,26 +68,34 @@
                 <table class="min-w-full text-sm border-collapse">
                     <thead>
                         <tr class="bg-sky-100 text-gray-700 text-sm">
-                            <th class="px-2 py-2 text-center border-b border-l border-gray-200">No</th>
-                            <th class="px-4 py-2 text-center border-b border-gray-200">Judul</th>
-                            <th class="px-4 py-2 text-center border-b border-gray-200">Kategori</th>
-                            <th class="px-4 py-2 text-center border-b border-r border-gray-200">Status Pembayaran</th>
+                            <th class="px-2 py-2 text-center border-b border-t border-l border-gray-200">No</th>
+                            <th class="px-4 py-2 text-center border-b border-t border-gray-200">Judul</th>
+                            <th class="px-4 py-2 text-center border-b border-t border-gray-200">Kategori</th>
+                            <th class="px-4 py-2 text-center border-b border-t border-r border-gray-200">Status Pembayaran</th>
                         </tr>
                     </thead>
                     <tbody class="text-gray-600 text-sm">
-                        <tr class="bg-white hover:bg-sky-50 border-b text-sm">
-                            <td class="px-2 py-2 text-center border-b border-l border-gray-200">dummy</td>
-                            <td class="px-4 py-2 border-b border-gray-200">dummy</td>
-                            <td class="px-4 py-2 border-b border-gray-200">dummy</td>
-                            <td class="py-3 px-6 text-center border-b border-r border-gray-200">
-                                <span class="bg-green-200/50 border border-2 border-green-300 text-green-500 px-2 py-0.5 rounded-xl">success</span>
-                            </td>
-                        </tr>
+                        @forelse($purchasedCourses as $index => $purchase)
+                            <tr class="bg-white hover:bg-sky-50 border-b text-sm">
+                                <td class="px-2 py-2 text-center border-b border-l border-gray-200">{{ $index + 1 }}</td>
+                                <td class="px-4 py-2 border-b border-gray-200 capitalize">{{ Str::limit($purchase->course->title ?? '-', 70) }}</td>
+                                <td class="px-4 py-2 border-b border-gray-200 capitalize">{{ Str::limit($purchase->course->category ?? '-', 40) }}</td>
+                                <td class="py-3 px-6 text-center border-b border-r border-gray-200">
+                                    <span class="bg-green-200/50 border border-2 border-green-300 text-green-500 px-2 py-0.5 rounded-xl">
+                                        {{ $purchase->payment->transaction_status ?? '-' }}
+                                    </span>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="4" class="text-center py-2 px-2 text-gray-400 border-l border-b border-r">Belum ada kursus yang dibeli</td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
-            <div class="mt-4">
-                paginate
+            <div class="pagination mt-4">
+                {{ $purchasedCourses->links('pagination::tailwind') }}
             </div> 
         </div>
         <!-- Tombol Kembali -->

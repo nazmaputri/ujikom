@@ -142,10 +142,10 @@
                 <table class="min-w-full border-collapse" id="courseTable">
                     <thead>
                         <tr class="bg-sky-100 text-gray-700 text-sm">
-                            <th class="py-2 px-2 border-b border-l border-gray-200">No</th>
-                            <th class="py-2 px-4 border-b border-gray-200">Nama</th>
-                            <th class="py-2 px-4 border-b border-gray-200">Email</th>
-                            <th class="py-2 border-b border-r border-gray-200">Status Pembayaran</th>
+                            <th class="py-2 px-2 border-b border-l border-t border-gray-200">No</th>
+                            <th class="py-2 px-4 border-b border-t border-gray-200">Nama</th>
+                            <th class="py-2 px-4 border-b border-t border-gray-200">Email</th>
+                            <th class="py-2 border-b border-r border-t border-gray-200">Status Pembayaran</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -158,7 +158,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="4" class="py-4 text-center text-sm text-gray-600 border-l border-b border-r border-gray-200">Belum ada peserta terdaftar.</td>
+                            <td colspan="4" class="py-2 text-center text-sm text-gray-600 border-l border-b border-r border-gray-200">Belum ada peserta terdaftar.</td>
                         </tr>
                         @endforelse
                     </tbody>

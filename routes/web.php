@@ -19,6 +19,7 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\KeranjangController;
 use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\CertificateController;
+use App\Http\Controllers\DashboardAdmin\NotifikasiMentorDaftarController;
 use App\Models\Course;
 use App\Mail\HelloMail;
 use Illuminate\Support\Facades\Mail;
@@ -73,6 +74,11 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::patch('/courses/{id}/{name}/hiddencourse', [DashboardAdminController::class, 'hiddencourse'])->name('hiddencourse');
     Route::resource('categories', CategoryController::class);
     Route::get('/categories/{name}', [CategoryController::class, 'show'])->name('categories.show');
+
+    // Notifikasi Jika Ada Mentor Yang Daftar
+    Route::get('/admin/notifikasi', [NotifikasiMentorDaftarController::class, 'fetchNotifikasi'])->name('notifikasi.fetch');
+    Route::post('/notifikasi/mark-as-read/{id}', [NotifikasiMentorDaftarController::class, 'markAsRead']);
+    Route::get('/notifikasi/check-unread', [NotifikasiMentorDaftarController::class, 'checkUnreadNotifikasi']);
 });
 
 Route::middleware(['auth:student'])->group(function () {

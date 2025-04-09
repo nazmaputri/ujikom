@@ -93,6 +93,7 @@ class CertificateController extends Controller
             'mentor_name'            => $course->mentor->name ?? 'Tidak Diketahui',
             'signature_title_left'   => 'Direktur Kursus',
             'signature_title_right'  => 'Mentor Kursus',
+            'is_pdf'                 => true // ← agar image tampil saat diunduh
         ];
     
         // Buat PDF menggunakan DOMPDF
